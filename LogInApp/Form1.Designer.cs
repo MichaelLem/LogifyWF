@@ -35,13 +35,15 @@
             txtPassword = new TextBox();
             errorUserName = new Label();
             errorPassword = new Label();
+            btnTest = new Button();
             SuspendLayout();
             // 
             // btnSubmit
             // 
-            btnSubmit.Location = new Point(25, 168);
+            btnSubmit.Location = new Point(31, 210);
+            btnSubmit.Margin = new Padding(4, 4, 4, 4);
             btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(94, 29);
+            btnSubmit.Size = new Size(118, 36);
             btnSubmit.TabIndex = 0;
             btnSubmit.Text = "Submit";
             btnSubmit.UseVisualStyleBackColor = true;
@@ -51,34 +53,38 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = SystemColors.Control;
-            label1.Location = new Point(20, 66);
+            label1.Location = new Point(25, 82);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(78, 20);
+            label1.Size = new Size(95, 25);
             label1.TabIndex = 1;
             label1.Text = "Username:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(25, 124);
+            label2.Location = new Point(31, 155);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(73, 20);
+            label2.Size = new Size(91, 25);
             label2.TabIndex = 2;
             label2.Text = "Password:";
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(150, 59);
+            txtUsername.Location = new Point(188, 74);
+            txtUsername.Margin = new Padding(4, 4, 4, 4);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(125, 27);
+            txtUsername.Size = new Size(155, 31);
             txtUsername.TabIndex = 3;
             txtUsername.TextChanged += txtUsername_TextChanged;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(150, 124);
+            txtPassword.Location = new Point(188, 155);
+            txtPassword.Margin = new Padding(4, 4, 4, 4);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(125, 27);
+            txtPassword.Size = new Size(155, 31);
             txtPassword.TabIndex = 4;
             txtPassword.UseSystemPasswordChar = true;
             txtPassword.TextChanged += txtPassword_TextChanged;
@@ -87,9 +93,10 @@
             // 
             errorUserName.AutoSize = true;
             errorUserName.ForeColor = Color.Red;
-            errorUserName.Location = new Point(298, 66);
+            errorUserName.Location = new Point(372, 82);
+            errorUserName.Margin = new Padding(4, 0, 4, 0);
             errorUserName.Name = "errorUserName";
-            errorUserName.Size = new Size(99, 20);
+            errorUserName.Size = new Size(120, 25);
             errorUserName.TabIndex = 5;
             errorUserName.Text = "ErrorMessage";
             errorUserName.Visible = false;
@@ -98,19 +105,33 @@
             // 
             errorPassword.AutoSize = true;
             errorPassword.ForeColor = Color.Red;
-            errorPassword.Location = new Point(298, 131);
+            errorPassword.Location = new Point(372, 164);
+            errorPassword.Margin = new Padding(4, 0, 4, 0);
             errorPassword.Name = "errorPassword";
-            errorPassword.Size = new Size(99, 20);
+            errorPassword.Size = new Size(120, 25);
             errorPassword.TabIndex = 6;
             errorPassword.Text = "ErrorMessage";
             errorPassword.Visible = false;
             // 
+            // btnTest
+            // 
+            btnTest.Location = new Point(425, 220);
+            btnTest.Margin = new Padding(4);
+            btnTest.Name = "btnTest";
+            btnTest.RightToLeft = RightToLeft.Yes;
+            btnTest.Size = new Size(118, 36);
+            btnTest.TabIndex = 7;
+            btnTest.Text = "Test";
+            btnTest.UseVisualStyleBackColor = true;
+            btnTest.Click += btnTest_Click;
+            // 
             // LogIn
             // 
             AcceptButton = btnSubmit;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(770, 267);
+            ClientSize = new Size(962, 334);
+            Controls.Add(btnTest);
             Controls.Add(errorPassword);
             Controls.Add(errorUserName);
             Controls.Add(txtPassword);
@@ -118,6 +139,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(btnSubmit);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "LogIn";
             Text = "Login";
             Load += LogIn_Load;
@@ -134,5 +156,6 @@
         private TextBox txtPassword;
         private Label errorUserName;
         private Label errorPassword;
+        private Button btnTest;
     }
 }
