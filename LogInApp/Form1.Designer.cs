@@ -35,6 +35,7 @@
             txtPassword = new TextBox();
             errorUserName = new Label();
             errorPassword = new Label();
+            btnSqlTest = new Button();
             SuspendLayout();
             // 
             // btnSubmit
@@ -105,12 +106,23 @@
             errorPassword.Text = "ErrorMessage";
             errorPassword.Visible = false;
             // 
+            // btnSqlTest
+            // 
+            btnSqlTest.Location = new Point(643, 168);
+            btnSqlTest.Name = "btnSqlTest";
+            btnSqlTest.Size = new Size(94, 29);
+            btnSqlTest.TabIndex = 7;
+            btnSqlTest.Text = "SQL Test";
+            btnSqlTest.UseVisualStyleBackColor = true;
+            btnSqlTest.Click += btnSqlTest_Click;
+            // 
             // LogIn
             // 
             AcceptButton = btnSubmit;
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(770, 267);
+            Controls.Add(btnSqlTest);
             Controls.Add(errorPassword);
             Controls.Add(errorUserName);
             Controls.Add(txtPassword);
@@ -134,5 +146,6 @@
         private TextBox txtPassword;
         private Label errorUserName;
         private Label errorPassword;
+        private Button btnSqlTest;
     }
 }

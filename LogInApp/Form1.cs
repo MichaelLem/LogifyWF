@@ -1,4 +1,5 @@
 using LogifyWin;
+using LogifyWin.DataLayer;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Data.SqlTypes;
 
@@ -17,7 +18,7 @@ namespace Logify
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             Authenticate userAuthenticate = new Authenticate();
-            
+
             string userName = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
@@ -67,6 +68,13 @@ namespace Logify
             {
                 errorPassword.Visible = false;
             }
+        }
+
+        private void btnSqlTest_Click(object sender, EventArgs e)
+        {
+            DbConnectionTester tester = new DbConnectionTester();
+            string result = tester.TestConnection();
+            MessageBox.Show(result);
         }
     }
 }
