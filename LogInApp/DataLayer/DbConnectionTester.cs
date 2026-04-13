@@ -1,6 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+
+namespace LogifyWin.DataLayer;
 
 public class DbConnectionTester
 {
@@ -24,7 +30,7 @@ public class DbConnectionTester
         }
         catch (Exception ex)
         {
-            string error  = "Connection FAILED: " + ex.Message;
+            string error = "Connection FAILED: " + ex.Message;
             return error;
         }
     }

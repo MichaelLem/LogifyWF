@@ -1,4 +1,5 @@
 using LogifyWin;
+using LogifyWin.DataLayer;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Configuration;
 
@@ -69,12 +70,11 @@ namespace Logify
             }
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
+        private void btnSqlTest_Click(object sender, EventArgs e)
         {
-            DbConnectionTester dbTester = new DbConnectionTester();
-
-            string message = dbTester.TestConnection();
-            MessageBox.Show(message);
+            DbConnectionTester tester = new DbConnectionTester();
+            string result = tester.TestConnection();
+            MessageBox.Show(result);
         }
     }
 }
