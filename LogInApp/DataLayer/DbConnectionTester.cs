@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 
-namespace LogifyWin.DataLayer;
+namespace Logify.DataLayer;
 
 public class DbConnectionTester
 {

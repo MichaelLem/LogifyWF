@@ -35,7 +35,7 @@
             txtPassword = new TextBox();
             errorUserName = new Label();
             errorPassword = new Label();
-            btnSqlTest = new Button();
+            //btnSqlTest = new Button();
             SuspendLayout();
             // 
             // btnSubmit

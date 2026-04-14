@@ -1,7 +1,6 @@
 using LogifyWin;
-using LogifyWin.DataLayer;
-using Microsoft.VisualBasic.ApplicationServices;
 using System.Configuration;
+using Logify.DataLayer;
 
 namespace Logify
 {
