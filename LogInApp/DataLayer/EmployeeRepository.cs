@@ -55,7 +55,7 @@ namespace Logify.DataLayer
 
                     CompanyId = reader.GetInt32(reader.GetOrdinal("CompanyId")),
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
-                    LastName = reader.GetString(reader.GetOrdinal("LastName"))
+                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
                 };
 
                 message = "Employee loaded successfully.";

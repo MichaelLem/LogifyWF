@@ -22,6 +22,8 @@ namespace LogifyWin
         private void Employee_Load(object sender, EventArgs e)
         {
             PopulateFields();
+            //DbConnectionTester dbConnectionTester = new DbConnectionTester();
+            //dbConnectionTester.TestConnection();
         }
 
         private void PopulateFields()
@@ -30,6 +32,7 @@ namespace LogifyWin
             EmployeeRepository EmployeeRepo = new EmployeeRepository();
             Worker = EmployeeRepo.GetEmployeesByLastNameRoleId("Brown", 2);
 
+
             if (Worker == null)
             {
                 string errorMessage = EmployeeRepo.message;
@@ -37,7 +40,7 @@ namespace LogifyWin
                 return;
             }
 
-            lblCompanyId.Text = Worker.CompanyId.ToString();
+            lblCompanyName.Text = Worker.CompanyId.ToString();
             lblFirstName.Text = Worker.FirstName.ToString();
             lblLastName.Text = Worker.LastName.ToString();
         }
