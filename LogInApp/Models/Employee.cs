@@ -11,7 +11,7 @@ namespace Logify.Models
         public int EmployeeId { get; set; }
         public int CompanyId { get; set; }
         public int RoleId { get; set; }
-        public int HourlyRate { get; set; }
+        public decimal HourlyRate { get; set; }
         public string CompanyName { get; set; } = string.Empty;
         public string RoleName { get; set; } = string.Empty;
         public string SSN { get; set; } = string.Empty;
@@ -19,6 +19,6 @@ namespace Logify.Models
         public string LastName { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string DateHired { get; set; } = string.Empty;
+        public DateTime DateHired { get; set; }
     }
 }
