@@ -30,7 +30,8 @@ namespace LogifyWin
         {
             Logify.Models.Employee Worker = new Logify.Models.Employee();
             EmployeeRepository EmployeeRepo = new EmployeeRepository();
-            Worker = EmployeeRepo.GetEmployeesByLastNameRoleId("Brown", 2);
+            //Worker = EmployeeRepo.GetEmployeesByLastNameRoleId("Chen", 2);
+            Worker = EmployeeRepo.GetEmployeeById(2);
 
 
             if (Worker == null)
@@ -40,9 +41,17 @@ namespace LogifyWin
                 return;
             }
 
-            lblCompanyName.Text = Worker.CompanyId.ToString();
+            lblCompanyId.Text = Worker.CompanyId.ToString();
             lblFirstName.Text = Worker.FirstName.ToString();
             lblLastName.Text = Worker.LastName.ToString();
+            lblEmployeeId.Text = Worker.EmployeeId.ToString();
+            lblRoleId.Text = Worker.RoleId.ToString();
+            lblHourlyRate.Text = Worker.HourlyRate.ToString();
+            lblCompanyName.Text = Worker.CompanyName.ToString();
+            lblRoleName.Text = Worker.RoleName.ToString();
+            lblSSN.Text = Worker.SSN.ToString();
+            lblEmail.Text = Worker.Email.ToString();
+            lblDateHired.Text = Worker.DateHired.ToString();
         }
     }
 }

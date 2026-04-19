@@ -38,6 +38,8 @@
             lblCompanyId = new Label();
             lblDateHired = new Label();
             lblSSN = new Label();
+            lblEmployeeId = new Label();
+            lblHourlyRate = new Label();
             SuspendLayout();
             // 
             // lblCompanyName
@@ -53,7 +55,7 @@
             // lblFirstName
             // 
             lblFirstName.AutoSize = true;
-            lblFirstName.Location = new Point(167, 127);
+            lblFirstName.Location = new Point(168, 150);
             lblFirstName.Margin = new Padding(2, 0, 2, 0);
             lblFirstName.Name = "lblFirstName";
             lblFirstName.Size = new Size(80, 20);
@@ -63,7 +65,7 @@
             // lblLastName
             // 
             lblLastName.AutoSize = true;
-            lblLastName.Location = new Point(167, 147);
+            lblLastName.Location = new Point(168, 170);
             lblLastName.Margin = new Padding(2, 0, 2, 0);
             lblLastName.Name = "lblLastName";
             lblLastName.Size = new Size(79, 20);
@@ -73,7 +75,7 @@
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(167, 211);
+            lblEmail.Location = new Point(168, 245);
             lblEmail.Margin = new Padding(2, 0, 2, 0);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(46, 20);
@@ -83,7 +85,7 @@
             // lblPhoneNumber
             // 
             lblPhoneNumber.AutoSize = true;
-            lblPhoneNumber.Location = new Point(167, 231);
+            lblPhoneNumber.Location = new Point(167, 282);
             lblPhoneNumber.Margin = new Padding(2, 0, 2, 0);
             lblPhoneNumber.Name = "lblPhoneNumber";
             lblPhoneNumber.Size = new Size(108, 20);
@@ -123,7 +125,7 @@
             // lblDateHired
             // 
             lblDateHired.AutoSize = true;
-            lblDateHired.Location = new Point(167, 265);
+            lblDateHired.Location = new Point(168, 311);
             lblDateHired.Margin = new Padding(2, 0, 2, 0);
             lblDateHired.Name = "lblDateHired";
             lblDateHired.Size = new Size(82, 20);
@@ -133,18 +135,40 @@
             // lblSSN
             // 
             lblSSN.AutoSize = true;
-            lblSSN.Location = new Point(167, 167);
+            lblSSN.Location = new Point(168, 197);
             lblSSN.Margin = new Padding(2, 0, 2, 0);
             lblSSN.Name = "lblSSN";
             lblSSN.Size = new Size(36, 20);
             lblSSN.TabIndex = 9;
             lblSSN.Text = "SSN";
             // 
+            // lblEmployeeId
+            // 
+            lblEmployeeId.AutoSize = true;
+            lblEmployeeId.Location = new Point(167, 130);
+            lblEmployeeId.Margin = new Padding(2, 0, 2, 0);
+            lblEmployeeId.Name = "lblEmployeeId";
+            lblEmployeeId.Size = new Size(88, 20);
+            lblEmployeeId.TabIndex = 10;
+            lblEmployeeId.Text = "EmployeeId";
+            // 
+            // lblHourlyRate
+            // 
+            lblHourlyRate.AutoSize = true;
+            lblHourlyRate.Location = new Point(167, 217);
+            lblHourlyRate.Margin = new Padding(2, 0, 2, 0);
+            lblHourlyRate.Name = "lblHourlyRate";
+            lblHourlyRate.Size = new Size(83, 20);
+            lblHourlyRate.TabIndex = 11;
+            lblHourlyRate.Text = "HourlyRate";
+            // 
             // Employee
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(640, 360);
+            Controls.Add(lblHourlyRate);
+            Controls.Add(lblEmployeeId);
             Controls.Add(lblSSN);
             Controls.Add(lblDateHired);
             Controls.Add(lblCompanyId);
@@ -175,5 +199,7 @@
         private Label lblCompanyId;
         private Label lblDateHired;
         private Label lblSSN;
+        private Label lblEmployeeId;
+        private Label lblHourlyRate;
     }
 }

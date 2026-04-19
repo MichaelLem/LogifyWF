@@ -56,6 +56,9 @@ namespace Logify.DataLayer
                     CompanyId = reader.GetInt32(reader.GetOrdinal("CompanyId")),
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    DateHired = reader.GetDateTime(reader.GetOrdinal("DateHired")),
+                    RoleName = reader.GetString(reader.GetOrdinal("RoleName")),
                 };
 
                 message = "Employee loaded successfully.";
@@ -68,9 +71,73 @@ namespace Logify.DataLayer
             }
         }
 
-        public Employee GetEmployeeById(int idCompany, int idEmployee)
+        public Employee GetEmployeeById(int idEmployee)
         {
-            return new Employee();
+            message = string.Empty;
+
+            try
+            {
+                var connectionString = ConfigurationManager
+                    .ConnectionStrings["LogifyDb"]
+                    .ConnectionString;
+
+                using var connection = new SqlConnection(connectionString);
+                connection.Open();
+
+                // Stored procedure call:
+                // EXEC dbo.GetEmployeesById @EmployeeId = 2;
+                using var cmd = new SqlCommand("dbo.GetEmployeeById", connection);
+
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+                // Put comments above the line they refer to (your preference)
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", System.Data.SqlDbType.Int) { Value = idEmployee });
+
+                // Query returns one record, so use a reader and read the first row
+                using var reader = cmd.ExecuteReader();
+
+                if (!reader.Read())
+                {
+                    message = $"No employee found for EmployeeId = {idEmployee}.";
+                    return null;
+                }
+
+                // NOTE: Query returns: CompanyId, FirstName, LastName etc.
+                var employee = new Employee
+                {
+                    // If EmployeeId is NOT returned by the proc, this will remain 0
+                    // EmployeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId")),
+
+                    EmployeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId")),
+                    CompanyId = reader.GetInt32(reader.GetOrdinal("CompanyId")),
+                    RoleId = reader.GetInt32(reader.GetOrdinal("RoleId")),
+                    HourlyRate = reader.GetDecimal(reader.GetOrdinal("HourlyRate")),
+                    CompanyName = reader.GetString(reader.GetOrdinal("CompanyName")),
+                    RoleName = reader.GetString(reader.GetOrdinal("RoleName")),
+                    SSN = reader.GetString(reader.GetOrdinal("SSN")),
+                    FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                    LastName = reader.GetString(reader.GetOrdinal("LastName")),
+                    Email = reader.GetString(reader.GetOrdinal("Email")),
+                    DateHired = reader.GetDateTime(reader.GetOrdinal("DateHired"))
+                };
+				var phoneOrdinal = reader.GetOrdinal("PhoneNumber");
+				if (!reader.IsDBNull(phoneOrdinal))
+				{
+				employee.PhoneNumber = reader.GetString(phoneOrdinal);
+				}
+				else
+				{
+				employee.PhoneNumber = string.Empty;
+				}
+
+                message = "Employee loaded successfully.";
+                return employee;
+            }
+            catch (Exception ex)
+            {
+                message = "Database call failed: " + ex.Message;
+                return null;
+            }
         }
 
         public Employee GetBySSN(string ssn) { return new Employee(); }
