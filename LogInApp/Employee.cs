@@ -31,7 +31,7 @@ namespace LogifyWin
             Logify.Models.Employee Worker = new Logify.Models.Employee();
             EmployeeRepository EmployeeRepo = new EmployeeRepository();
             //Worker = EmployeeRepo.GetEmployeesByLastNameRoleId("Chen", 2);
-            Worker = EmployeeRepo.GetEmployeeById(2);
+            Worker = EmployeeRepo.GetEmployeeById(101);
 
 
             if (Worker == null)
