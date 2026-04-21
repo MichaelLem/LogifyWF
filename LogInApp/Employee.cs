@@ -21,17 +21,17 @@ namespace LogifyWin
 
         private void Employee_Load(object sender, EventArgs e)
         {
-            PopulateFields();
+            //PopulateFields();
             //DbConnectionTester dbConnectionTester = new DbConnectionTester();
             //dbConnectionTester.TestConnection();
         }
 
-        private void PopulateFields()
+        private void PopulateFields(string LastName, int RoleId)
         {
             Logify.Models.Employee Worker = new Logify.Models.Employee();
             EmployeeRepository EmployeeRepo = new EmployeeRepository();
-            //Worker = EmployeeRepo.GetEmployeesByLastNameRoleId("Chen", 2);
-            Worker = EmployeeRepo.GetEmployeeById(101);
+            Worker = EmployeeRepo.GetEmployeesByLastNameRoleId(LastName, RoleId);
+            //Worker = EmployeeRepo.GetEmployeeById(101);
 
 
             if (Worker == null)
@@ -45,13 +45,17 @@ namespace LogifyWin
             lblFirstName.Text = Worker.FirstName.ToString();
             lblLastName.Text = Worker.LastName.ToString();
             lblEmployeeId.Text = Worker.EmployeeId.ToString();
-            lblRoleId.Text = Worker.RoleId.ToString();
             lblHourlyRate.Text = Worker.HourlyRate.ToString();
             lblCompanyName.Text = Worker.CompanyName.ToString();
-            lblRoleName.Text = Worker.RoleName.ToString();
             lblSSN.Text = Worker.SSN.ToString();
             lblEmail.Text = Worker.Email.ToString();
             lblDateHired.Text = Worker.DateHired.ToString();
+            lblPhoneNumber.Text = Worker.PhoneNumber.ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            PopulateFields("Chen", 2);
         }
     }
 }

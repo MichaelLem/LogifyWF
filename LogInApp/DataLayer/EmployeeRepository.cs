@@ -53,13 +53,18 @@ namespace Logify.DataLayer
                     // If EmployeeId is NOT returned by the proc, this will remain 0
                     // EmployeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId")),
 
+                    EmployeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId")),
                     CompanyId = reader.GetInt32(reader.GetOrdinal("CompanyId")),
+                    HourlyRate = reader.GetDecimal(reader.GetOrdinal("HourlyRate")),
+                    CompanyName = reader.GetString(reader.GetOrdinal("CompanyName")),
+                    SSN = reader.GetString(reader.GetOrdinal("SSN")),
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
                     Email = reader.GetString(reader.GetOrdinal("Email")),
-                    DateHired = reader.GetDateTime(reader.GetOrdinal("DateHired")),
-                    RoleName = reader.GetString(reader.GetOrdinal("RoleName")),
+                    DateHired = reader.GetDateTime(reader.GetOrdinal("DateHired"))
                 };
+
+                connection.Close();
 
                 message = "Employee loaded successfully.";
                 return employee;
@@ -82,7 +87,7 @@ namespace Logify.DataLayer
                     .ConnectionString;
 
                 using var connection = new SqlConnection(connectionString);
-                connection.Open();
+              
 
                 // Stored procedure call:
                 // EXEC dbo.GetEmployeesById @EmployeeId = 2;
@@ -93,8 +98,10 @@ namespace Logify.DataLayer
                 // Put comments above the line they refer to (your preference)
                 cmd.Parameters.Add(new SqlParameter("@EmployeeId", System.Data.SqlDbType.Int) { Value = idEmployee });
 
-                // Query returns one record, so use a reader and read the first row
+                connection.Open();
                 using var reader = cmd.ExecuteReader();
+          
+
 
                 if (!reader.Read())
                 {
@@ -120,7 +127,9 @@ namespace Logify.DataLayer
                     Email = reader.GetString(reader.GetOrdinal("Email")),
                     DateHired = reader.GetDateTime(reader.GetOrdinal("DateHired"))
                 };
-				var phoneOrdinal = reader.GetOrdinal("PhoneNumber");
+
+                //var phoneOrdinal = reader.GetOrdinal("PhoneNumber").ToString();
+                var phoneOrdinal = reader.GetOrdinal("PhoneNumber");
 				if (!reader.IsDBNull(phoneOrdinal))
 				{
 				employee.PhoneNumber = reader.GetString(phoneOrdinal);
@@ -129,6 +138,8 @@ namespace Logify.DataLayer
 				{
 				employee.PhoneNumber = string.Empty;
 				}
+
+                connection.Close();
 
                 message = "Employee loaded successfully.";
                 return employee;
