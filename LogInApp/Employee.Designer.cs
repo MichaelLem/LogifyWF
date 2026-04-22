@@ -189,9 +189,10 @@
             tbxLastName.ForeColor = SystemColors.ControlDark;
             tbxLastName.Location = new Point(12, 85);
             tbxLastName.Name = "tbxLastName";
+            tbxLastName.PlaceholderText = "Last Name";
             tbxLastName.Size = new Size(151, 27);
             tbxLastName.TabIndex = 14;
-            tbxLastName.Text = "Last Name";
+            tbxLastName.TextChanged += tbxLastName_TextChanged;
             // 
             // Employee
             // 

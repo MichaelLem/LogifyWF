@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Logify.DataLayer;
+using Logify.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Logify.DataLayer;
 
 
 namespace LogifyWin
@@ -24,6 +25,13 @@ namespace LogifyWin
             //PopulateFields();
             //DbConnectionTester dbConnectionTester = new DbConnectionTester();
             //dbConnectionTester.TestConnection();
+
+            RoleRepository repo = new RoleRepository();
+            List<RoleItem> roles = repo.GetRoles();
+
+            cbRoleNames.DataSource = roles;
+            cbRoleNames.DisplayMember = "RoleName";
+            cbRoleNames.ValueMember = "RoleId";
         }
 
         private void PopulateFields(string LastName, int RoleId)
@@ -32,7 +40,6 @@ namespace LogifyWin
             EmployeeRepository EmployeeRepo = new EmployeeRepository();
             Worker = EmployeeRepo.GetEmployeesByLastNameRoleId(LastName, RoleId);
             //Worker = EmployeeRepo.GetEmployeeById(101);
-
 
             if (Worker == null)
             {
@@ -56,6 +63,18 @@ namespace LogifyWin
         private void button1_Click(object sender, EventArgs e)
         {
             PopulateFields("Chen", 2);
+
+            //Testing worked
+            //RoleRepository repo = new RoleRepository();
+            //List<RoleItem> roles = repo.GetRoles();
+            //MessageBox.Show(roles.Count.ToString());
+        }
+
+        private void tbxLastName_TextChanged(object sender, EventArgs e)
+        {
+
+            //string tbxLastNameText = tbxLastName.Text.Trim();
+
         }
     }
 }
