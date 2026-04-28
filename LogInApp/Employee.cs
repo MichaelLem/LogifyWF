@@ -63,7 +63,7 @@ namespace LogifyWin
             lblPhoneNumber.Text = Worker.PhoneNumber.ToString();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnSubmit_Click(object sender, EventArgs e)
         {
             if (cbRoleNames.SelectedValue != null)
             {
@@ -74,6 +74,11 @@ namespace LogifyWin
             {
                 MessageBox.Show("Please select a role.");
             }
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
