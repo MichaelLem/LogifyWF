@@ -191,6 +191,7 @@
             // 
             tbxCreateEmployee.Location = new Point(194, 108);
             tbxCreateEmployee.Name = "tbxCreateEmployee";
+            tbxCreateEmployee.ReadOnly = true;
             tbxCreateEmployee.Size = new Size(102, 23);
             tbxCreateEmployee.TabIndex = 16;
             tbxCreateEmployee.Text = "Create Employee";

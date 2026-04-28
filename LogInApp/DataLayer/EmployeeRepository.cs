@@ -1,11 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Configuration;
+﻿using Logify.Models;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Logify.Models;
 
 
 namespace Logify.DataLayer
@@ -155,7 +156,31 @@ namespace Logify.DataLayer
 
         public bool InsertNewEmployee(Employee newEmployee)
         {
-            return false;
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["LogifyDb"]
+                .ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("dbo.InsertNewEmployee", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@CompanyId", newEmployee.CompanyId);
+                cmd.Parameters.AddWithValue("@RoleId", newEmployee.RoleId);
+                cmd.Parameters.AddWithValue("@HourlyRate", newEmployee.HourlyRate);
+                cmd.Parameters.AddWithValue("@DateHired", newEmployee.DateHired);
+                cmd.Parameters.AddWithValue("@FirstName", newEmployee.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", newEmployee.LastName);
+                cmd.Parameters.AddWithValue("@SSN", newEmployee.SSN);
+                cmd.Parameters.AddWithValue("@Email", newEmployee.Email);
+                cmd.Parameters.AddWithValue("@PhoneNumber", newEmployee.PhoneNumber);
+
+                conn.Open();
+
+                int newEmployeeId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return newEmployeeId > 0;
+            }
         }
 
 

@@ -78,7 +78,8 @@ namespace LogifyWin
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-
+            AddEmployeeForm addEmployee = new AddEmployeeForm();
+            addEmployee.ShowDialog();
         }
     }
 }
