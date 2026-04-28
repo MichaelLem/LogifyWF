@@ -192,7 +192,6 @@
             tbxLastName.PlaceholderText = "Last Name";
             tbxLastName.Size = new Size(151, 27);
             tbxLastName.TabIndex = 14;
-            tbxLastName.TextChanged += tbxLastName_TextChanged;
             // 
             // Employee
             // 

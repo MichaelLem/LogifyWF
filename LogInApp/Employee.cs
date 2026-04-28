@@ -30,15 +30,18 @@ namespace LogifyWin
             List<RoleItem> roles = repo.GetRoles();
 
             cbRoleNames.DataSource = roles;
-            cbRoleNames.DisplayMember = "RoleName";
-            cbRoleNames.ValueMember = "RoleId";
+            cbRoleNames.DisplayMember = nameof(RoleItem.RoleName);
+            cbRoleNames.ValueMember = nameof(RoleItem.RoleId);
         }
 
         private void PopulateFields(string LastName, int RoleId)
         {
+            //Grabs the employee by the last name and role id, then populates the fields with the employee information. If no employee is found, it will display an error message.
             Logify.Models.Employee Worker = new Logify.Models.Employee();
             EmployeeRepository EmployeeRepo = new EmployeeRepository();
             Worker = EmployeeRepo.GetEmployeesByLastNameRoleId(LastName, RoleId);
+
+            //Grabs the employee by the employee id, then populates the fields with the employee information. If no employee is found, it will display an error message.
             //Worker = EmployeeRepo.GetEmployeeById(101);
 
             if (Worker == null)
@@ -62,19 +65,15 @@ namespace LogifyWin
 
         private void button1_Click(object sender, EventArgs e)
         {
-            PopulateFields("Chen", 2);
-
-            //Testing worked
-            //RoleRepository repo = new RoleRepository();
-            //List<RoleItem> roles = repo.GetRoles();
-            //MessageBox.Show(roles.Count.ToString());
-        }
-
-        private void tbxLastName_TextChanged(object sender, EventArgs e)
-        {
-
-            //string tbxLastNameText = tbxLastName.Text.Trim();
-
+            if (cbRoleNames.SelectedValue != null)
+            {
+                int selectedRoleId = (int)cbRoleNames.SelectedValue;
+                PopulateFields(tbxLastName.Text.Trim(), selectedRoleId);
+            }
+            else
+            {
+                MessageBox.Show("Please select a role.");
+            }
         }
     }
 }
