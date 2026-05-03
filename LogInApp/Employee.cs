@@ -81,5 +81,19 @@ namespace LogifyWin
             AddEmployeeForm addEmployee = new AddEmployeeForm();
             addEmployee.ShowDialog();
         }
+
+        private void btnEditEmployee_Click(object sender, EventArgs e)
+        {
+            int employeeId = int.Parse(lblEmployeeId.Text);
+            decimal hourlyRate = decimal.Parse(txtHourlyRate.Text);
+
+            EmployeeRepository repo = new EmployeeRepository();
+            repo.UpdateEmployeePay(employeeId, hourlyRate);
+
+            string LastName = lblLastName.Text;
+            int RoleId = (int)cbRoleNames.SelectedValue;
+
+            PopulateFields(LastName, RoleId);
+        }
     }
 }

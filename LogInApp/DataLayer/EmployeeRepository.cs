@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Logify.DataLayer
 {
-    public  class EmployeeRepository
+    public class EmployeeRepository
     {
         // Gets ONE employee record based on last name + role id (per your stored procedure call)
         public string message = string.Empty;
-        public  Employee GetEmployeesByLastNameRoleId(string lastName, int roleId)
+        public Employee GetEmployeesByLastNameRoleId(string lastName, int roleId)
         {
             message = string.Empty;
 
@@ -34,7 +34,6 @@ namespace Logify.DataLayer
 
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-                // Put comments above the line they refer to (your preference)
                 cmd.Parameters.Add(new SqlParameter("@LastName", System.Data.SqlDbType.NVarChar, 50) { Value = lastName });
                 cmd.Parameters.Add(new SqlParameter("@RoleId", System.Data.SqlDbType.Int) { Value = roleId });
 
@@ -88,7 +87,7 @@ namespace Logify.DataLayer
                     .ConnectionString;
 
                 using var connection = new SqlConnection(connectionString);
-              
+
 
                 // Stored procedure call:
                 // EXEC dbo.GetEmployeesById @EmployeeId = 2;
@@ -101,7 +100,7 @@ namespace Logify.DataLayer
 
                 connection.Open();
                 using var reader = cmd.ExecuteReader();
-          
+
 
 
                 if (!reader.Read())
@@ -131,14 +130,14 @@ namespace Logify.DataLayer
 
                 //var phoneOrdinal = reader.GetOrdinal("PhoneNumber").ToString();
                 var phoneOrdinal = reader.GetOrdinal("PhoneNumber");
-				if (!reader.IsDBNull(phoneOrdinal))
-				{
-				employee.PhoneNumber = reader.GetString(phoneOrdinal);
-				}
-				else
-				{
-				employee.PhoneNumber = string.Empty;
-				}
+                if (!reader.IsDBNull(phoneOrdinal))
+                {
+                    employee.PhoneNumber = reader.GetString(phoneOrdinal);
+                }
+                else
+                {
+                    employee.PhoneNumber = string.Empty;
+                }
 
                 connection.Close();
 
@@ -182,7 +181,20 @@ namespace Logify.DataLayer
                 return newEmployeeId > 0;
             }
         }
-
-
+        public void UpdateEmployeePay(int employeeId, decimal newHourlyRate)
+        {
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["LogifyDb"]
+                .ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeePay", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
+                cmd.Parameters.AddWithValue("@HourlyRate", newHourlyRate);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
