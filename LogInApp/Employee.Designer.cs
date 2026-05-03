@@ -33,35 +33,40 @@
             lblLastName = new Label();
             lblEmail = new Label();
             lblPhoneNumber = new Label();
-            lblCompanyId = new Label();
             lblDateHired = new Label();
             lblSSN = new Label();
             lblEmployeeId = new Label();
             lblHourlyRate = new Label();
             cbRoleNames = new ComboBox();
             btnSubmit = new Button();
-            tbxLastName = new TextBox();
+            tbxFindLastName = new TextBox();
             btnCreate = new Button();
-            txtHourlyRate = new TextBox();
+            tbxEditHourlyRate = new TextBox();
             btnEditEmployee = new Button();
             lblEditEmployee = new Label();
             tbxCreateEmployee = new Label();
+            tbxEditPhoneNumber = new TextBox();
+            tbxEditEmail = new TextBox();
+            tbxEditFirstName = new TextBox();
+            tbxEditLastName = new TextBox();
+            lblDeleteEmployee = new Label();
+            btnDeleteEmployee = new Button();
             SuspendLayout();
             // 
             // lblCompanyName
             // 
             lblCompanyName.AutoSize = true;
-            lblCompanyName.Location = new Point(377, 11);
+            lblCompanyName.Location = new Point(377, 20);
             lblCompanyName.Margin = new Padding(2, 0, 2, 0);
             lblCompanyName.Name = "lblCompanyName";
-            lblCompanyName.Size = new Size(91, 15);
+            lblCompanyName.Size = new Size(94, 15);
             lblCompanyName.TabIndex = 0;
-            lblCompanyName.Text = "CompanyName";
+            lblCompanyName.Text = "Company Name";
             // 
             // lblFirstName
             // 
             lblFirstName.AutoSize = true;
-            lblFirstName.Location = new Point(377, 91);
+            lblFirstName.Location = new Point(377, 72);
             lblFirstName.Margin = new Padding(2, 0, 2, 0);
             lblFirstName.Name = "lblFirstName";
             lblFirstName.Size = new Size(64, 15);
@@ -71,7 +76,7 @@
             // lblLastName
             // 
             lblLastName.AutoSize = true;
-            lblLastName.Location = new Point(377, 116);
+            lblLastName.Location = new Point(377, 99);
             lblLastName.Margin = new Padding(2, 0, 2, 0);
             lblLastName.Name = "lblLastName";
             lblLastName.Size = new Size(63, 15);
@@ -98,16 +103,6 @@
             lblPhoneNumber.TabIndex = 4;
             lblPhoneNumber.Text = "Phone Number";
             // 
-            // lblCompanyId
-            // 
-            lblCompanyId.AutoSize = true;
-            lblCompanyId.Location = new Point(377, 36);
-            lblCompanyId.Margin = new Padding(2, 0, 2, 0);
-            lblCompanyId.Name = "lblCompanyId";
-            lblCompanyId.Size = new Size(72, 15);
-            lblCompanyId.TabIndex = 7;
-            lblCompanyId.Text = "Company Id";
-            // 
             // lblDateHired
             // 
             lblDateHired.AutoSize = true;
@@ -121,7 +116,7 @@
             // lblSSN
             // 
             lblSSN.AutoSize = true;
-            lblSSN.Location = new Point(377, 141);
+            lblSSN.Location = new Point(377, 127);
             lblSSN.Margin = new Padding(2, 0, 2, 0);
             lblSSN.Name = "lblSSN";
             lblSSN.Size = new Size(28, 15);
@@ -131,27 +126,28 @@
             // lblEmployeeId
             // 
             lblEmployeeId.AutoSize = true;
-            lblEmployeeId.Location = new Point(377, 67);
+            lblEmployeeId.Location = new Point(377, 44);
             lblEmployeeId.Margin = new Padding(2, 0, 2, 0);
             lblEmployeeId.Name = "lblEmployeeId";
-            lblEmployeeId.Size = new Size(69, 15);
+            lblEmployeeId.Size = new Size(72, 15);
             lblEmployeeId.TabIndex = 10;
-            lblEmployeeId.Text = "EmployeeId";
+            lblEmployeeId.Text = "Employee Id";
             // 
             // lblHourlyRate
             // 
             lblHourlyRate.AutoSize = true;
-            lblHourlyRate.Location = new Point(377, 166);
+            lblHourlyRate.Location = new Point(377, 163);
             lblHourlyRate.Margin = new Padding(2, 0, 2, 0);
             lblHourlyRate.Name = "lblHourlyRate";
-            lblHourlyRate.Size = new Size(66, 15);
+            lblHourlyRate.Size = new Size(69, 15);
             lblHourlyRate.TabIndex = 11;
-            lblHourlyRate.Text = "HourlyRate";
+            lblHourlyRate.Text = "Hourly Rate";
             // 
             // cbRoleNames
             // 
+            cbRoleNames.AutoCompleteMode = AutoCompleteMode.Suggest;
             cbRoleNames.FormattingEnabled = true;
-            cbRoleNames.Location = new Point(10, 91);
+            cbRoleNames.Location = new Point(12, 47);
             cbRoleNames.Margin = new Padding(3, 2, 3, 2);
             cbRoleNames.Name = "cbRoleNames";
             cbRoleNames.Size = new Size(133, 23);
@@ -160,7 +156,7 @@
             // 
             // btnSubmit
             // 
-            btnSubmit.Location = new Point(30, 137);
+            btnSubmit.Location = new Point(30, 74);
             btnSubmit.Margin = new Padding(3, 2, 3, 2);
             btnSubmit.Name = "btnSubmit";
             btnSubmit.Size = new Size(82, 22);
@@ -169,33 +165,33 @@
             btnSubmit.UseVisualStyleBackColor = true;
             btnSubmit.Click += btnSubmit_Click;
             // 
-            // tbxLastName
+            // tbxFindLastName
             // 
-            tbxLastName.ForeColor = SystemColors.ControlDark;
-            tbxLastName.Location = new Point(10, 64);
-            tbxLastName.Margin = new Padding(3, 2, 3, 2);
-            tbxLastName.Name = "tbxLastName";
-            tbxLastName.PlaceholderText = "Last Name";
-            tbxLastName.Size = new Size(133, 23);
-            tbxLastName.TabIndex = 14;
+            tbxFindLastName.ForeColor = SystemColors.ControlDark;
+            tbxFindLastName.Location = new Point(12, 20);
+            tbxFindLastName.Margin = new Padding(3, 2, 3, 2);
+            tbxFindLastName.Name = "tbxFindLastName";
+            tbxFindLastName.PlaceholderText = "Last Name";
+            tbxFindLastName.Size = new Size(133, 23);
+            tbxFindLastName.TabIndex = 14;
             // 
             // btnCreate
             // 
-            btnCreate.Location = new Point(214, 92);
+            btnCreate.Location = new Point(30, 153);
             btnCreate.Margin = new Padding(3, 2, 3, 2);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(82, 22);
+            btnCreate.Size = new Size(82, 25);
             btnCreate.TabIndex = 15;
             btnCreate.Text = "Create";
             btnCreate.UseVisualStyleBackColor = true;
             btnCreate.Click += btnCreate_Click;
             // 
-            // txtHourlyRate
+            // tbxEditHourlyRate
             // 
-            txtHourlyRate.Location = new Point(468, 158);
-            txtHourlyRate.Name = "txtHourlyRate";
-            txtHourlyRate.Size = new Size(100, 23);
-            txtHourlyRate.TabIndex = 17;
+            tbxEditHourlyRate.Location = new Point(468, 155);
+            tbxEditHourlyRate.Name = "tbxEditHourlyRate";
+            tbxEditHourlyRate.Size = new Size(100, 23);
+            tbxEditHourlyRate.TabIndex = 17;
             // 
             // btnEditEmployee
             // 
@@ -220,30 +216,87 @@
             // tbxCreateEmployee
             // 
             tbxCreateEmployee.AutoSize = true;
-            tbxCreateEmployee.Location = new Point(214, 53);
+            tbxCreateEmployee.Font = new Font("Segoe UI", 9.5F);
+            tbxCreateEmployee.Location = new Point(16, 118);
             tbxCreateEmployee.Name = "tbxCreateEmployee";
-            tbxCreateEmployee.Size = new Size(96, 15);
+            tbxCreateEmployee.Size = new Size(107, 17);
             tbxCreateEmployee.TabIndex = 20;
             tbxCreateEmployee.Text = "Create Employee";
+            tbxCreateEmployee.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // tbxEditPhoneNumber
+            // 
+            tbxEditPhoneNumber.Location = new Point(468, 215);
+            tbxEditPhoneNumber.Name = "tbxEditPhoneNumber";
+            tbxEditPhoneNumber.Size = new Size(100, 23);
+            tbxEditPhoneNumber.TabIndex = 21;
+            // 
+            // tbxEditEmail
+            // 
+            tbxEditEmail.Location = new Point(468, 184);
+            tbxEditEmail.Name = "tbxEditEmail";
+            tbxEditEmail.Size = new Size(100, 23);
+            tbxEditEmail.TabIndex = 23;
+            // 
+            // tbxEditFirstName
+            // 
+            tbxEditFirstName.Location = new Point(468, 69);
+            tbxEditFirstName.Name = "tbxEditFirstName";
+            tbxEditFirstName.Size = new Size(100, 23);
+            tbxEditFirstName.TabIndex = 24;
+            // 
+            // tbxEditLastName
+            // 
+            tbxEditLastName.Location = new Point(468, 96);
+            tbxEditLastName.Name = "tbxEditLastName";
+            tbxEditLastName.Size = new Size(100, 23);
+            tbxEditLastName.TabIndex = 25;
+            // 
+            // lblDeleteEmployee
+            // 
+            lblDeleteEmployee.AutoSize = true;
+            lblDeleteEmployee.Font = new Font("Segoe UI", 9.5F);
+            lblDeleteEmployee.Location = new Point(16, 192);
+            lblDeleteEmployee.Name = "lblDeleteEmployee";
+            lblDeleteEmployee.Size = new Size(106, 17);
+            lblDeleteEmployee.TabIndex = 26;
+            lblDeleteEmployee.Text = "Delete Employee";
+            lblDeleteEmployee.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnDeleteEmployee
+            // 
+            btnDeleteEmployee.Location = new Point(30, 220);
+            btnDeleteEmployee.Margin = new Padding(3, 2, 3, 2);
+            btnDeleteEmployee.Name = "btnDeleteEmployee";
+            btnDeleteEmployee.Size = new Size(82, 25);
+            btnDeleteEmployee.TabIndex = 27;
+            btnDeleteEmployee.Text = "Delete";
+            btnDeleteEmployee.UseVisualStyleBackColor = true;
+            btnDeleteEmployee.Click += btnDeleteEmployee_Click;
             // 
             // Employee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(600, 270);
+            Controls.Add(btnDeleteEmployee);
+            Controls.Add(lblDeleteEmployee);
+            Controls.Add(tbxEditLastName);
+            Controls.Add(tbxEditFirstName);
+            Controls.Add(tbxEditEmail);
+            Controls.Add(tbxEditPhoneNumber);
             Controls.Add(tbxCreateEmployee);
             Controls.Add(lblEditEmployee);
             Controls.Add(btnEditEmployee);
-            Controls.Add(txtHourlyRate);
+            Controls.Add(tbxEditHourlyRate);
             Controls.Add(btnCreate);
-            Controls.Add(tbxLastName);
+            Controls.Add(tbxFindLastName);
             Controls.Add(btnSubmit);
             Controls.Add(cbRoleNames);
             Controls.Add(lblHourlyRate);
             Controls.Add(lblEmployeeId);
             Controls.Add(lblSSN);
             Controls.Add(lblDateHired);
-            Controls.Add(lblCompanyId);
             Controls.Add(lblPhoneNumber);
             Controls.Add(lblEmail);
             Controls.Add(lblLastName);
@@ -271,11 +324,17 @@
         private Label lblHourlyRate;
         private ComboBox cbRoleNames;
         private Button btnSubmit;
-        private TextBox tbxLastName;
+        private TextBox tbxFindLastName;
         private Button btnCreate;
-        private TextBox txtHourlyRate;
+        private TextBox tbxEditHourlyRate;
         private Button btnEditEmployee;
         private Label lblEditEmployee;
         private Label tbxCreateEmployee;
+        private TextBox tbxEditPhoneNumber;
+        private TextBox tbxEditEmail;
+        private TextBox tbxEditFirstName;
+        private TextBox tbxEditLastName;
+        private Label lblDeleteEmployee;
+        private Button btnDeleteEmployee;
     }
 }

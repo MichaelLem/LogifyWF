@@ -11,6 +11,7 @@ namespace Logify.Models
         public int EmployeeId { get; set; }
         public int CompanyId { get; set; }
         public int RoleId { get; set; }
+        public bool IsActive { get; set; }
         public decimal HourlyRate { get; set; }
         public string CompanyName { get; set; } = string.Empty;
         public string RoleName { get; set; } = string.Empty;

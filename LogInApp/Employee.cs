@@ -51,12 +51,12 @@ namespace LogifyWin
                 return;
             }
 
-            lblCompanyId.Text = Worker.CompanyId.ToString();
+            //lblCompanyId.Text = Worker.CompanyId.ToString();
             lblFirstName.Text = Worker.FirstName.ToString();
             lblLastName.Text = Worker.LastName.ToString();
             lblEmployeeId.Text = Worker.EmployeeId.ToString();
             lblHourlyRate.Text = Worker.HourlyRate.ToString();
-            lblCompanyName.Text = Worker.CompanyName.ToString();
+            //lblCompanyName.Text = Worker.CompanyName.ToString();
             lblSSN.Text = Worker.SSN.ToString();
             lblEmail.Text = Worker.Email.ToString();
             lblDateHired.Text = Worker.DateHired.ToString();
@@ -68,7 +68,33 @@ namespace LogifyWin
             if (cbRoleNames.SelectedValue != null)
             {
                 int selectedRoleId = (int)cbRoleNames.SelectedValue;
-                PopulateFields(tbxLastName.Text.Trim(), selectedRoleId);
+
+                if (!string.IsNullOrWhiteSpace(tbxFindLastName.Text))
+                {
+                    EmployeeRepository repo = new EmployeeRepository();
+
+                    Logify.Models.Employee employee = repo.GetEmployeesByLastNameRoleId(
+                        tbxFindLastName.Text.Trim(),
+                        selectedRoleId
+                    );
+
+                    if (employee == null)
+                    {
+                        MessageBox.Show("No employee found.");
+                    }
+                    else if (!employee.IsActive)
+                    {
+                        MessageBox.Show("Employee is no longer with the company.");
+                    }
+                    else
+                    {
+                        PopulateFields(tbxFindLastName.Text.Trim(), selectedRoleId);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a last name.");
+                }
             }
             else
             {
@@ -85,15 +111,48 @@ namespace LogifyWin
         private void btnEditEmployee_Click(object sender, EventArgs e)
         {
             int employeeId = int.Parse(lblEmployeeId.Text);
-            decimal hourlyRate = decimal.Parse(txtHourlyRate.Text);
+            //Validating hourly rate to ensure its a valid decimal number and not a different type of character
+            if (!decimal.TryParse(tbxEditHourlyRate.Text, out decimal hourlyRate))
+            {
+                MessageBox.Show("Please enter a valid hourly rate.");
+            }
+            //decimal hourlyRate = decimal.Parse(txtHourlyRate.Text);
+
+            //Validating hourly rate to ensure its a positive number and does not pass the limit
+            if (hourlyRate < 0 || hourlyRate > 9999.99m)
+            {
+                MessageBox.Show("Hourly rate must be between 0 and 9999.99.");
+                return;
+            }
 
             EmployeeRepository repo = new EmployeeRepository();
-            repo.UpdateEmployeePay(employeeId, hourlyRate);
+            Logify.Models.Employee employee = new Logify.Models.Employee();
 
+            employee.EmployeeId = employeeId;
+            employee.HourlyRate = hourlyRate;
+            employee.FirstName = tbxEditFirstName.Text;
+            employee.LastName = tbxEditLastName.Text;
+            employee.Email = tbxEditEmail.Text;
+            employee.PhoneNumber = tbxEditPhoneNumber.Text;
+
+
+            repo.UpdateEmployeeInfo(employee);
+
+            // Grabs current employee last name in the label and role id from the combo box to repopulate the fields with the updated information.
             string LastName = lblLastName.Text;
             int RoleId = (int)cbRoleNames.SelectedValue;
 
             PopulateFields(LastName, RoleId);
+
+            MessageBox.Show("Hourly rate updated successfully.");
+        }
+
+        private void btnDeleteEmployee_Click(object sender, EventArgs e)
+        {
+            int employeeId = int.Parse(lblEmployeeId.Text);
+            EmployeeRepository repo = new EmployeeRepository();
+            repo.DeleteEmployee(employeeId);
+            MessageBox.Show("Employee deleted successfully.");
         }
     }
 }

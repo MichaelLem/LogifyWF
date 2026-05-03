@@ -56,6 +56,7 @@ namespace Logify.DataLayer
                     EmployeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId")),
                     CompanyId = reader.GetInt32(reader.GetOrdinal("CompanyId")),
                     HourlyRate = reader.GetDecimal(reader.GetOrdinal("HourlyRate")),
+                    IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
                     CompanyName = reader.GetString(reader.GetOrdinal("CompanyName")),
                     SSN = reader.GetString(reader.GetOrdinal("SSN")),
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
@@ -192,6 +193,41 @@ namespace Logify.DataLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
                 cmd.Parameters.AddWithValue("@HourlyRate", newHourlyRate);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void UpdateEmployeeInfo(Employee employee)
+        {
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["LogifyDb"]
+                .ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeeInfo", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@EmployeeId", employee.EmployeeId);
+                cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", employee.LastName);
+                cmd.Parameters.AddWithValue("@Email", employee.Email);
+                cmd.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
+                cmd.Parameters.AddWithValue("@HourlyRate", employee.HourlyRate);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteEmployee(int employeeId)
+        {
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["LogifyDb"]
+                .ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("dbo.DeleteEmployee", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
