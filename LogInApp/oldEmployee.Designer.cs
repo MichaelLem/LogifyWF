@@ -1,6 +1,6 @@
 ﻿namespace LogifyWin
 {
-    partial class Employee
+    partial class oldEmployee
     {
         /// <summary>
         /// Required designer variable.

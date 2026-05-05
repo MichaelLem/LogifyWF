@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8
+# Visual Studio Version 18
+VisualStudioVersion = 18.5.11723.231
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogifyWin", "LogInApp\LogifyWin.csproj", "{649C10D1-911E-4DEC-9D11-89EAA53830E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.DataLayer", "Logify.DataLayer\Logify.DataLayer.csproj", "{E7269E25-A7A8-4042-8613-9EEB02E0B421}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.Models", "Logify.Models\Logify.Models.csproj", "{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{649C10D1-911E-4DEC-9D11-89EAA53830E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{649C10D1-911E-4DEC-9D11-89EAA53830E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{649C10D1-911E-4DEC-9D11-89EAA53830E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7269E25-A7A8-4042-8613-9EEB02E0B421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7269E25-A7A8-4042-8613-9EEB02E0B421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7269E25-A7A8-4042-8613-9EEB02E0B421}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7269E25-A7A8-4042-8613-9EEB02E0B421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

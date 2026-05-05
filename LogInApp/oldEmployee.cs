@@ -13,9 +13,9 @@ using System.Windows.Forms;
 
 namespace LogifyWin
 {
-    public partial class Employee : Form
+    public partial class oldEmployee : Form
     {
-        public Employee()
+        public oldEmployee()
         {
             InitializeComponent();
         }
@@ -104,7 +104,7 @@ namespace LogifyWin
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            AddEmployeeForm addEmployee = new AddEmployeeForm();
+            FrmEmployee addEmployee = new FrmEmployee();
             addEmployee.ShowDialog();
         }
 
