@@ -42,6 +42,7 @@
             btnCreate = new Button();
             lblEmployeeId = new Label();
             lblCompanyName = new Label();
+            btnClear = new Button();
             SuspendLayout();
             // 
             // btnSearch
@@ -52,7 +53,7 @@
             btnSearch.TabIndex = 0;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = true;
-            btnSearch.Click += btnCreate_Click;
+            btnSearch.Click += btnSearch_Click;
             // 
             // tbxFirstName
             // 
@@ -125,6 +126,7 @@
             btnUpdate.TabIndex = 9;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // btnDelete
             // 
@@ -134,6 +136,7 @@
             btnDelete.TabIndex = 10;
             btnDelete.Text = "Deactivate";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnCreate
             // 
@@ -163,11 +166,22 @@
             lblCompanyName.TabIndex = 13;
             lblCompanyName.Text = "Company Name";
             // 
+            // btnClear
+            // 
+            btnClear.Location = new Point(519, 416);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(75, 23);
+            btnClear.TabIndex = 14;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
+            // 
             // FrmEmployee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(803, 452);
+            ClientSize = new Size(620, 452);
+            Controls.Add(btnClear);
             Controls.Add(lblCompanyName);
             Controls.Add(lblEmployeeId);
             Controls.Add(btnCreate);
@@ -205,5 +219,6 @@
         private Button btnCreate;
         private Label lblEmployeeId;
         private Label lblCompanyName;
+        private Button btnClear;
     }
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace LogifyWin
 {
@@ -30,22 +31,39 @@ namespace LogifyWin
             cbRoleNames.ValueMember = nameof(RoleItem.RoleId);
         }
 
-        private void PopulateFields(string LastName, int RoleId)
+        private int currentEmployeeId;
+
+        private void ClearEmployeeFields()
+        {
+            lblCompanyName.Text = string.Empty;
+            tbxFirstName.Text = string.Empty;
+            tbxLastName.Text = string.Empty;
+            lblEmployeeId.Text = string.Empty;
+            tbxHourlyRate.Text = string.Empty;
+            tbxSSN.Text = string.Empty;
+            tbxEmail.Text = string.Empty;
+            dtpDateHired.Value = DateTime.Now;
+            tbxPhoneNumber.Text = string.Empty;
+            currentEmployeeId = 0;
+        }
+
+        private void PopulateFields(Logify.Models.Employee Worker)
         {
             //Grabs the employee by the last name and role id, then populates the fields with the employee information. If no employee is found, it will display an error message.
-            Logify.Models.Employee Worker = new Logify.Models.Employee();
-            EmployeeRepository EmployeeRepo = new EmployeeRepository();
-            Worker = EmployeeRepo.GetEmployeesByLastNameRoleId(LastName, RoleId);
+            //Logify.Models.Employee Worker = new Logify.Models.Employee();
+            //EmployeeRepository EmployeeRepo = new EmployeeRepository();
+            //Worker = EmployeeRepo.GetEmployeesByLastNameRoleId(LastName, RoleId);
 
             //Grabs the employee by the employee id, then populates the fields with the employee information. If no employee is found, it will display an error message.
             //Worker = EmployeeRepo.GetEmployeeById(101);
 
             if (Worker == null)
             {
-                string errorMessage = EmployeeRepo.message;
-                MessageBox.Show(errorMessage);
+                MessageBox.Show("No employee found.");
                 return;
             }
+
+            currentEmployeeId = Worker.EmployeeId;
 
             //lblCompanyId.Text = Worker.CompanyId.ToString();
             lblCompanyName.Text = Worker.CompanyName.ToString();
@@ -80,7 +98,8 @@ namespace LogifyWin
             if (success)
             {
                 MessageBox.Show("Employee added successfully.");
-                this.Close();
+                //this.Close();
+
             }
             else
             {
@@ -112,7 +131,7 @@ namespace LogifyWin
                     }
                     else
                     {
-                        PopulateFields(tbxLastName.Text.Trim(), selectedRoleId);
+                        PopulateFields(employee);
                     }
                 }
                 else
@@ -127,7 +146,12 @@ namespace LogifyWin
         }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            int employeeId = int.Parse(lblEmployeeId.Text);
+            int employeeId = currentEmployeeId;
+            if (employeeId <= 0)
+            {
+                MessageBox.Show("Search and load an employee before updating.");
+                return;
+            }
             //Validating hourly rate to ensure its a valid decimal number and not a different type of character
             if (!decimal.TryParse(tbxHourlyRate.Text, out decimal hourlyRate))
             {
@@ -143,6 +167,14 @@ namespace LogifyWin
                 return;
             }
 
+            string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
+
+            if (!Regex.IsMatch(tbxPhoneNumber.Text, phonePattern))
+            {
+                MessageBox.Show("Please enter a valid phone number in the format XXX-XXX-XXXX.");
+                return;
+            }
+
             EmployeeRepository repo = new EmployeeRepository();
             Logify.Models.Employee employee = new Logify.Models.Employee();
 
@@ -153,24 +185,53 @@ namespace LogifyWin
             employee.Email = tbxEmail.Text;
             employee.PhoneNumber = tbxPhoneNumber.Text;
 
+            bool updated = repo.UpdateEmployeeInfo(employee);
+            //repo.UpdateEmployeeInfo(employee);
 
-            repo.UpdateEmployeeInfo(employee);
+            if (updated)
+            {
+                MessageBox.Show("Employee information updated successfully.");
+            }
+            else
+            {
+                MessageBox.Show("Failed to update employee information.");
+            }
 
             // Grabs current employee last name in the label and role id from the combo box to repopulate the fields with the updated information.
             string LastName = tbxLastName.Text;
             int RoleId = (int)cbRoleNames.SelectedValue;
 
-            PopulateFields(LastName, RoleId);
+            Logify.Models.Employee updatedEmployee = repo.GetEmployeeById(employeeId);
+            MessageBox.Show($"Phone from SQL: {updatedEmployee.PhoneNumber}");
+            PopulateFields(updatedEmployee);
 
-            MessageBox.Show("Hourly rate updated successfully.");
+            //MessageBox.Show("Hourly rate updated successfully.");
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            int employeeId = int.Parse(lblEmployeeId.Text);
-            EmployeeRepository repo = new EmployeeRepository();
-            repo.DeleteEmployee(employeeId);
-            MessageBox.Show("Employee deleted successfully.");
+            if (int.TryParse(lblEmployeeId.Text, out int employeeId))
+            {
+                EmployeeRepository repo = new EmployeeRepository();
+                if (repo.DeleteEmployee(employeeId))
+                {
+                    MessageBox.Show("Employee deleted successfully.");
+                    ClearEmployeeFields();
+                }
+                else
+                {
+                    MessageBox.Show("Employee could not be deleted.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Invalid employee id.");
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearEmployeeFields();
         }
     }
 }

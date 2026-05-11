@@ -62,6 +62,7 @@ namespace Logify.DataLayer
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
                     Email = reader.GetString(reader.GetOrdinal("Email")),
+                    PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
                     DateHired = reader.GetDateTime(reader.GetOrdinal("DateHired"))
                 };
 
@@ -126,6 +127,7 @@ namespace Logify.DataLayer
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
                     Email = reader.GetString(reader.GetOrdinal("Email")),
+                    PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
                     DateHired = reader.GetDateTime(reader.GetOrdinal("DateHired"))
                 };
 
@@ -182,23 +184,23 @@ namespace Logify.DataLayer
                 return newEmployeeId > 0;
             }
         }
-        public void UpdateEmployeePay(int employeeId, decimal newHourlyRate)
-        {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["LogifyDb"]
-                .ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeePay", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
-                cmd.Parameters.AddWithValue("@HourlyRate", newHourlyRate);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
-        }
+        //public void UpdateEmployeePay(int employeeId, decimal newHourlyRate)
+        //{
+        //    string connectionString = ConfigurationManager
+        //        .ConnectionStrings["LogifyDb"]
+        //        .ConnectionString;
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeePay", conn))
+        //    {
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
+        //        cmd.Parameters.AddWithValue("@HourlyRate", newHourlyRate);
+        //        conn.Open();
+        //        cmd.ExecuteNonQuery();
+        //    }
+        //}
 
-        public void UpdateEmployeeInfo(Employee employee)
+        public bool UpdateEmployeeInfo(Employee employee)
         {
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LogifyDb"]
@@ -214,11 +216,13 @@ namespace Logify.DataLayer
                 cmd.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
                 cmd.Parameters.AddWithValue("@HourlyRate", employee.HourlyRate);
                 conn.Open();
+
                 cmd.ExecuteNonQuery();
+                return true;
             }
         }
 
-        public void DeleteEmployee(int employeeId)
+        public bool DeleteEmployee(int employeeId)
         {
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LogifyDb"]
@@ -229,7 +233,9 @@ namespace Logify.DataLayer
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
                 conn.Open();
+
                 cmd.ExecuteNonQuery();
+                return true;
             }
         }
     }
