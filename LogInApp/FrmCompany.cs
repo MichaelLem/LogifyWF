@@ -19,6 +19,17 @@ namespace LogifyWin
             InitializeComponent();
         }
 
+        private void ClearFields()
+        {
+            tbxCompanyName.Clear();
+            tbxCompanyEmail.Clear();
+
+            tbxPcFirstName.Clear();
+            tbxPcLastName.Clear();
+            tbxPcEmail.Clear();
+            tbxPcPhoneNumber.Clear();
+        }
+
         private void btnCreate_Click(object sender, EventArgs e)
         {
             CompanyRepository companyRepo = new CompanyRepository();
@@ -68,6 +79,22 @@ namespace LogifyWin
             {
                 MessageBox.Show("Company creation failed.");
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearFields();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnManageEmployees_Click(object sender, EventArgs e)
+        {
+            FrmEmployee employeeFrm = new FrmEmployee();
+            employeeFrm.ShowDialog();
         }
     }
 }

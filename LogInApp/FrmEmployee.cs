@@ -109,6 +109,7 @@ namespace LogifyWin
             if (cbRoleNames.SelectedValue != null)
             {
                 int selectedRoleId = (int)cbRoleNames.SelectedValue;
+                MessageBox.Show(selectedRoleId.ToString());
 
                 if (!string.IsNullOrWhiteSpace(tbxLastName.Text))
                 {

@@ -58,7 +58,10 @@ namespace Logify.DataLayer
                     HourlyRate = reader.GetDecimal(reader.GetOrdinal("HourlyRate")),
                     IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
                     CompanyName = reader.GetString(reader.GetOrdinal("CompanyName")),
-                    SSN = reader.GetString(reader.GetOrdinal("SSN")),
+                    //SSN = reader.GetString(reader.GetOrdinal("SSN")),
+                    SSN = reader.IsDBNull(reader.GetOrdinal("SSN"))
+                        ? string.Empty
+                        : reader.GetString(reader.GetOrdinal("SSN")),
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
                     Email = reader.GetString(reader.GetOrdinal("Email")),
@@ -102,8 +105,6 @@ namespace Logify.DataLayer
 
                 connection.Open();
                 using var reader = cmd.ExecuteReader();
-
-
 
                 if (!reader.Read())
                 {

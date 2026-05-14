@@ -41,6 +41,7 @@
             grpCompanyInformation = new GroupBox();
             grpPrimaryContact = new GroupBox();
             grpActions = new GroupBox();
+            btnManageEmployees = new Button();
             grpCompanyInformation.SuspendLayout();
             grpPrimaryContact.SuspendLayout();
             grpActions.SuspendLayout();
@@ -96,17 +97,18 @@
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(200, 45);
+            btnClear.Location = new Point(113, 46);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(75, 34);
             btnClear.TabIndex = 19;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
             // 
             // btnCreate
             // 
             btnCreate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnCreate.Location = new Point(55, 45);
+            btnCreate.Location = new Point(6, 45);
             btnCreate.Name = "btnCreate";
             btnCreate.Size = new Size(75, 34);
             btnCreate.TabIndex = 18;
@@ -116,12 +118,13 @@
             // 
             // btnClose
             // 
-            btnClose.Location = new Point(337, 45);
+            btnClose.Location = new Point(205, 46);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(75, 34);
             btnClose.TabIndex = 15;
             btnClose.Text = "Close";
             btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
             // 
             // lblRolePrimaryContact
             // 
@@ -159,6 +162,7 @@
             // 
             // grpActions
             // 
+            grpActions.Controls.Add(btnManageEmployees);
             grpActions.Controls.Add(btnCreate);
             grpActions.Controls.Add(btnClear);
             grpActions.Controls.Add(btnClose);
@@ -169,6 +173,16 @@
             grpActions.TabStop = false;
             grpActions.Text = "Actions";
             // 
+            // btnManageEmployees
+            // 
+            btnManageEmployees.Location = new Point(335, 45);
+            btnManageEmployees.Name = "btnManageEmployees";
+            btnManageEmployees.Size = new Size(130, 34);
+            btnManageEmployees.TabIndex = 24;
+            btnManageEmployees.Text = "Manage Employees";
+            btnManageEmployees.UseVisualStyleBackColor = true;
+            btnManageEmployees.Click += btnManageEmployees_Click;
+            // 
             // FrmCompany
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -178,7 +192,7 @@
             Controls.Add(grpPrimaryContact);
             Controls.Add(grpCompanyInformation);
             Name = "FrmCompany";
-            Text = "FrmCompany";
+            Text = "Logify";
             grpCompanyInformation.ResumeLayout(false);
             grpCompanyInformation.PerformLayout();
             grpPrimaryContact.ResumeLayout(false);
@@ -204,5 +218,6 @@
         private GroupBox grpCompanyInformation;
         private GroupBox grpPrimaryContact;
         private GroupBox grpActions;
+        private Button btnManageEmployees;
     }
 }
