@@ -12,7 +12,7 @@ namespace Logify.DataLayer
 {
     public class CompanyRepository
     {
-        public bool InsertNewCompany(Company newCompany)
+        public int InsertNewCompany(Company newCompany)
         {
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LogifyDb"]
@@ -26,15 +26,6 @@ namespace Logify.DataLayer
                 cmd.Parameters.AddWithValue("@CompanyName", newCompany.CompanyName);
                 cmd.Parameters.AddWithValue("@CompanyEmail", newCompany.CompanyEmail);
 
-                cmd.Parameters.AddWithValue("@PcFirstName", newCompany.PcFirstName);
-                cmd.Parameters.AddWithValue("@PcLastName", newCompany.PcLastName);
-                cmd.Parameters.AddWithValue("@PcSSN", newCompany.PcSSN);
-                cmd.Parameters.AddWithValue("@PcEmail", newCompany.PcEmail);
-                cmd.Parameters.AddWithValue("@PcPhoneNumber", newCompany.PcPhoneNumber);
-
-                cmd.Parameters.AddWithValue("@PcHourlyRate", newCompany.PcHourlyRate);
-                cmd.Parameters.AddWithValue("@RoleId", newCompany.RoleId);
-
                 conn.Open();
 
                 object result = cmd.ExecuteScalar();
@@ -42,10 +33,32 @@ namespace Logify.DataLayer
                 if (result != null && int.TryParse(result.ToString(), out int newCompanyId))
                 {
                     newCompany.CompanyId = newCompanyId;
-                    return newCompanyId > 0;
+                    return newCompanyId;
                 }
 
-                return false;
+                return 0;
+            }
+        }
+
+        public bool UpdateCompanyPrimaryContactEmployeeId(int companyId, int primaryContactEmployeeId)
+        {
+            string connectionString = ConfigurationManager
+            .ConnectionStrings["LogifyDb"]
+            .ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("dbo.UpdateCompanyPrimaryContactEmployeeId", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@CompanyId", companyId);
+                cmd.Parameters.AddWithValue("@PrimaryContactEmployeeId", primaryContactEmployeeId);
+
+                conn.Open();
+
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                return rowsAffected > 0;
             }
         }
     }

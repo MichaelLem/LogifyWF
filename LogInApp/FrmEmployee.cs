@@ -98,8 +98,6 @@ namespace LogifyWin
             if (success)
             {
                 MessageBox.Show("Employee added successfully.");
-                //this.Close();
-
             }
             else
             {

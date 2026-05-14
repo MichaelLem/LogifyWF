@@ -13,8 +13,8 @@ namespace Logify.DataLayer
 {
     public class EmployeeRepository
     {
-        // Gets ONE employee record based on last name + role id (per your stored procedure call)
         public string message = string.Empty;
+        // Gets ONE employee record based on last name + role id (per your stored procedure call)
         public Employee GetEmployeesByLastNameRoleId(string lastName, int roleId)
         {
             message = string.Empty;
@@ -184,21 +184,21 @@ namespace Logify.DataLayer
                 return newEmployeeId > 0;
             }
         }
-        //public void UpdateEmployeePay(int employeeId, decimal newHourlyRate)
-        //{
-        //    string connectionString = ConfigurationManager
-        //        .ConnectionStrings["LogifyDb"]
-        //        .ConnectionString;
-        //    using (SqlConnection conn = new SqlConnection(connectionString))
-        //    using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeePay", conn))
-        //    {
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
-        //        cmd.Parameters.AddWithValue("@HourlyRate", newHourlyRate);
-        //        conn.Open();
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
+        public void UpdateEmployeePay(int employeeId, decimal newHourlyRate)
+        {
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["LogifyDb"]
+                .ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeePay", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
+                cmd.Parameters.AddWithValue("@HourlyRate", newHourlyRate);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
 
         public bool UpdateEmployeeInfo(Employee employee)
         {
@@ -236,6 +236,31 @@ namespace Logify.DataLayer
 
                 cmd.ExecuteNonQuery();
                 return true;
+            }
+        }
+
+        public int InsertPrimaryContactEmployee(Employee newEmployee)
+        {
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["LogifyDb"]
+                .ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand("dbo.InsertPrimaryContactEmployee", conn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@CompanyId", newEmployee.CompanyId);
+                cmd.Parameters.AddWithValue("@RoleId", newEmployee.RoleId);
+                cmd.Parameters.AddWithValue("@DateHired", newEmployee.DateHired);
+                cmd.Parameters.AddWithValue("@HourlyRate", newEmployee.HourlyRate);
+                cmd.Parameters.AddWithValue("@FirstName", newEmployee.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", newEmployee.LastName);
+                cmd.Parameters.AddWithValue("@Email", newEmployee.Email);
+                cmd.Parameters.AddWithValue("@PhoneNumber", newEmployee.PhoneNumber);
+
+                conn.Open();
+
+                int newEmployeeId = Convert.ToInt32(cmd.ExecuteScalar());
+                return newEmployeeId;
             }
         }
     }

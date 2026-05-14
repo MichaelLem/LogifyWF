@@ -13,14 +13,5 @@ namespace Logify.Models
 
         public string CompanyName { get; set; } = string.Empty;
         public string CompanyEmail { get; set; } = string.Empty;
-
-        public string PcFirstName { get; set; } = string.Empty;
-        public string PcLastName { get; set; } = string.Empty;
-        public string PcSSN { get; set; } = string.Empty;
-        public string PcEmail { get; set; } = string.Empty;
-        public string PcPhoneNumber { get; set; } = string.Empty;
-
-        public decimal PcHourlyRate { get; set; }
-        public int RoleId { get; set; }
     }
 }
