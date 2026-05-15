@@ -183,6 +183,7 @@ namespace LogifyWin
             employee.LastName = tbxLastName.Text;
             employee.Email = tbxEmail.Text;
             employee.PhoneNumber = tbxPhoneNumber.Text;
+            employee.SSN = tbxSSN.Text;
 
             bool updated = repo.UpdateEmployeeInfo(employee);
             //repo.UpdateEmployeeInfo(employee);
@@ -200,6 +201,7 @@ namespace LogifyWin
             string LastName = tbxLastName.Text;
             int RoleId = (int)cbRoleNames.SelectedValue;
 
+            MessageBox.Show($"employeeId before refresh: {employeeId}");
             Logify.Models.Employee updatedEmployee = repo.GetEmployeeById(employeeId);
             MessageBox.Show($"Phone from SQL: {updatedEmployee.PhoneNumber}");
             PopulateFields(updatedEmployee);

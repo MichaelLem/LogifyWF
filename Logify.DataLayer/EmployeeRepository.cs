@@ -124,7 +124,9 @@ namespace Logify.DataLayer
                     HourlyRate = reader.GetDecimal(reader.GetOrdinal("HourlyRate")),
                     CompanyName = reader.GetString(reader.GetOrdinal("CompanyName")),
                     RoleName = reader.GetString(reader.GetOrdinal("RoleName")),
-                    SSN = reader.GetString(reader.GetOrdinal("SSN")),
+                    SSN = reader.IsDBNull(reader.GetOrdinal("SSN"))
+                        ? string.Empty
+                        : reader.GetString(reader.GetOrdinal("SSN")),
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
                     Email = reader.GetString(reader.GetOrdinal("Email")),
@@ -216,6 +218,7 @@ namespace Logify.DataLayer
                 cmd.Parameters.AddWithValue("@Email", employee.Email);
                 cmd.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
                 cmd.Parameters.AddWithValue("@HourlyRate", employee.HourlyRate);
+                cmd.Parameters.AddWithValue("@SSN", employee.SSN);
                 conn.Open();
 
                 cmd.ExecuteNonQuery();
