@@ -47,7 +47,7 @@ namespace LogifyWin
             timeEnd = eStart;
         }
 
-        public void WriteToJson()
+        public void WriteToJson() //TODO : Implement to connect to SQL
         {
             TimeEntries record = new TimeEntries
             {
@@ -59,15 +59,12 @@ namespace LogifyWin
                 TimeEnd = timeEnd.ToString("hh:mm:ss tt"),
                 Notes = Notes
             };
-
-            Logger logger = new Logger();
-            logger.WriteToJson(record);
         }
 
-        public List<TimeEntries> ReadFromJson()
-        {
-            Logger logger = new Logger();
-            return logger.ReadFromJson();
-        }
+        //public List<TimeEntries> ReadFromJson()
+        //{
+        //    Logger logger = new Logger();
+        //    return logger.ReadFromJson();
+        //}
     }
 }

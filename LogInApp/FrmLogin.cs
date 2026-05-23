@@ -1,8 +1,19 @@
 using LogifyWin;
 using System.Configuration;
 using Logify.DataLayer;
+using Logify.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace Logify
+
+namespace LogifyWin
 {
     public partial class LogIn : Form
     {
@@ -10,39 +21,37 @@ namespace Logify
         {
             InitializeComponent();
         }
+
         private void LogIn_Load(object sender, EventArgs e)
         {
-            errorUserName.Visible = false;
+
         }
+
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            Authenticate userAuthenticate = new Authenticate();
-
             string userName = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
+            UserAccount? user = UserAccountRepository.ValidateUserLogin(userName);
 
-            bool userNameValid = userAuthenticate.isValidUserName(userName);
-            bool userPassword = userAuthenticate.isValidPassword(password);
-
-            if (userNameValid == false)
+            if (user == null)
             {
-                errorUserName.Text = userAuthenticate.ErrorMessage;
+                errorUserName.Text = "User not found";
                 errorUserName.Visible = true;
                 txtUsername.Focus();
                 return;
             }
-            if (userPassword == false)
+            if (password != user.PasswordHash)
             {
-                errorPassword.Text = userAuthenticate.ErrorMessage;
+                errorPassword.Text = "Incorrect password";
                 errorPassword.Visible = true;
                 txtPassword.Focus();
                 return;
             }
             else
             {
-                string Fullname = userAuthenticate.GetFullName();
-                MessageBox.Show($"Welcome {Fullname}");
+                MessageBox.Show($"Welcome");
+                
                 errorUserName.Visible = false;
                 errorPassword.Visible = false;
 
@@ -52,28 +61,28 @@ namespace Logify
             }
         }
 
-        private void txtUsername_TextChanged(object sender, EventArgs e)
-        {
-            string userName = txtUsername.Text.Trim();
-            if (userName.Length >= 4)
-            {
-                errorUserName.Visible = false;
-            }
-        }
-        private void txtPassword_TextChanged(object sender, EventArgs e)
-        {
-            string password = txtPassword.Text.Trim();
-            if (password.Length >= 4)
-            {
-                errorPassword.Visible = false;
-            }
-        }
+        //private void txtUsername_TextChanged(object sender, EventArgs e)
+        //{
+        //    string userName = txtUsername.Text.Trim();
+        //    if (userName.Length >= 4)
+        //    {
+        //        errorUserName.Visible = false;
+        //    }
+        //}
+        //private void txtPassword_TextChanged(object sender, EventArgs e)
+        //{
+        //    string password = txtPassword.Text.Trim();
+        //    if (password.Length >= 4)
+        //    {
+        //        errorPassword.Visible = false;
+        //    }
+        //}
 
-        private void btnSqlTest_Click(object sender, EventArgs e)
-        {
-            DbConnectionTester tester = new DbConnectionTester();
-            string result = tester.TestConnection();
-            MessageBox.Show(result);
-        }
+        //private void btnSqlTest_Click(object sender, EventArgs e)
+        //{
+        //    DbConnectionTester tester = new DbConnectionTester();
+        //    string result = tester.TestConnection();
+        //    MessageBox.Show(result);
+        //}
     }
 }

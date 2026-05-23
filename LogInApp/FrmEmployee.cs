@@ -18,6 +18,15 @@ namespace LogifyWin
         public FrmEmployee()
         {
             InitializeComponent();
+
+            btnSearch.Enabled = true;
+            btnCreate.Enabled = true;
+            btnDelete.Enabled = false;
+            btnUpdate.Enabled = false;
+
+            int newSize = 12;
+            btnCreate.Font = new Font(btnCreate.Font.FontFamily, newSize, FontStyle.Bold);
+            btnCreate.Focus();
         }
 
         private void FrmEmployee_Load(object sender, EventArgs e)
@@ -109,7 +118,7 @@ namespace LogifyWin
             if (cbRoleNames.SelectedValue != null)
             {
                 int selectedRoleId = (int)cbRoleNames.SelectedValue;
-                MessageBox.Show(selectedRoleId.ToString());
+                //MessageBox.Show(selectedRoleId.ToString());
 
                 if (!string.IsNullOrWhiteSpace(tbxLastName.Text))
                 {
@@ -131,6 +140,8 @@ namespace LogifyWin
                     else
                     {
                         PopulateFields(employee);
+                        btnUpdate.Enabled = true;
+                        btnDelete.Enabled = true;
                     }
                 }
                 else
@@ -201,9 +212,14 @@ namespace LogifyWin
             string LastName = tbxLastName.Text;
             int RoleId = (int)cbRoleNames.SelectedValue;
 
-            MessageBox.Show($"employeeId before refresh: {employeeId}");
+            //Testing to see if the employee id is correct before refreshing the fields with the updated information. It is correct and shows the same employee id as before.
+            //MessageBox.Show($"employeeId before refresh: {employeeId}");
+
             Logify.Models.Employee updatedEmployee = repo.GetEmployeeById(employeeId);
-            MessageBox.Show($"Phone from SQL: {updatedEmployee.PhoneNumber}");
+
+            //Testing to see if the employee id is correct after refreshing the fields with the updated information. It is correct and shows the same employee id as before.
+            //MessageBox.Show($"Phone from SQL: {updatedEmployee.PhoneNumber}");
+
             PopulateFields(updatedEmployee);
 
             //MessageBox.Show("Hourly rate updated successfully.");
@@ -233,6 +249,11 @@ namespace LogifyWin
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearEmployeeFields();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

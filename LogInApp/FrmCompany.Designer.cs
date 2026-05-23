@@ -42,6 +42,8 @@
             grpPrimaryContact = new GroupBox();
             grpActions = new GroupBox();
             btnManageEmployees = new Button();
+            tbxPcUserName = new TextBox();
+            tbxPcPassword = new TextBox();
             grpCompanyInformation.SuspendLayout();
             grpPrimaryContact.SuspendLayout();
             grpActions.SuspendLayout();
@@ -148,6 +150,8 @@
             // 
             // grpPrimaryContact
             // 
+            grpPrimaryContact.Controls.Add(tbxPcPassword);
+            grpPrimaryContact.Controls.Add(tbxPcUserName);
             grpPrimaryContact.Controls.Add(tbxPcFirstName);
             grpPrimaryContact.Controls.Add(tbxPcLastName);
             grpPrimaryContact.Controls.Add(lblRolePrimaryContact);
@@ -182,6 +186,22 @@
             btnManageEmployees.Text = "Manage Employees";
             btnManageEmployees.UseVisualStyleBackColor = true;
             btnManageEmployees.Click += btnManageEmployees_Click;
+            // 
+            // tbxPcUserName
+            // 
+            tbxPcUserName.Location = new Point(55, 138);
+            tbxPcUserName.Name = "tbxPcUserName";
+            tbxPcUserName.PlaceholderText = "Username";
+            tbxPcUserName.Size = new Size(100, 23);
+            tbxPcUserName.TabIndex = 21;
+            // 
+            // tbxPcPassword
+            // 
+            tbxPcPassword.Location = new Point(312, 138);
+            tbxPcPassword.Name = "tbxPcPassword";
+            tbxPcPassword.PlaceholderText = "Password";
+            tbxPcPassword.Size = new Size(100, 23);
+            tbxPcPassword.TabIndex = 22;
             // 
             // FrmCompany
             // 
@@ -219,5 +239,7 @@
         private GroupBox grpPrimaryContact;
         private GroupBox grpActions;
         private Button btnManageEmployees;
+        private TextBox tbxPcPassword;
+        private TextBox tbxPcUserName;
     }
 }

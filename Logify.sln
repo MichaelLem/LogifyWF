@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.DataLayer", "Logify.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.Models", "Logify.Models\Logify.Models.csproj", "{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BizLayer", "BizLayer\BizLayer.csproj", "{1CD4C573-1171-463E-AC3C-01F12DD4F716}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CD4C573-1171-463E-AC3C-01F12DD4F716}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD4C573-1171-463E-AC3C-01F12DD4F716}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD4C573-1171-463E-AC3C-01F12DD4F716}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD4C573-1171-463E-AC3C-01F12DD4F716}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

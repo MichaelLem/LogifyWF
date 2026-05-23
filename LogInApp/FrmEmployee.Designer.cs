@@ -43,6 +43,7 @@
             lblEmployeeId = new Label();
             lblCompanyName = new Label();
             btnClear = new Button();
+            btnClose = new Button();
             SuspendLayout();
             // 
             // btnSearch
@@ -50,7 +51,7 @@
             btnSearch.Location = new Point(141, 416);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(75, 23);
-            btnSearch.TabIndex = 0;
+            btnSearch.TabIndex = 1;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = true;
             btnSearch.Click += btnSearch_Click;
@@ -61,7 +62,7 @@
             tbxFirstName.Name = "tbxFirstName";
             tbxFirstName.PlaceholderText = "First Name";
             tbxFirstName.Size = new Size(100, 23);
-            tbxFirstName.TabIndex = 1;
+            tbxFirstName.TabIndex = 6;
             // 
             // tbxLastName
             // 
@@ -69,7 +70,7 @@
             tbxLastName.Name = "tbxLastName";
             tbxLastName.PlaceholderText = "Last Name";
             tbxLastName.Size = new Size(100, 23);
-            tbxLastName.TabIndex = 2;
+            tbxLastName.TabIndex = 7;
             // 
             // tbxSSN
             // 
@@ -77,7 +78,7 @@
             tbxSSN.Name = "tbxSSN";
             tbxSSN.PlaceholderText = "SSN";
             tbxSSN.Size = new Size(100, 23);
-            tbxSSN.TabIndex = 3;
+            tbxSSN.TabIndex = 8;
             // 
             // tbxEmail
             // 
@@ -85,7 +86,7 @@
             tbxEmail.Name = "tbxEmail";
             tbxEmail.PlaceholderText = "Email";
             tbxEmail.Size = new Size(100, 23);
-            tbxEmail.TabIndex = 4;
+            tbxEmail.TabIndex = 9;
             // 
             // tbxPhoneNumber
             // 
@@ -93,7 +94,7 @@
             tbxPhoneNumber.Name = "tbxPhoneNumber";
             tbxPhoneNumber.PlaceholderText = "Phone Number";
             tbxPhoneNumber.Size = new Size(100, 23);
-            tbxPhoneNumber.TabIndex = 5;
+            tbxPhoneNumber.TabIndex = 10;
             // 
             // tbxHourlyRate
             // 
@@ -101,14 +102,14 @@
             tbxHourlyRate.Name = "tbxHourlyRate";
             tbxHourlyRate.PlaceholderText = "Hourly Rate";
             tbxHourlyRate.Size = new Size(100, 23);
-            tbxHourlyRate.TabIndex = 6;
+            tbxHourlyRate.TabIndex = 11;
             // 
             // dtpDateHired
             // 
             dtpDateHired.Location = new Point(48, 336);
             dtpDateHired.Name = "dtpDateHired";
             dtpDateHired.Size = new Size(193, 23);
-            dtpDateHired.TabIndex = 7;
+            dtpDateHired.TabIndex = 12;
             // 
             // cbRoleNames
             // 
@@ -116,14 +117,14 @@
             cbRoleNames.Location = new Point(48, 376);
             cbRoleNames.Name = "cbRoleNames";
             cbRoleNames.Size = new Size(193, 23);
-            cbRoleNames.TabIndex = 8;
+            cbRoleNames.TabIndex = 13;
             // 
             // btnUpdate
             // 
             btnUpdate.Location = new Point(237, 416);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(75, 23);
-            btnUpdate.TabIndex = 9;
+            btnUpdate.TabIndex = 2;
             btnUpdate.Text = "Update";
             btnUpdate.UseVisualStyleBackColor = true;
             btnUpdate.Click += btnUpdate_Click;
@@ -133,17 +134,18 @@
             btnDelete.Location = new Point(339, 416);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(75, 23);
-            btnDelete.TabIndex = 10;
+            btnDelete.TabIndex = 3;
             btnDelete.Text = "Deactivate";
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
             // 
             // btnCreate
             // 
+            btnCreate.AutoSize = true;
             btnCreate.Location = new Point(48, 416);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(75, 23);
-            btnCreate.TabIndex = 11;
+            btnCreate.Size = new Size(75, 25);
+            btnCreate.TabIndex = 0;
             btnCreate.Text = "Create";
             btnCreate.UseVisualStyleBackColor = true;
             btnCreate.Click += btnCreate_Click;
@@ -154,7 +156,7 @@
             lblEmployeeId.Location = new Point(48, 52);
             lblEmployeeId.Name = "lblEmployeeId";
             lblEmployeeId.Size = new Size(73, 15);
-            lblEmployeeId.TabIndex = 12;
+            lblEmployeeId.TabIndex = 15;
             lblEmployeeId.Text = "Employee ID";
             // 
             // lblCompanyName
@@ -163,24 +165,35 @@
             lblCompanyName.Location = new Point(48, 21);
             lblCompanyName.Name = "lblCompanyName";
             lblCompanyName.Size = new Size(94, 15);
-            lblCompanyName.TabIndex = 13;
+            lblCompanyName.TabIndex = 15;
             lblCompanyName.Text = "Company Name";
             // 
             // btnClear
             // 
-            btnClear.Location = new Point(519, 416);
+            btnClear.Location = new Point(453, 416);
             btnClear.Name = "btnClear";
             btnClear.Size = new Size(75, 23);
-            btnClear.TabIndex = 14;
+            btnClear.TabIndex = 4;
             btnClear.Text = "Clear";
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
+            // 
+            // btnClose
+            // 
+            btnClose.Location = new Point(534, 416);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(75, 23);
+            btnClose.TabIndex = 5;
+            btnClose.Text = "Close";
+            btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += btnClose_Click;
             // 
             // FrmEmployee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(620, 452);
+            Controls.Add(btnClose);
             Controls.Add(btnClear);
             Controls.Add(lblCompanyName);
             Controls.Add(lblEmployeeId);
@@ -220,5 +233,6 @@
         private Label lblEmployeeId;
         private Label lblCompanyName;
         private Button btnClear;
+        private Button btnClose;
     }
 }

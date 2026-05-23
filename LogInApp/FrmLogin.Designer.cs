@@ -1,4 +1,4 @@
-﻿namespace Logify
+﻿namespace LogifyWin
 {
     partial class LogIn
     {
@@ -28,75 +28,70 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnSubmit = new Button();
+            btnLogIn = new Button();
             label1 = new Label();
             label2 = new Label();
             txtUsername = new TextBox();
             txtPassword = new TextBox();
             errorUserName = new Label();
             errorPassword = new Label();
-            //btnSqlTest = new Button();
+            chkShowPassword = new CheckBox();
             SuspendLayout();
             // 
-            // btnSubmit
+            // btnLogIn
             // 
-            btnSubmit.Location = new Point(31, 210);
-            btnSubmit.Margin = new Padding(4, 4, 4, 4);
-            btnSubmit.Name = "btnSubmit";
-            btnSubmit.Size = new Size(118, 36);
-            btnSubmit.TabIndex = 0;
-            btnSubmit.Text = "Submit";
-            btnSubmit.UseVisualStyleBackColor = true;
-            btnSubmit.Click += btnSubmit_Click;
+            btnLogIn.Location = new Point(284, 219);
+            btnLogIn.Margin = new Padding(3, 2, 3, 2);
+            btnLogIn.Name = "btnLogIn";
+            btnLogIn.Size = new Size(83, 22);
+            btnLogIn.TabIndex = 0;
+            btnLogIn.Text = "Log In";
+            btnLogIn.UseVisualStyleBackColor = true;
+            btnLogIn.Click += btnSubmit_Click;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.BackColor = SystemColors.Control;
-            label1.Location = new Point(25, 82);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(170, 69);
             label1.Name = "label1";
-            label1.Size = new Size(95, 25);
+            label1.Size = new Size(63, 15);
             label1.TabIndex = 1;
             label1.Text = "Username:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(31, 155);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(174, 113);
             label2.Name = "label2";
-            label2.Size = new Size(91, 25);
+            label2.Size = new Size(60, 15);
             label2.TabIndex = 2;
             label2.Text = "Password:";
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(188, 74);
-            txtUsername.Margin = new Padding(4, 4, 4, 4);
+            txtUsername.Location = new Point(255, 61);
+            txtUsername.Margin = new Padding(3, 2, 3, 2);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(155, 31);
+            txtUsername.Size = new Size(139, 23);
             txtUsername.TabIndex = 3;
-            txtUsername.TextChanged += txtUsername_TextChanged;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(188, 155);
-            txtPassword.Margin = new Padding(4, 4, 4, 4);
+            txtPassword.Location = new Point(255, 105);
+            txtPassword.Margin = new Padding(3, 2, 3, 2);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(155, 31);
+            txtPassword.Size = new Size(139, 23);
             txtPassword.TabIndex = 4;
             txtPassword.UseSystemPasswordChar = true;
-            txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // errorUserName
             // 
             errorUserName.AutoSize = true;
             errorUserName.ForeColor = Color.Red;
-            errorUserName.Location = new Point(372, 82);
-            errorUserName.Margin = new Padding(4, 0, 4, 0);
+            errorUserName.Location = new Point(514, 64);
             errorUserName.Name = "errorUserName";
-            errorUserName.Size = new Size(120, 25);
+            errorUserName.Size = new Size(78, 15);
             errorUserName.TabIndex = 5;
             errorUserName.Text = "ErrorMessage";
             errorUserName.Visible = false;
@@ -105,30 +100,40 @@
             // 
             errorPassword.AutoSize = true;
             errorPassword.ForeColor = Color.Red;
-            errorPassword.Location = new Point(372, 164);
-            errorPassword.Margin = new Padding(4, 0, 4, 0);
+            errorPassword.Location = new Point(514, 108);
             errorPassword.Name = "errorPassword";
-            errorPassword.Size = new Size(120, 25);
+            errorPassword.Size = new Size(78, 15);
             errorPassword.TabIndex = 6;
             errorPassword.Text = "ErrorMessage";
             errorPassword.Visible = false;
             // 
+            // chkShowPassword
+            // 
+            chkShowPassword.AutoSize = true;
+            chkShowPassword.Location = new Point(400, 109);
+            chkShowPassword.Name = "chkShowPassword";
+            chkShowPassword.Size = new Size(108, 19);
+            chkShowPassword.TabIndex = 8;
+            chkShowPassword.Text = "Show Password";
+            chkShowPassword.UseVisualStyleBackColor = true;
+            // 
             // LogIn
             // 
-            AcceptButton = btnSubmit;
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AcceptButton = btnLogIn;
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(770, 267);
+            ClientSize = new Size(723, 327);
+            Controls.Add(chkShowPassword);
             Controls.Add(errorPassword);
             Controls.Add(errorUserName);
             Controls.Add(txtPassword);
             Controls.Add(txtUsername);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(btnSubmit);
-            Margin = new Padding(4, 4, 4, 4);
+            Controls.Add(btnLogIn);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "LogIn";
-            Text = "Login";
+            Text = "Logify";
             Load += LogIn_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -136,12 +141,13 @@
 
         #endregion
 
-        private Button btnSubmit;
+        private Button btnLogIn;
         private Label label1;
         private Label label2;
         private TextBox txtUsername;
         private TextBox txtPassword;
         private Label errorUserName;
         private Label errorPassword;
+        private CheckBox chkShowPassword;
     }
 }

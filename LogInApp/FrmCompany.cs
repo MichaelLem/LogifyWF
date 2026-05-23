@@ -28,12 +28,24 @@ namespace LogifyWin
             tbxPcLastName.Clear();
             tbxPcEmail.Clear();
             tbxPcPhoneNumber.Clear();
+            tbxPcUserName.Clear();
+            tbxPcPassword.Clear();
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
             CompanyRepository companyRepo = new CompanyRepository();
             EmployeeRepository employeeRepo = new EmployeeRepository();
+            RoleRepository roleRepo = new RoleRepository();
+            //int testRoleIdFour = 4; Replaced with actual RoleId for Primary Contact role
+
+            var role = roleRepo.GetRoles().FirstOrDefault(r => r.RoleName == "Primary Contact");
+            if (role == null)
+            {
+                MessageBox.Show("Unable to create company onboarding because the Primary Contact role could not be found.\r\nPlease contact system administration.");
+                return;
+            }
+            int roleId = role.RoleId;
 
             Company newCompany = new Company()
             {
@@ -48,7 +60,7 @@ namespace LogifyWin
                 Employee primaryContactEmployee = new Employee()
                 {
                     CompanyId = newCompanyId,
-                    RoleId = 4,
+                    RoleId = roleId,
                     FirstName = tbxPcFirstName.Text.Trim(),
                     LastName = tbxPcLastName.Text.Trim(),
                     Email = tbxPcEmail.Text.Trim(),
@@ -56,7 +68,9 @@ namespace LogifyWin
                     HourlyRate = 0,
                     DateHired = DateTime.Today,
                 };
+
                 int newEmployeeId = employeeRepo.InsertPrimaryContactEmployee(primaryContactEmployee);
+
                 if (newEmployeeId > 0)
                 {
                     bool updateCompanyResult = companyRepo.UpdateCompanyPrimaryContactEmployeeId(newCompanyId, newEmployeeId);
