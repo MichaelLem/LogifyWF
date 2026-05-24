@@ -2,6 +2,7 @@ using LogifyWin;
 using System.Configuration;
 using Logify.DataLayer;
 using Logify.Models;
+using Logify.BizLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,15 +25,25 @@ namespace LogifyWin
 
         private void LogIn_Load(object sender, EventArgs e)
         {
-
+            txtPassword.UseSystemPasswordChar = true;
         }
 
-        private void btnSubmit_Click(object sender, EventArgs e)
+        private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
+            txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
+        }
+
+        private void btnLogIn_Click(object sender, EventArgs e)
+        {
+            errorUserName.Visible = false;
+            errorPassword.Visible = false;
+
             string userName = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            UserAccount? user = UserAccountRepository.ValidateUserLogin(userName);
+            Authenticate auth = new Authenticate();
+
+            UserAccount? user = auth.Validate(userName, password);
 
             if (user == null)
             {
@@ -50,8 +61,8 @@ namespace LogifyWin
             }
             else
             {
-                MessageBox.Show($"Welcome");
-                
+                MessageBox.Show($"Welcome {userName}");
+
                 errorUserName.Visible = false;
                 errorPassword.Visible = false;
 
@@ -60,6 +71,8 @@ namespace LogifyWin
                 this.Hide();
             }
         }
+
+      
 
         //private void txtUsername_TextChanged(object sender, EventArgs e)
         //{

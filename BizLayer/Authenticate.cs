@@ -16,12 +16,19 @@ namespace Logify.BizLayer
 {
     public class Authenticate
     {
-        public bool Validate(string userName, string password)
+        public UserAccount? Validate(string userName, string password)
         {
+            DataLayer.UserAccountRepository authRepo = new DataLayer.UserAccountRepository();
+
             // Call AuthRepo in DataLayer to validate credentials
-            var authRepo = new DataLayer.UserAccountRepository();
-            //return authRepo.ValidateCredentials(userName, password);
-            return false;
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
+            {
+                return null;
+            }
+            return authRepo.ValidateUserLogin(userName, password);
         }
     }
 }
+
+
+

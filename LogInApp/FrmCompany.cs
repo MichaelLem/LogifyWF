@@ -37,6 +37,7 @@ namespace LogifyWin
             CompanyRepository companyRepo = new CompanyRepository();
             EmployeeRepository employeeRepo = new EmployeeRepository();
             RoleRepository roleRepo = new RoleRepository();
+            UserAccountRepository userRepo = new UserAccountRepository();
             //int testRoleIdFour = 4; Replaced with actual RoleId for Primary Contact role
 
             var role = roleRepo.GetRoles().FirstOrDefault(r => r.RoleName == "Primary Contact");
@@ -73,6 +74,21 @@ namespace LogifyWin
 
                 if (newEmployeeId > 0)
                 {
+                    UserAccount primaryContactCredentials = new UserAccount()
+                    {
+                        EmployeeId = newEmployeeId,
+                        Username = tbxPcUserName.Text.Trim(),
+                        PasswordHash = tbxPcPassword.Text.Trim()
+                    };
+
+                    bool userCreated = userRepo.InsertUserAccount(primaryContactCredentials);
+
+                    if (!userCreated)
+                    {
+                        MessageBox.Show("Primary contact employee was created, but user account creation failed.");
+                        return;
+                    }
+
                     bool updateCompanyResult = companyRepo.UpdateCompanyPrimaryContactEmployeeId(newCompanyId, newEmployeeId);
                     if (updateCompanyResult)
                     {

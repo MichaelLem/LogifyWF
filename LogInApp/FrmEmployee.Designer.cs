@@ -44,6 +44,7 @@
             lblCompanyName = new Label();
             btnClear = new Button();
             btnClose = new Button();
+            btnLogin = new Button();
             SuspendLayout();
             // 
             // btnSearch
@@ -188,11 +189,22 @@
             btnClose.UseVisualStyleBackColor = true;
             btnClose.Click += btnClose_Click;
             // 
+            // btnLogin
+            // 
+            btnLogin.Location = new Point(534, 17);
+            btnLogin.Name = "btnLogin";
+            btnLogin.Size = new Size(75, 23);
+            btnLogin.TabIndex = 16;
+            btnLogin.Text = "Login";
+            btnLogin.UseVisualStyleBackColor = true;
+            btnLogin.Click += btnLogin_Click;
+            // 
             // FrmEmployee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(620, 452);
+            Controls.Add(btnLogin);
             Controls.Add(btnClose);
             Controls.Add(btnClear);
             Controls.Add(lblCompanyName);
@@ -234,5 +246,6 @@
         private Label lblCompanyName;
         private Button btnClear;
         private Button btnClose;
+        private Button btnLogin;
     }
 }

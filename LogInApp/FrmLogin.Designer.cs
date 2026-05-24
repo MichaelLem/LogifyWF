@@ -47,7 +47,7 @@
             btnLogIn.TabIndex = 0;
             btnLogIn.Text = "Log In";
             btnLogIn.UseVisualStyleBackColor = true;
-            btnLogIn.Click += btnSubmit_Click;
+            btnLogIn.Click += btnLogIn_Click;
             // 
             // label1
             // 
@@ -116,6 +116,7 @@
             chkShowPassword.TabIndex = 8;
             chkShowPassword.Text = "Show Password";
             chkShowPassword.UseVisualStyleBackColor = true;
+            chkShowPassword.CheckedChanged += chkShowPassword_CheckedChanged;
             // 
             // LogIn
             // 

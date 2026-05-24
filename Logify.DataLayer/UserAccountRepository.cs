@@ -13,7 +13,7 @@ namespace Logify.DataLayer
 {
     public class UserAccountRepository
     {
-        public static UserAccount? ValidateUserLogin(string username)
+        public UserAccount? ValidateUserLogin(string username, string password)
         {
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LogifyDb"]
@@ -23,6 +23,7 @@ namespace Logify.DataLayer
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Username", username);
+                //cmd.Parameters.AddWithValue("@Password", password);
                 conn.Open();
                 //cmd.ExecuteNonQuery();
 
@@ -42,6 +43,29 @@ namespace Logify.DataLayer
 
                 return null;
             }
+        }
+
+        public bool InsertUserAccount(UserAccount userAccount)
+        {
+            string connectionString = ConfigurationManager
+                .ConnectionStrings["LogifyDb"]
+                .ConnectionString;
+
+            using SqlConnection conn = new SqlConnection(connectionString);
+            using SqlCommand cmd = new SqlCommand("dbo.InsertUserAccount", conn);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@EmployeeId", userAccount.EmployeeId);
+            cmd.Parameters.AddWithValue("@Username", userAccount.Username);
+            cmd.Parameters.AddWithValue("@PasswordHash", userAccount.PasswordHash);
+
+            conn.Open();
+
+            //int rowsAffected = cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();
+
+            return true;
         }
     }
 }

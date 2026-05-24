@@ -1,5 +1,6 @@
 ﻿using Logify.DataLayer;
 using Logify.Models;
+using LogifyWin;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,9 +8,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace LogifyWin
 {
@@ -253,6 +255,13 @@ namespace LogifyWin
 
         private void btnClose_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            LogIn login = new LogIn();
+            login.ShowDialog();
             this.Close();
         }
     }
