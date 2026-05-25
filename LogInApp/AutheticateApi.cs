@@ -1,0 +1,109 @@
+﻿using Logify;
+using Microsoft.VisualBasic.ApplicationServices;
+using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Policy;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+using System.Threading.Tasks;
+
+
+namespace Logify
+{
+    public class AutheticateApi 
+    {
+        private UserProfiles user = new UserProfiles();
+
+        private int UserNameLength = 4;
+        private int PasswordLength = 4;
+
+        public string ErrorMessage = string.Empty;
+
+       // ErrorMessages errorMessages = new ErrorMessages();
+       
+        public bool isValidPassword(string password)
+        {
+            string passwordStored = user.Password;
+
+            return true;
+        }
+
+        public bool isValidUserName(string userName)
+        {
+            string userNameStored = user.UserName;
+            return true;
+        }
+
+        public async Task<string> GetFullName()
+        {
+          
+            string ApiResult = string.Empty;
+
+            ApiResult = await GetFullNameFromApi("manny", "1234");
+
+            return "";
+        }
+
+        public async Task<string> GetFullNameFromApi(string userName, string password)
+        {
+            string domain = "https://localhost:7151";
+            string route = "/api/auth/authenticate?";
+            string userNameApi = "userName=";
+            string and = "&";
+            string passwordApi = "password=";
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(domain);
+            sb.Append(route);
+            sb.Append(userNameApi);
+            sb.Append(userName);
+            sb.Append(and);
+            sb.Append(passwordApi);
+            sb.Append(password);
+
+            string ApiUrl = sb.ToString();
+
+            // For learning purposes: ignore local HTTPS cert issues
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+
+            using var http = new HttpClient(handler);
+
+            // API uses GET
+            using var response = await http.GetAsync(ApiUrl);
+
+            string apiResponseJson = await response.Content.ReadAsStringAsync();
+
+            // If the request failed, return a helpful message (including body)
+            if (!response.IsSuccessStatusCode)
+            {
+                return "Web Failure";
+            }
+
+            //Get the JSON return 
+            // {"message":"Authenticated","userName":"manny"}
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            var data = JsonSerializer.Deserialize<AuthResponse>(apiResponseJson, options);
+
+
+
+            return data.UserName;
+        }
+    }
+
+    public class AuthResponse
+    {
+        public string Message { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+    }
+}
