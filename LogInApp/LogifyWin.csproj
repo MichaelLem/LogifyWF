@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BizLayer\BizLayer.csproj" />
+    <ProjectReference Include="..\BizLayer\Logify.BizLayer.csproj" />
     <ProjectReference Include="..\Logify.DataLayer\Logify.DataLayer.csproj" />
     <ProjectReference Include="..\Logify.Models\Logify.Models.csproj" />
   </ItemGroup>

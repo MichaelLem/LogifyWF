@@ -1,4 +1,5 @@
 using LogifyWin;
+using Logify.BizLayer;
 using System.Configuration;
 using Logify.DataLayer;
 using System.Text;
@@ -17,40 +18,40 @@ namespace Logify
         }
         private async void btnSubmit_Click(object sender, EventArgs e)
         {
-            //Authenticate userAuthenticate = new Authenticate();
-            AutheticateApi userAuthenticate = new AutheticateApi();
+            Authenticate userAuthenticate = new Authenticate();
+            //AutheticateApi userAuthenticate = new AutheticateApi();
 
             string userName = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            bool userNameValid = userAuthenticate.isValidUserName(userName);
-            bool userPassword = userAuthenticate.isValidPassword(password);
+            //bool userNameValid = userAuthenticate.isValidUserName(userName);
+            //bool userPassword = userAuthenticate.isValidPassword(password);
 
-            if (userNameValid == false)
-            {
-                errorUserName.Text = userAuthenticate.ErrorMessage;
-                errorUserName.Visible = true;
-                txtUsername.Focus();
-                return;
-            }
-            if (userPassword == false)
-            {
-                errorPassword.Text = userAuthenticate.ErrorMessage;
-                errorPassword.Visible = true;
-                txtPassword.Focus();
-                return;
-            }
-            else
-            {
-                string Fullname = await userAuthenticate.GetFullName();
-                MessageBox.Show($"Welcome {Fullname}");
-                errorUserName.Visible = false;
-                errorPassword.Visible = false;
+            //if (userNameValid == false)
+            //{
+            //    errorUserName.Text = userAuthenticate.ErrorMessage;
+            //    errorUserName.Visible = true;
+            //    txtUsername.Focus();
+            //    return;
+            //}
+            //if (userPassword == false)
+            //{
+            //    errorPassword.Text = userAuthenticate.ErrorMessage;
+            //    errorPassword.Visible = true;
+            //    txtPassword.Focus();
+            //    return;
+            //}
+            //else
+            //{
+            //    string Fullname = await userAuthenticate.GetFullName();
+            //    MessageBox.Show($"Welcome {Fullname}");
+            //    errorUserName.Visible = false;
+            //    errorPassword.Visible = false;
 
-                SessionForm sessionForm = new SessionForm(userName);
-                sessionForm.Show();
-                this.Hide();
-            }
+            //    SessionForm sessionForm = new SessionForm(userName);
+            //    sessionForm.Show();
+            //    this.Hide();
+            //}
         }
 
         private void txtUsername_TextChanged(object sender, EventArgs e)

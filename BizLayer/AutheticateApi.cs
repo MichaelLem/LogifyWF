@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Threading.Tasks;
 
 
-namespace Logify
+namespace Logify.BizLayer
 {
     public class AutheticateApi 
     {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 18
-VisualStudioVersion = 18.5.11723.231
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogifyWin", "LogInApp\LogifyWin.csproj", "{649C10D1-911E-4DEC-9D11-89EAA53830E9}"
 EndProject
@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.DataLayer", "Logify.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.Models", "Logify.Models\Logify.Models.csproj", "{F91F5C51-77E7-47CF-8F85-AE9E1BD76514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BizLayer", "BizLayer\BizLayer.csproj", "{1CD4C573-1171-463E-AC3C-01F12DD4F716}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.BizLayer", "BizLayer\Logify.BizLayer.csproj", "{1CD4C573-1171-463E-AC3C-01F12DD4F716}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.Api", "Logify.Api\Logify.Api.csproj", "{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1CD4C573-1171-463E-AC3C-01F12DD4F716}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CD4C573-1171-463E-AC3C-01F12DD4F716}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CD4C573-1171-463E-AC3C-01F12DD4F716}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

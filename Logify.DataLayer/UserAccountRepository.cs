@@ -13,7 +13,7 @@ namespace Logify.DataLayer
 {
     public class UserAccountRepository
     {
-        public UserAccount? ValidateUserLogin(string username, string password)
+        public UserAccount ValidateUserLogin(string username, string password)
         {
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LogifyDb"]
@@ -23,16 +23,18 @@ namespace Logify.DataLayer
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Username", username);
+                //ToDo : uncomment this and make the password works
                 //cmd.Parameters.AddWithValue("@Password", password);
                 conn.Open();
                 //cmd.ExecuteNonQuery();
 
                 using SqlDataReader reader = cmd.ExecuteReader();
+                //ToDo : ensure you only have 1 record returned, try to use a dataset or check row count
 
                 if (reader.Read())
                 {
-                    UserAccount user = new UserAccount 
-                    { 
+                    UserAccount user = new UserAccount
+                    {
                         UserAccountId = (int)reader["UserAccountId"],
                         EmployeeId = (int)reader["EmployeeId"],
                         Username = reader["Username"].ToString() ?? string.Empty,
@@ -41,7 +43,9 @@ namespace Logify.DataLayer
                     return user;
                 }
 
-                return null;
+                UserAccount BadUserNamePwd = new UserAccount();
+                BadUserNamePwd.IsAuthenticated = false;
+                return BadUserNamePwd;
             }
         }
 

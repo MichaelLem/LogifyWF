@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Logify.Api\\Logify.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "LogInApp\\LogifyWin.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
