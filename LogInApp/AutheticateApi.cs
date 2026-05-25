@@ -16,7 +16,6 @@ namespace Logify
 {
     public class AutheticateApi 
     {
-        private UserProfiles user = new UserProfiles();
 
         private int UserNameLength = 4;
         private int PasswordLength = 4;
@@ -27,15 +26,12 @@ namespace Logify
        
         public bool isValidPassword(string password)
         {
-            string passwordStored = user.Password;
-
-            return true;
+            return false;
         }
 
         public bool isValidUserName(string userName)
         {
-            string userNameStored = user.UserName;
-            return true;
+            return false;
         }
 
         public async Task<string> GetFullName()
