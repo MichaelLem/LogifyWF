@@ -1,0 +1,5 @@
+﻿Homework
+* fix the repo ToDos (password!)
+* btnLogIn_Click() remove commented code and uncomment Session form view code
+* refactor the api url construction to it's own class and methods
+* clean up UserAccountRepository code

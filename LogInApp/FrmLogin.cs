@@ -34,12 +34,6 @@ namespace LogifyWin
             txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            txtUsername.Text = "manny";
-            txtPassword.Text = "1234";
-        }
-
         private async void btnLogIn_Click(object sender, EventArgs e)
         {
             Authenticate auth = new Authenticate();

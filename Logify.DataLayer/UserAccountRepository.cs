@@ -14,12 +14,13 @@ namespace Logify.DataLayer
 {
     public class UserAccountRepository
     {
+        string connectionString = "Data Source=localhost;Initial Catalog=Logify;User ID=CRUDLogify;Password=L0gify$Us3r;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;";
         public UserAccount ValidateUserLogin(string username, string password)
         {
             //string connectionString = ConfigurationManager
             //    .ConnectionStrings["LogifyDb"]
             //    .ConnectionString;
-            string connectionString = "Data Source=localhost;Initial Catalog=Logify;User ID=CRUDLogify;Password=L0gify$Us3r;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;";
+           
             using (SqlConnection conn = new SqlConnection(connectionString))
                 try
                 {
