@@ -67,9 +67,9 @@ namespace LogifyWin
             errorUserName.Visible = false;
             errorPassword.Visible = false;
 
-            //SessionForm sessionForm = new SessionForm(userName);
-            //sessionForm.Show();
-            //this.Hide();
+            SessionForm sessionForm = new SessionForm(userName);
+            sessionForm.Show();
+            this.Hide();
         }
 
         public async Task<UserAccount> GetFullNameFromApi(string userName, string password)

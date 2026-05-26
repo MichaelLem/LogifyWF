@@ -1,5 +1,6 @@
 ﻿Homework
 * fix the repo ToDos (password!)
 * btnLogIn_Click() remove commented code and uncomment Session form view code
+* add logic to FrmLogin to verify the user is logged in from the API
 * refactor the api url construction to it's own class and methods
 * clean up UserAccountRepository code
