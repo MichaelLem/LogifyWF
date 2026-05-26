@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 
 namespace Logify.DataLayer
@@ -15,38 +16,45 @@ namespace Logify.DataLayer
     {
         public UserAccount ValidateUserLogin(string username, string password)
         {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["LogifyDb"]
-                .ConnectionString;
+            //string connectionString = ConfigurationManager
+            //    .ConnectionStrings["LogifyDb"]
+            //    .ConnectionString;
+            string connectionString = "Data Source=localhost;Initial Catalog=Logify;User ID=CRUDLogify;Password=L0gify$Us3r;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;";
             using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("dbo.ValidateUserLogin", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Username", username);
-                //ToDo : uncomment this and make the password works
-                //cmd.Parameters.AddWithValue("@Password", password);
-                conn.Open();
-                //cmd.ExecuteNonQuery();
-
-                using SqlDataReader reader = cmd.ExecuteReader();
-                //ToDo : ensure you only have 1 record returned, try to use a dataset or check row count
-
-                if (reader.Read())
+                try
                 {
-                    UserAccount user = new UserAccount
+                    using (SqlCommand cmd = new SqlCommand("dbo.ValidateUserLogin", conn))
                     {
-                        UserAccountId = (int)reader["UserAccountId"],
-                        EmployeeId = (int)reader["EmployeeId"],
-                        Username = reader["Username"].ToString() ?? string.Empty,
-                        PasswordHash = reader["PasswordHash"].ToString() ?? string.Empty,
-                    };
-                    return user;
-                }
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Username", username);
+                        //ToDo : uncomment this and make the password works
+                        //cmd.Parameters.AddWithValue("@Password", password);
+                        conn.Open();
+                        //cmd.ExecuteNonQuery();
 
-                UserAccount BadUserNamePwd = new UserAccount();
-                BadUserNamePwd.IsAuthenticated = false;
-                return BadUserNamePwd;
-            }
+                        using SqlDataReader reader = cmd.ExecuteReader();
+                        //ToDo : ensure you only have 1 record returned, try to use a dataset or check row count
+
+                        if (reader.Read())
+                        {
+                            UserAccount user = new UserAccount
+                            {
+                                UserAccountId = (int)reader["UserAccountId"],
+                                EmployeeId = (int)reader["EmployeeId"],
+                                Username = reader["Username"].ToString() ?? string.Empty,
+                                PasswordHash = reader["PasswordHash"].ToString() ?? string.Empty,
+                            };
+                            return user;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    conn.Close();
+                }
+            UserAccount BadUserNamePwd = new UserAccount();
+            BadUserNamePwd.IsAuthenticated = false;
+            return BadUserNamePwd;
         }
 
         public bool InsertUserAccount(UserAccount userAccount)

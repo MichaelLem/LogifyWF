@@ -260,7 +260,7 @@ namespace LogifyWin
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            LogIn login = new LogIn();
+            FrmLogIn login = new FrmLogIn();
             login.ShowDialog();
             this.Close();
         }

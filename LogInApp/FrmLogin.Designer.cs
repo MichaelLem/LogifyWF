@@ -1,6 +1,6 @@
 ﻿namespace LogifyWin
 {
-    partial class LogIn
+    partial class FrmLogIn
     {
         /// <summary>
         ///  Required designer variable.
@@ -36,14 +36,15 @@
             errorUserName = new Label();
             errorPassword = new Label();
             chkShowPassword = new CheckBox();
+            //button1 = new Button();
             SuspendLayout();
             // 
             // btnLogIn
             // 
-            btnLogIn.Location = new Point(284, 219);
-            btnLogIn.Margin = new Padding(3, 2, 3, 2);
+            btnLogIn.Location = new Point(527, 467);
+            btnLogIn.Margin = new Padding(6, 4, 6, 4);
             btnLogIn.Name = "btnLogIn";
-            btnLogIn.Size = new Size(83, 22);
+            btnLogIn.Size = new Size(154, 47);
             btnLogIn.TabIndex = 0;
             btnLogIn.Text = "Log In";
             btnLogIn.UseVisualStyleBackColor = true;
@@ -53,35 +54,37 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = SystemColors.Control;
-            label1.Location = new Point(170, 69);
+            label1.Location = new Point(316, 147);
+            label1.Margin = new Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new Size(63, 15);
+            label1.Size = new Size(126, 32);
             label1.TabIndex = 1;
             label1.Text = "Username:";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(174, 113);
+            label2.Location = new Point(323, 241);
+            label2.Margin = new Padding(6, 0, 6, 0);
             label2.Name = "label2";
-            label2.Size = new Size(60, 15);
+            label2.Size = new Size(116, 32);
             label2.TabIndex = 2;
             label2.Text = "Password:";
             // 
             // txtUsername
             // 
-            txtUsername.Location = new Point(255, 61);
-            txtUsername.Margin = new Padding(3, 2, 3, 2);
+            txtUsername.Location = new Point(640, 344);
+            txtUsername.Margin = new Padding(6, 4, 6, 4);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(139, 23);
+            txtUsername.Size = new Size(255, 39);
             txtUsername.TabIndex = 3;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(255, 105);
-            txtPassword.Margin = new Padding(3, 2, 3, 2);
+            txtPassword.Location = new Point(474, 224);
+            txtPassword.Margin = new Padding(6, 4, 6, 4);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(139, 23);
+            txtPassword.Size = new Size(255, 39);
             txtPassword.TabIndex = 4;
             txtPassword.UseSystemPasswordChar = true;
             // 
@@ -89,9 +92,10 @@
             // 
             errorUserName.AutoSize = true;
             errorUserName.ForeColor = Color.Red;
-            errorUserName.Location = new Point(514, 64);
+            errorUserName.Location = new Point(955, 137);
+            errorUserName.Margin = new Padding(6, 0, 6, 0);
             errorUserName.Name = "errorUserName";
-            errorUserName.Size = new Size(78, 15);
+            errorUserName.Size = new Size(158, 32);
             errorUserName.TabIndex = 5;
             errorUserName.Text = "ErrorMessage";
             errorUserName.Visible = false;
@@ -100,9 +104,10 @@
             // 
             errorPassword.AutoSize = true;
             errorPassword.ForeColor = Color.Red;
-            errorPassword.Location = new Point(514, 108);
+            errorPassword.Location = new Point(955, 230);
+            errorPassword.Margin = new Padding(6, 0, 6, 0);
             errorPassword.Name = "errorPassword";
-            errorPassword.Size = new Size(78, 15);
+            errorPassword.Size = new Size(158, 32);
             errorPassword.TabIndex = 6;
             errorPassword.Text = "ErrorMessage";
             errorPassword.Visible = false;
@@ -110,20 +115,31 @@
             // chkShowPassword
             // 
             chkShowPassword.AutoSize = true;
-            chkShowPassword.Location = new Point(400, 109);
+            chkShowPassword.Location = new Point(743, 233);
+            chkShowPassword.Margin = new Padding(6);
             chkShowPassword.Name = "chkShowPassword";
-            chkShowPassword.Size = new Size(108, 19);
+            chkShowPassword.Size = new Size(208, 36);
             chkShowPassword.TabIndex = 8;
             chkShowPassword.Text = "Show Password";
             chkShowPassword.UseVisualStyleBackColor = true;
             chkShowPassword.CheckedChanged += chkShowPassword_CheckedChanged;
             // 
-            // LogIn
+            // button1
+            // 
+            //button1.Location = new Point(548, 198);
+            //button1.Name = "button1";
+            //button1.Size = new Size(150, 46);
+            //button1.TabIndex = 9;
+            //button1.Text = "button1";
+            //button1.UseVisualStyleBackColor = true;
+            // 
+            // FrmLogIn
             // 
             AcceptButton = btnLogIn;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(723, 327);
+            ClientSize = new Size(1343, 698);
+            //Controls.Add(button1);
             Controls.Add(chkShowPassword);
             Controls.Add(errorPassword);
             Controls.Add(errorUserName);
@@ -132,8 +148,8 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(btnLogIn);
-            Margin = new Padding(3, 2, 3, 2);
-            Name = "LogIn";
+            Margin = new Padding(6, 4, 6, 4);
+            Name = "FrmLogIn";
             Text = "Logify";
             Load += LogIn_Load;
             ResumeLayout(false);
@@ -150,5 +166,6 @@
         private Label errorUserName;
         private Label errorPassword;
         private CheckBox chkShowPassword;
+        //private Button button1;
     }
 }

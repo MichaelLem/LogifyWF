@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Logify.Models;
+using Logify.BizLayer;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,30 +14,15 @@ namespace Logify.Api.Controllers
         // GET: /api/auth/authenticate?userName=...&password=...
         // You can also send these in the body (shown in a note below), but this matches your request: 2 parameters.
         [HttpGet("Authenticate")]
-        public IActionResult Authenticate(string userName, string password)
+        public ActionResult<UserAccount> Authenticate(string userName, string password)
         {
-            // Basic validation
-            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
-            {
-                return BadRequest(new { message = "userName and password are required." });
-            }
+            UserAccount user = new UserAccount();
+            Authenticate auth = new Authenticate();
 
-            // DEMO ONLY: Replace with your real validation (DB lookup, Identity, etc.)
-            var isValid =
-                userName.Equals("manny", StringComparison.OrdinalIgnoreCase) &&
-                password == "1234";
+            user = auth.Validate(userName, password);
 
-            if (!isValid)
-            {
-                return Unauthorized(new { message = "Invalid credentials." });
-            }
-
-            // Demo response (in real apps you'd return a JWT/token or set a cookie)
-            return Ok(new
-            {
-                message = "Authenticated",
-                userName = userName
-            });
+            // Return the UserAccount model directly as JSON
+            return Ok(user);
         }
 
     }

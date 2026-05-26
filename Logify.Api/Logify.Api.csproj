@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BizLayer\Logify.BizLayer.csproj" />
+    <ProjectReference Include="..\Logify.Models\Logify.Models.csproj" />
+  </ItemGroup>
+
 </Project>
