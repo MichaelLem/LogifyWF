@@ -18,7 +18,7 @@ namespace Logify.BizLayer
     {
         public UserAccount Validate(string userName, string password)
         {
-            DataLayer.UserAccountRepository authRepo = new DataLayer.UserAccountRepository();
+            UserAccountRepository authRepo = new UserAccountRepository();
             UserAccount user = new UserAccount();
 
             // Call AuthRepo in DataLayer to validate credentials

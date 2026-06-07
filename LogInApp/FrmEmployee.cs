@@ -58,16 +58,8 @@ namespace LogifyWin
             currentEmployeeId = 0;
         }
 
-        private void PopulateFields(Logify.Models.Employee Worker)
+        private void PopulateFields(Employee Worker)
         {
-            //Grabs the employee by the last name and role id, then populates the fields with the employee information. If no employee is found, it will display an error message.
-            //Logify.Models.Employee Worker = new Logify.Models.Employee();
-            //EmployeeRepository EmployeeRepo = new EmployeeRepository();
-            //Worker = EmployeeRepo.GetEmployeesByLastNameRoleId(LastName, RoleId);
-
-            //Grabs the employee by the employee id, then populates the fields with the employee information. If no employee is found, it will display an error message.
-            //Worker = EmployeeRepo.GetEmployeeById(101);
-
             if (Worker == null)
             {
                 MessageBox.Show("No employee found.");
@@ -90,10 +82,9 @@ namespace LogifyWin
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            Logify.Models.Employee newEmployee = new Logify.Models.Employee();
+            Employee newEmployee = new Employee();
 
             newEmployee.CompanyId = 1;
-            newEmployee.RoleId = (int)cbRoleNames.SelectedValue;
             newEmployee.FirstName = tbxFirstName.Text;
             newEmployee.LastName = tbxLastName.Text;
             newEmployee.SSN = tbxSSN.Text;
@@ -101,6 +92,14 @@ namespace LogifyWin
             newEmployee.PhoneNumber = tbxPhoneNumber.Text;
             newEmployee.HourlyRate = decimal.Parse(tbxHourlyRate.Text);
             newEmployee.DateHired = dtpDateHired.Value;
+
+            if (cbRoleNames.SelectedValue == null)
+            {
+                MessageBox.Show("Please select a valid role.");
+                return;
+            }
+
+            newEmployee.RoleId = (int)cbRoleNames.SelectedValue;
 
             EmployeeRepository repo = new EmployeeRepository();
 
@@ -120,13 +119,12 @@ namespace LogifyWin
             if (cbRoleNames.SelectedValue != null)
             {
                 int selectedRoleId = (int)cbRoleNames.SelectedValue;
-                //MessageBox.Show(selectedRoleId.ToString());
 
                 if (!string.IsNullOrWhiteSpace(tbxLastName.Text))
                 {
                     EmployeeRepository repo = new EmployeeRepository();
 
-                    Logify.Models.Employee employee = repo.GetEmployeesByLastNameRoleId(
+                    Employee employee = repo.GetEmployeesByLastNameRoleId(
                         tbxLastName.Text.Trim(),
                         selectedRoleId
                     );
@@ -159,6 +157,7 @@ namespace LogifyWin
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             int employeeId = currentEmployeeId;
+
             if (employeeId <= 0)
             {
                 MessageBox.Show("Search and load an employee before updating.");
@@ -170,17 +169,18 @@ namespace LogifyWin
                 MessageBox.Show("Please enter a valid hourly rate.");
                 return;
             }
-            //decimal hourlyRate = decimal.Parse(txtHourlyRate.Text);
 
             //Validating hourly rate to ensure its a positive number and does not pass the limit
-            if (hourlyRate < 0 || hourlyRate > 9999.99m)
+            if (hourlyRate <= 0 || hourlyRate > 9999.99m)
             {
                 MessageBox.Show("Hourly rate must be between 0 and 9999.99.");
                 return;
             }
-
+            // @ is a verbatim string, ^ indicates the start of the string, \d{3} matches exactly three digits, - matches a literal hyphen, and $ indicates the end of the string.
             string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
 
+            // Regex (Regular Expression) is a pattern-matching language used for searching and manipulating strings.
+            // In this case, it checks if the phone number entered in the text box matches the specified pattern of XXX-XXX-XXXX, where X is a digit. 
             if (!Regex.IsMatch(tbxPhoneNumber.Text, phonePattern))
             {
                 MessageBox.Show("Please enter a valid phone number in the format XXX-XXX-XXXX.");
@@ -188,7 +188,7 @@ namespace LogifyWin
             }
 
             EmployeeRepository repo = new EmployeeRepository();
-            Logify.Models.Employee employee = new Logify.Models.Employee();
+            Employee employee = new Employee();
 
             employee.EmployeeId = employeeId;
             employee.HourlyRate = hourlyRate;
@@ -199,7 +199,6 @@ namespace LogifyWin
             employee.SSN = tbxSSN.Text;
 
             bool updated = repo.UpdateEmployeeInfo(employee);
-            //repo.UpdateEmployeeInfo(employee);
 
             if (updated)
             {
@@ -210,25 +209,15 @@ namespace LogifyWin
                 MessageBox.Show("Failed to update employee information.");
             }
 
-            // Grabs current employee last name in the label and role id from the combo box to repopulate the fields with the updated information.
-            string LastName = tbxLastName.Text;
-            int RoleId = (int)cbRoleNames.SelectedValue;
-
-            //Testing to see if the employee id is correct before refreshing the fields with the updated information. It is correct and shows the same employee id as before.
-            //MessageBox.Show($"employeeId before refresh: {employeeId}");
-
-            Logify.Models.Employee updatedEmployee = repo.GetEmployeeById(employeeId);
-
-            //Testing to see if the employee id is correct after refreshing the fields with the updated information. It is correct and shows the same employee id as before.
-            //MessageBox.Show($"Phone from SQL: {updatedEmployee.PhoneNumber}");
+            // Retrieve updated employee information and repopulate the form.
+            Employee updatedEmployee = repo.GetEmployeeById(employeeId);
 
             PopulateFields(updatedEmployee);
-
-            //MessageBox.Show("Hourly rate updated successfully.");
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            //try to convert the text in lblEmployeeId to an integer and store it in employeeId variable, if conversion is successful, proceed with deletion, otherwise show an error message.
             if (int.TryParse(lblEmployeeId.Text, out int employeeId))
             {
                 EmployeeRepository repo = new EmployeeRepository();

@@ -13,7 +13,9 @@ namespace Logify.DataLayer
 {
     public class EmployeeRepository
     {
+        //string connectionString = "Data Source=localhost;Initial Catalog=Logify;User ID=CRUDLogify;Password=L0gify$Us3r;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;";
         public string message = string.Empty;
+
         // Gets ONE employee record based on last name + role id (per your stored procedure call)
         public Employee GetEmployeesByLastNameRoleId(string lastName, int roleId)
         {
@@ -81,7 +83,7 @@ namespace Logify.DataLayer
             }
         }
 
-        public Employee GetEmployeeById(int idEmployee)
+        public Employee GetEmployeeById(int employeeId)
         {
             message = string.Empty;
 
@@ -92,32 +94,23 @@ namespace Logify.DataLayer
                     .ConnectionString;
 
                 using var connection = new SqlConnection(connectionString);
-
-
                 // Stored procedure call:
-                // EXEC dbo.GetEmployeesById @EmployeeId = 2;
                 using var cmd = new SqlCommand("dbo.GetEmployeeById", connection);
 
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-
-                // Put comments above the line they refer to (your preference)
-                cmd.Parameters.Add(new SqlParameter("@EmployeeId", System.Data.SqlDbType.Int) { Value = idEmployee });
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@EmployeeId", SqlDbType.Int) { Value = employeeId });
 
                 connection.Open();
-                using var reader = cmd.ExecuteReader();
+                using SqlDataReader reader = cmd.ExecuteReader();
 
                 if (!reader.Read())
                 {
-                    message = $"No employee found for EmployeeId = {idEmployee}.";
-                    return null;
+                    return new Employee();
                 }
 
-                // NOTE: Query returns: CompanyId, FirstName, LastName etc.
+                // Query returns: CompanyId, FirstName, LastName etc.
                 var employee = new Employee
                 {
-                    // If EmployeeId is NOT returned by the proc, this will remain 0
-                    // EmployeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId")),
-
                     EmployeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId")),
                     CompanyId = reader.GetInt32(reader.GetOrdinal("CompanyId")),
                     RoleId = reader.GetInt32(reader.GetOrdinal("RoleId")),
@@ -130,19 +123,13 @@ namespace Logify.DataLayer
                     FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                     LastName = reader.GetString(reader.GetOrdinal("LastName")),
                     Email = reader.GetString(reader.GetOrdinal("Email")),
-                    PhoneNumber = reader.GetString(reader.GetOrdinal("PhoneNumber")),
                     DateHired = reader.GetDateTime(reader.GetOrdinal("DateHired"))
                 };
 
-                //var phoneOrdinal = reader.GetOrdinal("PhoneNumber").ToString();
                 var phoneOrdinal = reader.GetOrdinal("PhoneNumber");
                 if (!reader.IsDBNull(phoneOrdinal))
                 {
                     employee.PhoneNumber = reader.GetString(phoneOrdinal);
-                }
-                else
-                {
-                    employee.PhoneNumber = string.Empty;
                 }
 
                 connection.Close();
@@ -153,53 +140,43 @@ namespace Logify.DataLayer
             catch (Exception ex)
             {
                 message = "Database call failed: " + ex.Message;
-                return null;
+                return new Employee();
             }
         }
-
-        public Employee GetBySSN(string ssn) { return new Employee(); }
 
         public bool InsertNewEmployee(Employee newEmployee)
         {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["LogifyDb"]
-                .ConnectionString;
+            try 
+            { 
+                string connectionString = ConfigurationManager
+                    .ConnectionStrings["LogifyDb"]
+                    .ConnectionString;
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("dbo.InsertNewEmployee", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand("dbo.InsertNewEmployee", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.AddWithValue("@CompanyId", newEmployee.CompanyId);
-                cmd.Parameters.AddWithValue("@RoleId", newEmployee.RoleId);
-                cmd.Parameters.AddWithValue("@HourlyRate", newEmployee.HourlyRate);
-                cmd.Parameters.AddWithValue("@DateHired", newEmployee.DateHired);
-                cmd.Parameters.AddWithValue("@FirstName", newEmployee.FirstName);
-                cmd.Parameters.AddWithValue("@LastName", newEmployee.LastName);
-                cmd.Parameters.AddWithValue("@SSN", newEmployee.SSN);
-                cmd.Parameters.AddWithValue("@Email", newEmployee.Email);
-                cmd.Parameters.AddWithValue("@PhoneNumber", newEmployee.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@CompanyId", newEmployee.CompanyId);
+                    cmd.Parameters.AddWithValue("@RoleId", newEmployee.RoleId);
+                    cmd.Parameters.AddWithValue("@HourlyRate", newEmployee.HourlyRate);
+                    cmd.Parameters.AddWithValue("@DateHired", newEmployee.DateHired);
+                    cmd.Parameters.AddWithValue("@FirstName", newEmployee.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", newEmployee.LastName);
+                    cmd.Parameters.AddWithValue("@SSN", newEmployee.SSN);
+                    cmd.Parameters.AddWithValue("@Email", newEmployee.Email);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", newEmployee.PhoneNumber);
 
-                conn.Open();
+                    conn.Open();
 
-                int newEmployeeId = Convert.ToInt32(cmd.ExecuteScalar());
+                    int newEmployeeId = Convert.ToInt32(cmd.ExecuteScalar());
 
-                return newEmployeeId > 0;
+                    return newEmployeeId > 0;
+                }
             }
-        }
-        public void UpdateEmployeePay(int employeeId, decimal newHourlyRate)
-        {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["LogifyDb"]
-                .ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeePay", conn))
+            catch (Exception ex)
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
-                cmd.Parameters.AddWithValue("@HourlyRate", newHourlyRate);
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                throw new ApplicationException("Error inserting new employee: " + ex.Message);
             }
         }
 
@@ -208,6 +185,7 @@ namespace Logify.DataLayer
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LogifyDb"]
                 .ConnectionString;
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeeInfo", conn))
             {
@@ -231,16 +209,33 @@ namespace Logify.DataLayer
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LogifyDb"]
                 .ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("dbo.DeleteEmployee", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
-                conn.Open();
 
-                cmd.ExecuteNonQuery();
-                return true;
-            }
+            using (SqlConnection conn = new SqlConnection(connectionString))
+                try
+                { 
+                    using (SqlCommand cmd = new SqlCommand("dbo.DeleteEmployee", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
+
+                        conn.Open();
+
+                        cmd.ExecuteNonQuery();
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        
+                        if (rowsAffected > 0)
+                        {
+                            return true;
+                        }
+                        // No rows affected means no record was deleted, likely because the EmployeeId didn't exist.
+                        return false; 
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ApplicationException("Error deleting employee: " + ex.Message);
+                }
         }
 
         public int InsertPrimaryContactEmployee(Employee newEmployee)
@@ -248,24 +243,34 @@ namespace Logify.DataLayer
             string connectionString = ConfigurationManager
                 .ConnectionStrings["LogifyDb"]
                 .ConnectionString;
+
             using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("dbo.InsertPrimaryContactEmployee", conn))
-            {
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@CompanyId", newEmployee.CompanyId);
-                cmd.Parameters.AddWithValue("@RoleId", newEmployee.RoleId);
-                cmd.Parameters.AddWithValue("@DateHired", newEmployee.DateHired);
-                cmd.Parameters.AddWithValue("@HourlyRate", newEmployee.HourlyRate);
-                cmd.Parameters.AddWithValue("@FirstName", newEmployee.FirstName);
-                cmd.Parameters.AddWithValue("@LastName", newEmployee.LastName);
-                cmd.Parameters.AddWithValue("@Email", newEmployee.Email);
-                cmd.Parameters.AddWithValue("@PhoneNumber", newEmployee.PhoneNumber);
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("dbo.InsertPrimaryContactEmployee", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CompanyId", newEmployee.CompanyId);
+                        cmd.Parameters.AddWithValue("@RoleId", newEmployee.RoleId);
+                        cmd.Parameters.AddWithValue("@DateHired", newEmployee.DateHired);
+                        cmd.Parameters.AddWithValue("@HourlyRate", newEmployee.HourlyRate);
+                        cmd.Parameters.AddWithValue("@FirstName", newEmployee.FirstName);
+                        cmd.Parameters.AddWithValue("@LastName", newEmployee.LastName);
+                        cmd.Parameters.AddWithValue("@Email", newEmployee.Email);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", newEmployee.PhoneNumber);
 
-                conn.Open();
+                        conn.Open();
 
-                int newEmployeeId = Convert.ToInt32(cmd.ExecuteScalar());
-                return newEmployeeId;
-            }
+                        // ExecuteScalar is used because the stored procedure returns the new EmployeeId.
+                        int newEmployeeId = Convert.ToInt32(cmd.ExecuteScalar());
+                        return newEmployeeId;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // User sees a generic error message, but we throw an exception with the details for logging/debugging purposes.
+                    throw new ApplicationException("Error inserting primary contact employee: " + ex.Message);
+                }
         }
     }
 }

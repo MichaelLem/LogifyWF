@@ -37,30 +37,31 @@ namespace LogifyWin
         private async void btnLogIn_Click(object sender, EventArgs e)
         {
             Authenticate auth = new Authenticate();
-            Logify.Models.UserAccount user = new Logify.Models.UserAccount();
+            UserAccount user = new UserAccount();
 
             errorUserName.Visible = false;
             errorPassword.Visible = false;
 
             string userName = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
-            if (user == null)
+
+            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
             {
-                errorUserName.Text = "User not found";
+                errorUserName.Text = "Username and password are required";
                 errorUserName.Visible = true;
                 txtUsername.Focus();
                 return;
             }
-            if (password != user.PasswordHash)
+
+            user = await GetFullNameFromApi(userName, password);
+
+            if (user.IsAuthenticated == false)
             {
-                errorPassword.Text = "Incorrect password";
-                errorPassword.Visible = true;
-                txtPassword.Focus();
+                errorUserName.Text = "Invalid username or password.";
+                errorUserName.Visible = true;
+                txtUsername.Focus();
                 return;
             }
-
-            //user = auth.Validate(userName, password);
-            user = await GetFullNameFromApi(userName, password);
 
             MessageBox.Show($"Authorized; {user.IsAuthenticated}");
 
@@ -74,22 +75,8 @@ namespace LogifyWin
 
         public async Task<UserAccount> GetFullNameFromApi(string userName, string password)
         {
-            string domain = ConfigurationManager.AppSettings["ApiDomainLcl"].ToString(); //"https://localhost:7151";
-            string route = ConfigurationManager.AppSettings["ApiAuthRoute"].ToString(); //"/api/auth/authenticate?";
-            string userNameApi = "userName=";
-            string and = "&";
-            string passwordApi = "password=";
-
-            StringBuilder sb = new StringBuilder();
-            sb.Append(domain);
-            sb.Append(route);
-            sb.Append(userNameApi);
-            sb.Append(userName);
-            sb.Append(and);
-            sb.Append(passwordApi);
-            sb.Append(password);
-
-            string ApiUrl = sb.ToString();
+            ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
+            string ApiUrl = apiUrlBuilder.BuildLoginUrl(userName, password);
 
             // For learning purposes: ignore local HTTPS cert issues
             var handler = new HttpClientHandler

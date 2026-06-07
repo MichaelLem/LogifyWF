@@ -40,7 +40,7 @@ namespace LogifyWin
             UserAccountRepository userRepo = new UserAccountRepository();
             //int testRoleIdFour = 4; Replaced with actual RoleId for Primary Contact role
 
-            var role = roleRepo.GetRoles().FirstOrDefault(r => r.RoleName == "Primary Contact");
+            var role = roleRepo.GetRoles().FirstOrDefault(pcRoleId => pcRoleId.RoleName == "Primary Contact");
             if (role == null)
             {
                 MessageBox.Show("Unable to create company onboarding because the Primary Contact role could not be found.\r\nPlease contact system administration.");
@@ -74,7 +74,7 @@ namespace LogifyWin
 
                 if (newEmployeeId > 0)
                 {
-                    Logify.Models.UserAccount primaryContactCredentials = new Logify.Models.UserAccount()
+                    Logify.Models.UserAccount primaryContactCredentials = new UserAccount()
                     {
                         EmployeeId = newEmployeeId,
                         Username = tbxPcUserName.Text.Trim(),

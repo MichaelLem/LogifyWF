@@ -60,11 +60,5 @@ namespace LogifyWin
                 Notes = Notes
             };
         }
-
-        //public List<TimeEntries> ReadFromJson()
-        //{
-        //    Logger logger = new Logger();
-        //    return logger.ReadFromJson();
-        //}
     }
 }

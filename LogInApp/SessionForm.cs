@@ -76,7 +76,7 @@ namespace LogifyWin
 
         private void btnViewHistory_Click(object sender, EventArgs e)
         {
-            if (!System.IO.File.Exists(filePath))
+            if (File.Exists(filePath))
             {
                 MessageBox.Show("No history file found.");
                 return;
