@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -114,7 +115,7 @@ namespace LogifyWin
                 MessageBox.Show("Employee was not added.");
             }
         }
-        private void btnSearch_Click(object sender, EventArgs e)
+        private async void btnSearch_Click(object sender, EventArgs e)
         {
             if (cbRoleNames.SelectedValue != null)
             {
@@ -124,12 +125,12 @@ namespace LogifyWin
                 {
                     EmployeeRepository repo = new EmployeeRepository();
 
-                    Employee employee = repo.GetEmployeesByLastNameRoleId(
+                    Employee employee = await GetEmployeeFromApi(
                         tbxLastName.Text.Trim(),
                         selectedRoleId
                     );
 
-                    if (employee == null)
+                    if (employee.EmployeeId == 0)
                     {
                         MessageBox.Show("No employee found.");
                     }
@@ -252,6 +253,43 @@ namespace LogifyWin
             FrmLogIn login = new FrmLogIn();
             login.ShowDialog();
             this.Close();
+        }
+
+        public async Task<Employee> GetEmployeeFromApi(string lastName, int roleId)
+        {
+            ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
+            string apiUrl = apiUrlBuilder.BuildSearchEmployeeUrl(lastName, roleId);
+
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+
+            using var http = new HttpClient(handler);
+
+            using var response = await http.GetAsync(apiUrl);
+
+            string apiResponseJson = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new Employee();
+            }
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            Employee employee = JsonSerializer.Deserialize<Employee>(apiResponseJson, options);
+
+            if (employee == null)
+            {
+                return new Employee();
+            }
+
+            return employee;
         }
     }
 }

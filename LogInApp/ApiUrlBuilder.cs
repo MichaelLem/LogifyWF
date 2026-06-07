@@ -34,10 +34,22 @@ namespace LogifyWin
             return ApiLoginUrl;
         }
 
-        public string BuildSearchEmployeeUrl(int employeeId)
+        public string BuildSearchEmployeeUrl(string lastName, int roleId)
         {
+            string route = ConfigurationManager.AppSettings["ApiEmployeeSearchRoute"].ToString();
+            string lastNameApi = "lastName=";
+            string and = "&";
+            string roleIdApi = "roleId=";
+
             StringBuilder sb = new StringBuilder();
+
             sb.Append(domain);
+            sb.Append(route);
+            sb.Append(lastNameApi);
+            sb.Append(lastName);
+            sb.Append(and);
+            sb.Append(roleIdApi);
+            sb.Append(roleId.ToString());
 
             string ApiSearchUrl = sb.ToString();
 

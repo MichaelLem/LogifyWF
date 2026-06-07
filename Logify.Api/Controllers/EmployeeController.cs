@@ -15,6 +15,11 @@ namespace Logify.Api.Controllers
 
             Employee employee = repo.GetEmployeesByLastNameRoleId(lastName, roleId);
 
+            if (employee == null)
+            {
+                return Ok(new Employee());
+            }
+
             return Ok(employee);
         }
     }
