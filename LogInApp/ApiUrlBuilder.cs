@@ -56,6 +56,20 @@ namespace LogifyWin
             return ApiSearchUrl;
         }
 
+        public string BuildUpdateEmployeeUrl()
+        {
+            string route = ConfigurationManager.AppSettings["ApiEmployeeUpdateRoute"].ToString();
+
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(domain);
+            sb.Append(route);
+
+            string ApiUpdateUrl = sb.ToString();
+
+            return ApiUpdateUrl;
+        }
+
         public string BuildCreateEmployeeUrl()
         {
             StringBuilder sb = new StringBuilder();
@@ -66,15 +80,6 @@ namespace LogifyWin
             return ApiCreateUrl;
         }
 
-        public string BuildUpdateEmployeeUrl(int employeeId)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append(domain);
-
-            string ApiUpdateUrl = sb.ToString();
-
-            return ApiUpdateUrl;
-        }
 
         public string BuildDeleteEmployeeUrl(int employeeId)
         {

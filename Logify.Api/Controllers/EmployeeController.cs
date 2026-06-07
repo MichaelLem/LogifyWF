@@ -1,5 +1,6 @@
 ﻿using Logify.DataLayer;
 using Logify.Models;
+using LogifyWin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Logify.Api.Controllers
@@ -21,6 +22,16 @@ namespace Logify.Api.Controllers
             }
 
             return Ok(employee);
+        }
+
+        [HttpPost("Update")]
+        public bool UpdateEmployee(Employee employee)
+        {
+            EmployeeRepository repo = new EmployeeRepository();
+
+            bool updated = repo.UpdateEmployeeInfo(employee);
+
+            return updated;
         }
     }
 }

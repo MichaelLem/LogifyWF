@@ -155,7 +155,7 @@ namespace LogifyWin
                 MessageBox.Show("Please select a role.");
             }
         }
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private async void btnUpdate_Click(object sender, EventArgs e)
         {
             int employeeId = currentEmployeeId;
 
@@ -199,7 +199,7 @@ namespace LogifyWin
             employee.PhoneNumber = tbxPhoneNumber.Text;
             employee.SSN = tbxSSN.Text;
 
-            bool updated = repo.UpdateEmployeeInfo(employee);
+            bool updated = await UpdateEmployeeFromApi(employee);
 
             if (updated)
             {
@@ -211,9 +211,9 @@ namespace LogifyWin
             }
 
             // Retrieve updated employee information and repopulate the form.
-            Employee updatedEmployee = repo.GetEmployeeById(employeeId);
+            //Employee updatedEmployee = repo.GetEmployeeById(employeeId);
 
-            PopulateFields(updatedEmployee);
+            //PopulateFields(updatedEmployee);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -290,6 +290,45 @@ namespace LogifyWin
             }
 
             return employee;
+        }
+        public async Task<bool> UpdateEmployeeFromApi(Employee employee)
+        {
+            ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
+            string apiUrl = apiUrlBuilder.BuildUpdateEmployeeUrl();
+
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+
+            using var http = new HttpClient(handler);
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            string employeeJson = JsonSerializer.Serialize(employee, options);
+
+            using var content = new StringContent(
+                employeeJson,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            using var response = await http.PostAsync(apiUrl, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            string apiResponseJson = await response.Content.ReadAsStringAsync();
+
+            bool updated = JsonSerializer.Deserialize<bool>(apiResponseJson, options);
+
+            return updated;
         }
     }
 }
