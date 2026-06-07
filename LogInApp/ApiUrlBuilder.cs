@@ -10,15 +10,17 @@ namespace LogifyWin
 {
     public class ApiUrlBuilder
     {
-            string domain = ConfigurationManager.AppSettings["ApiDomainLcl"].ToString(); //"https://localhost:7151";
+        string domain = ConfigurationManager.AppSettings["ApiDomainLcl"].ToString(); //"https://localhost:7151";
+
+        public string BuildLoginUrl(string userName, string password)
+        {
             string route = ConfigurationManager.AppSettings["ApiAuthRoute"].ToString(); //"/api/auth/authenticate?";
             string userNameApi = "userName=";
             string and = "&";
             string passwordApi = "password=";
 
-        public string BuildLoginUrl(string userName, string password)
-        {
             StringBuilder sb = new StringBuilder();
+
             sb.Append(domain);
             sb.Append(route);
             sb.Append(userNameApi);
@@ -36,12 +38,6 @@ namespace LogifyWin
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(domain);
-            sb.Append(route);
-            //sb.Append(employeeIdApi);
-            sb.Append(employeeId);
-            sb.Append(and);
-            sb.Append(passwordApi);
-            //sb.Append(password);
 
             string ApiSearchUrl = sb.ToString();
 
@@ -52,12 +48,6 @@ namespace LogifyWin
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(domain);
-            sb.Append(route);
-            sb.Append(userNameApi);
-            //sb.Append(userName);
-            sb.Append(and);
-            sb.Append(passwordApi);
-            //sb.Append(password);
 
             string ApiCreateUrl = sb.ToString();
 
@@ -68,12 +58,6 @@ namespace LogifyWin
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(domain);
-            sb.Append(route);
-            sb.Append(userNameApi);
-            //sb.Append(userName);
-            sb.Append(and);
-            sb.Append(passwordApi);
-            //sb.Append(password);
 
             string ApiUpdateUrl = sb.ToString();
 
@@ -84,12 +68,6 @@ namespace LogifyWin
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(domain);
-            sb.Append(route);
-            sb.Append(userNameApi);
-            //sb.Append(userName);
-            sb.Append(and);
-            sb.Append(passwordApi);
-            //sb.Append(password);
 
             string ApiDeleteUrl = sb.ToString();
 

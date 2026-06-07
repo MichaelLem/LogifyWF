@@ -13,7 +13,8 @@ namespace Logify.DataLayer
 {
     public class EmployeeRepository
     {
-        //string connectionString = "Data Source=localhost;Initial Catalog=Logify;User ID=CRUDLogify;Password=L0gify$Us3r;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;";
+        // TODO: Move connection string to API configuration.
+        string connectionString = "Data Source=localhost;Initial Catalog=Logify;User ID=CRUDLogify;Password=L0gify$Us3r;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;";
         public string message = string.Empty;
 
         // Gets ONE employee record based on last name + role id (per your stored procedure call)
@@ -23,9 +24,9 @@ namespace Logify.DataLayer
 
             try
             {
-                var connectionString = ConfigurationManager
-                    .ConnectionStrings["LogifyDb"]
-                    .ConnectionString;
+                //var connectionString = ConfigurationManager
+                //    .ConnectionStrings["LogifyDb"]
+                //    .ConnectionString;
 
                 using var connection = new SqlConnection(connectionString);
                 connection.Open();
@@ -89,9 +90,9 @@ namespace Logify.DataLayer
 
             try
             {
-                var connectionString = ConfigurationManager
-                    .ConnectionStrings["LogifyDb"]
-                    .ConnectionString;
+                //var connectionString = ConfigurationManager
+                //    .ConnectionStrings["LogifyDb"]
+                //    .ConnectionString;
 
                 using var connection = new SqlConnection(connectionString);
                 // Stored procedure call:
@@ -148,9 +149,9 @@ namespace Logify.DataLayer
         {
             try 
             { 
-                string connectionString = ConfigurationManager
-                    .ConnectionStrings["LogifyDb"]
-                    .ConnectionString;
+                //string connectionString = ConfigurationManager
+                //    .ConnectionStrings["LogifyDb"]
+                //    .ConnectionString;
 
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 using (SqlCommand cmd = new SqlCommand("dbo.InsertNewEmployee", conn))
@@ -182,9 +183,9 @@ namespace Logify.DataLayer
 
         public bool UpdateEmployeeInfo(Employee employee)
         {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["LogifyDb"]
-                .ConnectionString;
+            //string connectionString = ConfigurationManager
+            //    .ConnectionStrings["LogifyDb"]
+            //    .ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeeInfo", conn))
@@ -206,9 +207,9 @@ namespace Logify.DataLayer
 
         public bool DeleteEmployee(int employeeId)
         {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["LogifyDb"]
-                .ConnectionString;
+            //string connectionString = ConfigurationManager
+            //    .ConnectionStrings["LogifyDb"]
+            //    .ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
                 try
@@ -240,9 +241,9 @@ namespace Logify.DataLayer
 
         public int InsertPrimaryContactEmployee(Employee newEmployee)
         {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["LogifyDb"]
-                .ConnectionString;
+            //string connectionString = ConfigurationManager
+            //    .ConnectionStrings["LogifyDb"]
+            //    .ConnectionString;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
                 try
