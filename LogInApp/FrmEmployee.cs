@@ -1,5 +1,6 @@
 ﻿using Logify.DataLayer;
 using Logify.Models;
+using Logify.BizLayer;
 using LogifyWin;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,6 @@ namespace LogifyWin
         {
             RoleRepository repo = new RoleRepository();
             List<RoleItem> roles = repo.GetRoles();
-            //var roles = repo.GetRoles();
 
             cbRoleNames.DataSource = roles;
             cbRoleNames.DisplayMember = nameof(RoleItem.RoleName);
@@ -69,7 +69,6 @@ namespace LogifyWin
 
             currentEmployeeId = Worker.EmployeeId;
 
-            //lblCompanyId.Text = Worker.CompanyId.ToString();
             lblCompanyName.Text = Worker.CompanyName.ToString();
             tbxFirstName.Text = Worker.FirstName.ToString();
             tbxLastName.Text = Worker.LastName.ToString();
@@ -123,9 +122,9 @@ namespace LogifyWin
 
                 if (!string.IsNullOrWhiteSpace(tbxLastName.Text))
                 {
-                    EmployeeRepository repo = new EmployeeRepository();
+                    EmployeeServices services = new EmployeeServices();
 
-                    Employee employee = await GetEmployeeFromApi(
+                    Employee employee = await services.GetEmployeeFromApi(
                         tbxLastName.Text.Trim(),
                         selectedRoleId
                     );
@@ -164,6 +163,7 @@ namespace LogifyWin
                 MessageBox.Show("Search and load an employee before updating.");
                 return;
             }
+
             //Validating hourly rate to ensure its a valid decimal number and not a different type of character
             if (!decimal.TryParse(tbxHourlyRate.Text, out decimal hourlyRate))
             {
@@ -177,6 +177,7 @@ namespace LogifyWin
                 MessageBox.Show("Hourly rate must be between 0 and 9999.99.");
                 return;
             }
+
             // @ is a verbatim string, ^ indicates the start of the string, \d{3} matches exactly three digits, - matches a literal hyphen, and $ indicates the end of the string.
             string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
 
@@ -188,7 +189,6 @@ namespace LogifyWin
                 return;
             }
 
-            EmployeeRepository repo = new EmployeeRepository();
             Employee employee = new Employee();
 
             employee.EmployeeId = employeeId;
@@ -199,7 +199,9 @@ namespace LogifyWin
             employee.PhoneNumber = tbxPhoneNumber.Text;
             employee.SSN = tbxSSN.Text;
 
-            bool updated = await UpdateEmployeeFromApi(employee);
+            EmployeeServices services = new EmployeeServices();
+
+            bool updated = await services.UpdateEmployeeFromApi(employee);
 
             if (updated)
             {
@@ -209,20 +211,17 @@ namespace LogifyWin
             {
                 MessageBox.Show("Failed to update employee information.");
             }
-
-            // Retrieve updated employee information and repopulate the form.
-            //Employee updatedEmployee = repo.GetEmployeeById(employeeId);
-
-            //PopulateFields(updatedEmployee);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
             //try to convert the text in lblEmployeeId to an integer and store it in employeeId variable, if conversion is successful, proceed with deletion, otherwise show an error message.
             if (int.TryParse(lblEmployeeId.Text, out int employeeId))
             {
-                EmployeeRepository repo = new EmployeeRepository();
-                if (repo.DeleteEmployee(employeeId))
+                EmployeeServices services = new EmployeeServices();
+                bool deleted = await services.DeleteEmployeeFromApi(employeeId);
+
+                if (deleted)
                 {
                     MessageBox.Show("Employee deleted successfully.");
                     ClearEmployeeFields();
@@ -253,82 +252,6 @@ namespace LogifyWin
             FrmLogIn login = new FrmLogIn();
             login.ShowDialog();
             this.Close();
-        }
-
-        public async Task<Employee> GetEmployeeFromApi(string lastName, int roleId)
-        {
-            ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
-            string apiUrl = apiUrlBuilder.BuildSearchEmployeeUrl(lastName, roleId);
-
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback =
-                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-            };
-
-            using var http = new HttpClient(handler);
-
-            using var response = await http.GetAsync(apiUrl);
-
-            string apiResponseJson = await response.Content.ReadAsStringAsync();
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return new Employee();
-            }
-
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
-            Employee employee = JsonSerializer.Deserialize<Employee>(apiResponseJson, options);
-
-            if (employee == null)
-            {
-                return new Employee();
-            }
-
-            return employee;
-        }
-        public async Task<bool> UpdateEmployeeFromApi(Employee employee)
-        {
-            ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
-            string apiUrl = apiUrlBuilder.BuildUpdateEmployeeUrl();
-
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback =
-                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-            };
-
-            using var http = new HttpClient(handler);
-
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
-            string employeeJson = JsonSerializer.Serialize(employee, options);
-
-            using var content = new StringContent(
-                employeeJson,
-                Encoding.UTF8,
-                "application/json"
-            );
-
-            using var response = await http.PostAsync(apiUrl, content);
-
-            if (!response.IsSuccessStatusCode)
-            {
-                return false;
-            }
-
-            string apiResponseJson = await response.Content.ReadAsStringAsync();
-
-            bool updated = JsonSerializer.Deserialize<bool>(apiResponseJson, options);
-
-            return updated;
         }
     }
 }

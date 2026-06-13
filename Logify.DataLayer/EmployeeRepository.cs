@@ -157,7 +157,6 @@ namespace Logify.DataLayer
                 using (SqlCommand cmd = new SqlCommand("dbo.InsertNewEmployee", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-
                     cmd.Parameters.AddWithValue("@CompanyId", newEmployee.CompanyId);
                     cmd.Parameters.AddWithValue("@RoleId", newEmployee.RoleId);
                     cmd.Parameters.AddWithValue("@HourlyRate", newEmployee.HourlyRate);
@@ -220,8 +219,6 @@ namespace Logify.DataLayer
                         cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
 
                         conn.Open();
-
-                        cmd.ExecuteNonQuery();
 
                         int rowsAffected = cmd.ExecuteNonQuery();
                         

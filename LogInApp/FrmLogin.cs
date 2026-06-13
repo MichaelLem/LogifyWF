@@ -36,7 +36,6 @@ namespace LogifyWin
 
         private async void btnLogIn_Click(object sender, EventArgs e)
         {
-            Authenticate auth = new Authenticate();
             UserAccount user = new UserAccount();
 
             errorUserName.Visible = false;
@@ -53,7 +52,9 @@ namespace LogifyWin
                 return;
             }
 
-            user = await GetFullNameFromApi(userName, password);
+            EmployeeServices services = new EmployeeServices();
+
+            user = await services.AuthenticateUserFromApi(userName, password);
 
             if (user.IsAuthenticated == false)
             {
@@ -72,56 +73,5 @@ namespace LogifyWin
             sessionForm.Show();
             this.Hide();
         }
-
-        public async Task<UserAccount> GetFullNameFromApi(string userName, string password)
-        {
-            ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
-            string ApiUrl = apiUrlBuilder.BuildLoginUrl(userName, password);
-
-            // For learning purposes: ignore local HTTPS cert issues
-            var handler = new HttpClientHandler
-            {
-                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-            };
-
-            using var http = new HttpClient(handler);
-
-            // API uses GET
-            using var response = await http.GetAsync(ApiUrl);
-
-            string apiResponseJson = await response.Content.ReadAsStringAsync();
-
-            // If the request failed, return a helpful message (including body)
-            if (!response.IsSuccessStatusCode)
-            {
-                UserAccount userBad = new UserAccount
-                {
-                    IsAuthenticated = false
-                };
-                return userBad;
-            }
-
-            //Get the JSON return 
-            // {"message":"Authenticated","userName":"manny"}
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
-            var data = JsonSerializer.Deserialize<UserAccount>(apiResponseJson, options);
-
-            UserAccount user = new UserAccount
-            {
-                UserAccountId = data.UserAccountId,
-                EmployeeId = data.EmployeeId,
-                Username = data.Username,
-                PasswordHash = data.PasswordHash,
-                IsActive = data.IsActive,
-                IsAuthenticated = data.IsAuthenticated
-            };
-
-            return user;
-        }
-
     }
 }

@@ -9,7 +9,7 @@ namespace Logify.Api.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        [HttpGet("Search")]
+        [HttpGet]
         public ActionResult<Employee> Search(string lastName, int roleId)
         {
             EmployeeRepository repo = new EmployeeRepository();
@@ -24,14 +24,24 @@ namespace Logify.Api.Controllers
             return Ok(employee);
         }
 
-        [HttpPost("Update")]
-        public bool UpdateEmployee(Employee employee)
+        [HttpPut]
+        public ActionResult<bool> UpdateEmployee(Employee employee)
         {
             EmployeeRepository repo = new EmployeeRepository();
 
             bool updated = repo.UpdateEmployeeInfo(employee);
 
-            return updated;
+            return Ok(updated);
+        }
+
+        [HttpDelete]
+        public ActionResult<bool> Delete(int employeeId)
+        {
+            EmployeeRepository repo = new EmployeeRepository();
+
+            bool deleted = repo.DeleteEmployee(employeeId);
+
+            return Ok(deleted);
         }
     }
 }
