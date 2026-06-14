@@ -1,4 +1,5 @@
 ﻿using Logify.Models;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -65,7 +66,10 @@ namespace Logify.BizLayer
         public TimeEntries GetTimeCard(int CompanyId, int employeeID, string LookUpDate)
         {
             //Check that the date is valid and not in the future
-
+            bool isDateValid = false;
+            ValidateLogDate(LookUpDate, out isDateValid);
+                if (isDateValid == false) return null;
+            
             //Get the time entries for the employee and date from the database
             TimeEntries record = new TimeEntries
             {
@@ -81,5 +85,29 @@ namespace Logify.BizLayer
 
             return record;
         }
+
+        public string ValidateLogDate(string logDate, out bool isValid)
+        {
+            if (DateTime.TryParse(logDate, out DateTime validDate))
+            {
+                if (validDate.Date <= DateTime.Now.Date)
+                {
+                    isValid = true;
+                    return validDate.ToShortDateString();
+                }
+                else
+                {
+                    isValid = false;
+                    return "";
+                }
+            }
+            else
+            {
+                isValid = false;
+                return "";
+            }
+        }
+
+
     }
 }
