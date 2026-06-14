@@ -84,13 +84,7 @@ namespace LogifyWin
         {
             Employee newEmployee = new Employee();
 
-            newEmployee.CompanyId = 1;
-            newEmployee.FirstName = tbxFirstName.Text;
-            newEmployee.LastName = tbxLastName.Text;
-            newEmployee.SSN = tbxSSN.Text;
-            newEmployee.Email = tbxEmail.Text;
-            newEmployee.PhoneNumber = tbxPhoneNumber.Text;
-            newEmployee.DateHired = dtpDateHired.Value;
+          
 
             if (cbRoleNames.SelectedValue == null)
             {
@@ -105,8 +99,23 @@ namespace LogifyWin
                 MessageBox.Show("Invalid hourly rate.");
                 return;
             }
-
             newEmployee.HourlyRate = hourlyRate;
+
+            /* Create a validate employee fields function
+             * Have that function return true/false
+             * Reuse that function before the update, create functions
+             */
+           
+            //Validate values first, never trust user data
+            newEmployee.CompanyId = 1; //No hard coded values or magic numbers
+            newEmployee.FirstName = tbxFirstName.Text;
+            newEmployee.LastName = tbxLastName.Text;
+            newEmployee.SSN = tbxSSN.Text;
+            newEmployee.Email = tbxEmail.Text;
+            newEmployee.PhoneNumber = tbxPhoneNumber.Text;
+            newEmployee.DateHired = dtpDateHired.Value;
+
+
 
             EmployeeRepository repo = new EmployeeRepository();
 
@@ -168,6 +177,8 @@ namespace LogifyWin
         }
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
+            // if (formValidate() == false) return;
+
             int employeeId = currentEmployeeId;
 
             if (employeeId <= 0)
