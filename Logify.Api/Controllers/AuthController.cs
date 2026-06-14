@@ -13,7 +13,7 @@ namespace Logify.Api.Controllers
 
         // GET: /api/auth/authenticate?userName=...&password=...
         // You can also send these in the body (shown in a note below), but this matches your request: 2 parameters.
-        [HttpGet("Authenticate")]
+        [HttpGet]
         public ActionResult<UserAccount> Authenticate(string userName, string password)
         {
             UserAccount user = new UserAccount();

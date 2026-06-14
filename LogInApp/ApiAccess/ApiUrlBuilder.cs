@@ -11,7 +11,7 @@ public class ApiUrlBuilder
 {
     string domain = ConfigurationManager.AppSettings["ApiDomainLcl"].ToString(); //"https://localhost:7151";
 
-    public string BuildLoginUrl(string userName, string password)
+    public string BuildAuthenticateUrl(string userName, string password)
     {
         string route = ConfigurationManager.AppSettings["ApiAuthRoute"].ToString(); //"/api/auth/authenticate?";
         string userNameApi = "userName=";
@@ -28,9 +28,9 @@ public class ApiUrlBuilder
         sb.Append(passwordApi);
         sb.Append(password);
 
-        string ApiLoginUrl = sb.ToString();
+        string ApiAuthenticateUrl = sb.ToString();
         
-        return ApiLoginUrl;
+        return ApiAuthenticateUrl;
     }
 
     public string BuildSearchEmployeeUrl(string lastName, int roleId)
@@ -59,7 +59,6 @@ public class ApiUrlBuilder
     {
         string route = ConfigurationManager.AppSettings["ApiEmployeeUpdateRoute"].ToString();
 
-
         StringBuilder sb = new StringBuilder();
 
         sb.Append(domain);
@@ -69,17 +68,19 @@ public class ApiUrlBuilder
 
         return ApiUpdateUrl;
     }
-
     public string BuildCreateEmployeeUrl()
     {
+        string route = ConfigurationManager.AppSettings["ApiEmployeeCreateRoute"].ToString();
+
         StringBuilder sb = new StringBuilder();
+
         sb.Append(domain);
+        sb.Append(route);
 
         string ApiCreateUrl = sb.ToString();
 
         return ApiCreateUrl;
     }
-
 
     public string BuildDeleteEmployeeUrl(int employeeId)
     {

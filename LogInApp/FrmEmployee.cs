@@ -59,25 +59,25 @@ namespace LogifyWin
             currentEmployeeId = 0;
         }
 
-        private void PopulateFields(Employee Worker)
+        private void PopulateFields(Employee employee)
         {
-            if (Worker == null)
+            if (employee == null)
             {
                 MessageBox.Show("No employee found.");
                 return;
             }
 
-            currentEmployeeId = Worker.EmployeeId;
+            currentEmployeeId = employee.EmployeeId;
 
-            lblCompanyName.Text = Worker.CompanyName.ToString();
-            tbxFirstName.Text = Worker.FirstName.ToString();
-            tbxLastName.Text = Worker.LastName.ToString();
-            lblEmployeeId.Text = Worker.EmployeeId.ToString();
-            tbxHourlyRate.Text = Worker.HourlyRate.ToString();
-            tbxSSN.Text = Worker.SSN.ToString();
-            tbxEmail.Text = Worker.Email.ToString();
-            dtpDateHired.Value = Worker.DateHired;
-            tbxPhoneNumber.Text = Worker.PhoneNumber.ToString();
+            lblCompanyName.Text = employee.CompanyName.ToString();
+            tbxFirstName.Text = employee.FirstName.ToString();
+            tbxLastName.Text = employee.LastName.ToString();
+            lblEmployeeId.Text = employee.EmployeeId.ToString();
+            tbxHourlyRate.Text = employee.HourlyRate.ToString();
+            tbxSSN.Text = employee.SSN.ToString();
+            tbxEmail.Text = employee.Email.ToString();
+            dtpDateHired.Value = employee.DateHired;
+            tbxPhoneNumber.Text = employee.PhoneNumber.ToString();
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
@@ -90,7 +90,6 @@ namespace LogifyWin
             newEmployee.SSN = tbxSSN.Text;
             newEmployee.Email = tbxEmail.Text;
             newEmployee.PhoneNumber = tbxPhoneNumber.Text;
-            newEmployee.HourlyRate = decimal.Parse(tbxHourlyRate.Text);
             newEmployee.DateHired = dtpDateHired.Value;
 
             if (cbRoleNames.SelectedValue == null)
@@ -101,6 +100,14 @@ namespace LogifyWin
 
             newEmployee.RoleId = (int)cbRoleNames.SelectedValue;
 
+            if (!decimal.TryParse(tbxHourlyRate.Text, out decimal hourlyRate))
+            {
+                MessageBox.Show("Invalid hourly rate.");
+                return;
+            }
+
+            newEmployee.HourlyRate = hourlyRate;
+
             EmployeeRepository repo = new EmployeeRepository();
 
             bool success = repo.InsertNewEmployee(newEmployee);
@@ -108,6 +115,11 @@ namespace LogifyWin
             if (success)
             {
                 MessageBox.Show("Employee added successfully.");
+
+                btnSearch.Enabled = true;
+                btnDelete.Enabled = true;
+                btnUpdate.Enabled = true;
+                btnCreate.Enabled = false;
             }
             else
             {
@@ -240,6 +252,11 @@ namespace LogifyWin
         private void btnClear_Click(object sender, EventArgs e)
         {
             ClearEmployeeFields();
+
+            btnCreate.Enabled = true;
+            btnSearch.Enabled = true;
+            btnDelete.Enabled = false;
+            btnUpdate.Enabled = false;
         }
 
         private void btnClose_Click(object sender, EventArgs e)

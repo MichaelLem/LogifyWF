@@ -12,6 +12,46 @@ namespace Logify.BizLayer
 {
     public class EmployeeServices
     {
+        public async Task<bool> CreateEmployeeFromApi(Employee employee)
+        {
+            ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
+            string apiUrl = apiUrlBuilder.BuildCreateEmployeeUrl();
+
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+
+            using var http = new HttpClient(handler);
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            string employeeJson = JsonSerializer.Serialize(employee, options);
+
+            using var content = new StringContent(
+                employeeJson,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            using var response = await http.PostAsync(apiUrl, content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
+            string apiResponseJson = await response.Content.ReadAsStringAsync();
+
+            bool created = JsonSerializer.Deserialize<bool>(apiResponseJson, options);
+
+            return created;
+        }
+
         public async Task<Employee> GetEmployeeFromApi(string lastName, int roleId)
         {
             ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
@@ -93,7 +133,7 @@ namespace Logify.BizLayer
         {
             ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
 
-            string ApiUrl = apiUrlBuilder.BuildLoginUrl(userName, password);
+            string ApiUrl = apiUrlBuilder.BuildAuthenticateUrl(userName, password);
 
             // For learning purposes: ignore local HTTPS cert issues
             var handler = new HttpClientHandler

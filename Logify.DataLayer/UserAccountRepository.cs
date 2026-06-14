@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 
-
 namespace Logify.DataLayer
 {
     public class UserAccountRepository
@@ -81,9 +80,9 @@ namespace Logify.DataLayer
             }
             catch (Exception ex)
             {
-                conn.Close();
+                throw;
             }
-                return false;
+            return false;
         }
     }
 }
