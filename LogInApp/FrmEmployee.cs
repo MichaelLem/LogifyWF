@@ -115,15 +115,12 @@ namespace LogifyWin
             newEmployee.PhoneNumber = tbxPhoneNumber.Text;
             newEmployee.DateHired = dtpDateHired.Value;
 
-
-
             EmployeeRepository repo = new EmployeeRepository();
-
             bool success = repo.InsertNewEmployee(newEmployee);
 
             if (success)
             {
-                MessageBox.Show("Employee added successfully.");
+                MessageBox.Show($"Employee added successfully.");
 
                 btnSearch.Enabled = true;
                 btnDelete.Enabled = true;
@@ -132,9 +129,10 @@ namespace LogifyWin
             }
             else
             {
-                MessageBox.Show("Employee was not added.");
+                MessageBox.Show("Employee was not addwefed.");
             }
         }
+        
         private async void btnSearch_Click(object sender, EventArgs e)
         {
             if (cbRoleNames.SelectedValue != null)
@@ -175,6 +173,7 @@ namespace LogifyWin
                 MessageBox.Show("Please select a role.");
             }
         }
+        
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
             // if (formValidate() == false) return;

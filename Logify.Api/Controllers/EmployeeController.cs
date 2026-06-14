@@ -1,6 +1,5 @@
 ﻿using Logify.DataLayer;
 using Logify.Models;
-using LogifyWin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Logify.Api.Controllers

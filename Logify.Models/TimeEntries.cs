@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System;
 
-namespace LogifyWin
+namespace Logify.Models
 {
     public class TimeEntries
     {
         public int EmployeeId { get; set; }
-
-
         public string Username { get; set; } = string.Empty;
         public string LogDate { get; set; } = string.Empty;
         public string TimeStart { get; set; } = string.Empty;

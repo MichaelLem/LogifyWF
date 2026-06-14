@@ -15,6 +15,7 @@ namespace LogifyWin
 {
     public partial class SessionForm : Form
     {
+        //Session session = new Session(1);
         Session session = new Session();
 
         //private TimeEntries currentRecord;

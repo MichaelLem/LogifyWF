@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logify.Models;
 
+//Being Moved to BizLayer for better separation of concerns and to connect to SQL database instead of JSON file
 namespace LogifyWin
 {
     public class Session
@@ -22,6 +24,16 @@ namespace LogifyWin
         {
             return DateTime.Now;
         }
+
+
+        //private Session()
+        //{
+        //    //Private constructor to prevent instantiation without employeeID
+        //}
+        //public Session(int employeeID)
+        //{
+        //   // _employeeID = employeeID;
+        //}
 
         public void StartTime()
         {

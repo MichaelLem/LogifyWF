@@ -50,7 +50,8 @@ namespace Logify.DataLayer
                 }
                 catch (Exception ex)
                 {
-                    conn.Close();
+                    //conn.Close();
+                    //ToDo : Log your error here. You can use a logging framework like NLog, Serilog, or log4net to log the exception details to a file, database, or other logging targets.
                 }
             UserAccount InvalidUser = new UserAccount();
             InvalidUser.IsAuthenticated = false;

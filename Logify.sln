@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.BizLayer", "BizLayer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.Api", "Logify.Api\Logify.Api.csproj", "{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logify.Tests", "Logify.Tests\Logify.Tests.csproj", "{3ADA53DF-5C6F-4C8D-8820-15665EFA6606}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ED40ED6-728D-424A-9F6A-BC2AFB92BAED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ADA53DF-5C6F-4C8D-8820-15665EFA6606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ADA53DF-5C6F-4C8D-8820-15665EFA6606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ADA53DF-5C6F-4C8D-8820-15665EFA6606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ADA53DF-5C6F-4C8D-8820-15665EFA6606}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
