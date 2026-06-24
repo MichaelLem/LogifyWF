@@ -35,8 +35,15 @@ namespace LogifyWin
 
         private void FrmEmployee_Load(object sender, EventArgs e)
         {
+            CompanyRepository companyRepo = new CompanyRepository();
             RoleRepository repo = new RoleRepository();
+
             List<RoleItem> roles = repo.GetRoles();
+            List<Company> companies = companyRepo.GetCompanies();
+
+            cbCompanyNames.DataSource = companies;
+            cbCompanyNames.DisplayMember = nameof(Company.CompanyName);
+            cbCompanyNames.ValueMember = nameof(Company.CompanyId);
 
             cbRoleNames.DataSource = roles;
             cbRoleNames.DisplayMember = nameof(RoleItem.RoleName);
@@ -44,13 +51,17 @@ namespace LogifyWin
         }
 
         private int currentEmployeeId;
+        private int currentCompanyId;
+        private decimal validatedHourlyRate;
 
         private void ClearEmployeeFields()
         {
+            currentEmployeeId = 0;
+            currentCompanyId = 0;
+
             lblCompanyName.Text = string.Empty;
             tbxFirstName.Text = string.Empty;
             tbxLastName.Text = string.Empty;
-            lblEmployeeId.Text = string.Empty;
             tbxHourlyRate.Text = string.Empty;
             tbxSSN.Text = string.Empty;
             tbxEmail.Text = string.Empty;
@@ -68,55 +79,101 @@ namespace LogifyWin
             }
 
             currentEmployeeId = employee.EmployeeId;
+            currentCompanyId = employee.CompanyId;
 
-            lblCompanyName.Text = employee.CompanyName.ToString();
-            tbxFirstName.Text = employee.FirstName.ToString();
-            tbxLastName.Text = employee.LastName.ToString();
-            lblEmployeeId.Text = employee.EmployeeId.ToString();
+            cbCompanyNames.SelectedValue = employee.CompanyId;
+            cbRoleNames.SelectedValue = employee.RoleId;
+
+            lblCompanyName.Text = employee.CompanyName;
+            tbxFirstName.Text = employee.FirstName;
+            tbxLastName.Text = employee.LastName;
             tbxHourlyRate.Text = employee.HourlyRate.ToString();
-            tbxSSN.Text = employee.SSN.ToString();
-            tbxEmail.Text = employee.Email.ToString();
+            tbxSSN.Text = employee.SSN;
+            tbxEmail.Text = employee.Email;
             dtpDateHired.Value = employee.DateHired;
-            tbxPhoneNumber.Text = employee.PhoneNumber.ToString();
+            tbxPhoneNumber.Text = employee.PhoneNumber;
         }
 
-        private void btnCreate_Click(object sender, EventArgs e)
+        public bool ValidateEmployeeFields()
         {
-            Employee newEmployee = new Employee();
-
-          
-
-            if (cbRoleNames.SelectedValue == null)
+            if (cbRoleNames.SelectedValue == null || (int)cbRoleNames.SelectedValue <= 0)
             {
                 MessageBox.Show("Please select a valid role.");
-                return;
+                return false;
             }
-
-            newEmployee.RoleId = (int)cbRoleNames.SelectedValue;
-
-            if (!decimal.TryParse(tbxHourlyRate.Text, out decimal hourlyRate))
+            if (cbCompanyNames.SelectedValue == null || (int)cbCompanyNames.SelectedValue <= 0)
+            {
+                MessageBox.Show("Please select a valid company.");
+                return false;
+            }
+            if (!decimal.TryParse(tbxHourlyRate.Text, out validatedHourlyRate))
             {
                 MessageBox.Show("Invalid hourly rate.");
+                return false;
+            }
+            if (validatedHourlyRate <= 0 || validatedHourlyRate > 9999.99m)
+            {
+                MessageBox.Show("Hourly rate must be between 0 and 9999.99.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(tbxFirstName.Text) || tbxFirstName.Text.Length > 25)
+            {
+                MessageBox.Show("First name is required and must be 25 characters or less.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(tbxLastName.Text) || tbxLastName.Text.Length > 25)
+            {
+                MessageBox.Show("Last name is required and must be 25 characters or less.");
+                return false;
+            }
+            if (!Regex.IsMatch(tbxPhoneNumber.Text, @"^\d{3}-\d{3}-\d{4}$"))
+            {
+                MessageBox.Show("Please enter a valid phone number in the format XXX-XXX-XXXX.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(tbxSSN.Text))
+            {
+                MessageBox.Show("SSN is required.");
+                return false;
+            }
+            if (!Regex.IsMatch(tbxSSN.Text, @"^\d{3}-\d{2}-\d{4}$"))
+            {
+                MessageBox.Show("Please enter a valid SSN in the format XXX-XX-XXXX.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(tbxEmail.Text))
+            {
+                MessageBox.Show("Please enter a valid email address.");
+                return false;
+            }
+            if (dtpDateHired.Value > DateTime.Now)
+            {
+                MessageBox.Show("Hire date cannot be in the future.");
+                return false;
+            }
+            return true;
+        }
+
+        private async void btnCreate_Click(object sender, EventArgs e)
+        {
+            if (!ValidateEmployeeFields())
+            {
                 return;
             }
-            newEmployee.HourlyRate = hourlyRate;
 
-            /* Create a validate employee fields function
-             * Have that function return true/false
-             * Reuse that function before the update, create functions
-             */
-           
-            //Validate values first, never trust user data
-            newEmployee.CompanyId = 1; //No hard coded values or magic numbers
-            newEmployee.FirstName = tbxFirstName.Text;
-            newEmployee.LastName = tbxLastName.Text;
-            newEmployee.SSN = tbxSSN.Text;
-            newEmployee.Email = tbxEmail.Text;
-            newEmployee.PhoneNumber = tbxPhoneNumber.Text;
+            Employee newEmployee = new Employee();
+
+            newEmployee.RoleId = (int)cbRoleNames.SelectedValue;
+            newEmployee.HourlyRate = validatedHourlyRate;
+            newEmployee.FirstName = tbxFirstName.Text.Trim();
+            newEmployee.LastName = tbxLastName.Text.Trim();
+            newEmployee.SSN = tbxSSN.Text.Trim();
+            newEmployee.Email = tbxEmail.Text.Trim();
+            newEmployee.PhoneNumber = tbxPhoneNumber.Text.Trim();
             newEmployee.DateHired = dtpDateHired.Value;
 
-            EmployeeRepository repo = new EmployeeRepository();
-            bool success = repo.InsertNewEmployee(newEmployee);
+            EmployeeServices services = new EmployeeServices();
+            bool success = await services.CreateEmployeeFromApi(newEmployee);
 
             if (success)
             {
@@ -129,7 +186,7 @@ namespace LogifyWin
             }
             else
             {
-                MessageBox.Show("Employee was not addwefed.");
+                MessageBox.Show("Employee was not added.");
             }
         }
         
@@ -148,7 +205,7 @@ namespace LogifyWin
                         selectedRoleId
                     );
 
-                    if (employee.EmployeeId == 0)
+                    if (employee == null || employee.EmployeeId == 0)
                     {
                         MessageBox.Show("No employee found.");
                     }
@@ -176,7 +233,6 @@ namespace LogifyWin
         
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
-            // if (formValidate() == false) return;
 
             int employeeId = currentEmployeeId;
 
@@ -186,40 +242,18 @@ namespace LogifyWin
                 return;
             }
 
-            //Validating hourly rate to ensure its a valid decimal number and not a different type of character
-            if (!decimal.TryParse(tbxHourlyRate.Text, out decimal hourlyRate))
-            {
-                MessageBox.Show("Please enter a valid hourly rate.");
-                return;
-            }
-
-            //Validating hourly rate to ensure its a positive number and does not pass the limit
-            if (hourlyRate <= 0 || hourlyRate > 9999.99m)
-            {
-                MessageBox.Show("Hourly rate must be between 0 and 9999.99.");
-                return;
-            }
-
-            // @ is a verbatim string, ^ indicates the start of the string, \d{3} matches exactly three digits, - matches a literal hyphen, and $ indicates the end of the string.
-            string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
-
-            // Regex (Regular Expression) is a pattern-matching language used for searching and manipulating strings.
-            // In this case, it checks if the phone number entered in the text box matches the specified pattern of XXX-XXX-XXXX, where X is a digit. 
-            if (!Regex.IsMatch(tbxPhoneNumber.Text, phonePattern))
-            {
-                MessageBox.Show("Please enter a valid phone number in the format XXX-XXX-XXXX.");
-                return;
-            }
-
             Employee employee = new Employee();
 
             employee.EmployeeId = employeeId;
-            employee.HourlyRate = hourlyRate;
+            employee.CompanyId = (int)cbCompanyNames.SelectedValue;
+            employee.RoleId = (int)cbRoleNames.SelectedValue;
+            employee.HourlyRate = validatedHourlyRate;
             employee.FirstName = tbxFirstName.Text;
             employee.LastName = tbxLastName.Text;
             employee.Email = tbxEmail.Text;
             employee.PhoneNumber = tbxPhoneNumber.Text;
             employee.SSN = tbxSSN.Text;
+            employee.DateHired = dtpDateHired.Value;
 
             EmployeeServices services = new EmployeeServices();
 
@@ -237,11 +271,10 @@ namespace LogifyWin
 
         private async void btnDelete_Click(object sender, EventArgs e)
         {
-            //try to convert the text in lblEmployeeId to an integer and store it in employeeId variable, if conversion is successful, proceed with deletion, otherwise show an error message.
-            if (int.TryParse(lblEmployeeId.Text, out int employeeId))
+            if (currentEmployeeId > 0)
             {
                 EmployeeServices services = new EmployeeServices();
-                bool deleted = await services.DeleteEmployeeFromApi(employeeId);
+                bool deleted = await services.DeleteEmployeeFromApi(currentEmployeeId);
 
                 if (deleted)
                 {

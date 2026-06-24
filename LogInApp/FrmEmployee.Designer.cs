@@ -40,11 +40,19 @@
             btnUpdate = new Button();
             btnDelete = new Button();
             btnCreate = new Button();
-            lblEmployeeId = new Label();
-            lblCompanyName = new Label();
             btnClear = new Button();
             btnClose = new Button();
             btnLogin = new Button();
+            cbCompanyNames = new ComboBox();
+            lblCompanyName = new Label();
+            lblFirstName = new Label();
+            lblLastName = new Label();
+            lblSSN = new Label();
+            lblEmail = new Label();
+            lblPhoneNumber = new Label();
+            lblHourlyRate = new Label();
+            lblHireDate = new Label();
+            lblRole = new Label();
             SuspendLayout();
             // 
             // btnSearch
@@ -59,9 +67,9 @@
             // 
             // tbxFirstName
             // 
-            tbxFirstName.Location = new Point(48, 79);
+            tbxFirstName.Location = new Point(48, 76);
             tbxFirstName.Name = "tbxFirstName";
-            tbxFirstName.PlaceholderText = "First Name";
+            tbxFirstName.PlaceholderText = "Jon";
             tbxFirstName.Size = new Size(100, 23);
             tbxFirstName.TabIndex = 6;
             // 
@@ -69,7 +77,7 @@
             // 
             tbxLastName.Location = new Point(48, 120);
             tbxLastName.Name = "tbxLastName";
-            tbxLastName.PlaceholderText = "Last Name";
+            tbxLastName.PlaceholderText = "Doe";
             tbxLastName.Size = new Size(100, 23);
             tbxLastName.TabIndex = 7;
             // 
@@ -77,29 +85,29 @@
             // 
             tbxSSN.Location = new Point(48, 163);
             tbxSSN.Name = "tbxSSN";
-            tbxSSN.PlaceholderText = "SSN";
+            tbxSSN.PlaceholderText = "555-55-5555";
             tbxSSN.Size = new Size(100, 23);
             tbxSSN.TabIndex = 8;
             // 
             // tbxEmail
             // 
-            tbxEmail.Location = new Point(48, 208);
+            tbxEmail.Location = new Point(48, 207);
             tbxEmail.Name = "tbxEmail";
-            tbxEmail.PlaceholderText = "Email";
-            tbxEmail.Size = new Size(100, 23);
+            tbxEmail.PlaceholderText = "email@email.com";
+            tbxEmail.Size = new Size(193, 23);
             tbxEmail.TabIndex = 9;
             // 
             // tbxPhoneNumber
             // 
-            tbxPhoneNumber.Location = new Point(48, 246);
+            tbxPhoneNumber.Location = new Point(48, 255);
             tbxPhoneNumber.Name = "tbxPhoneNumber";
-            tbxPhoneNumber.PlaceholderText = "Phone Number";
+            tbxPhoneNumber.PlaceholderText = "555-555-5555";
             tbxPhoneNumber.Size = new Size(100, 23);
             tbxPhoneNumber.TabIndex = 10;
             // 
             // tbxHourlyRate
             // 
-            tbxHourlyRate.Location = new Point(48, 289);
+            tbxHourlyRate.Location = new Point(48, 299);
             tbxHourlyRate.Name = "tbxHourlyRate";
             tbxHourlyRate.PlaceholderText = "Hourly Rate";
             tbxHourlyRate.Size = new Size(100, 23);
@@ -107,7 +115,7 @@
             // 
             // dtpDateHired
             // 
-            dtpDateHired.Location = new Point(48, 336);
+            dtpDateHired.Location = new Point(48, 343);
             dtpDateHired.Name = "dtpDateHired";
             dtpDateHired.Size = new Size(193, 23);
             dtpDateHired.TabIndex = 12;
@@ -115,7 +123,7 @@
             // cbRoleNames
             // 
             cbRoleNames.FormattingEnabled = true;
-            cbRoleNames.Location = new Point(48, 376);
+            cbRoleNames.Location = new Point(48, 387);
             cbRoleNames.Name = "cbRoleNames";
             cbRoleNames.Size = new Size(193, 23);
             cbRoleNames.TabIndex = 13;
@@ -151,24 +159,6 @@
             btnCreate.UseVisualStyleBackColor = true;
             btnCreate.Click += btnCreate_Click;
             // 
-            // lblEmployeeId
-            // 
-            lblEmployeeId.AutoSize = true;
-            lblEmployeeId.Location = new Point(48, 52);
-            lblEmployeeId.Name = "lblEmployeeId";
-            lblEmployeeId.Size = new Size(73, 15);
-            lblEmployeeId.TabIndex = 15;
-            lblEmployeeId.Text = "Employee ID";
-            // 
-            // lblCompanyName
-            // 
-            lblCompanyName.AutoSize = true;
-            lblCompanyName.Location = new Point(48, 21);
-            lblCompanyName.Name = "lblCompanyName";
-            lblCompanyName.Size = new Size(94, 15);
-            lblCompanyName.TabIndex = 15;
-            lblCompanyName.Text = "Company Name";
-            // 
             // btnClear
             // 
             btnClear.Location = new Point(453, 416);
@@ -199,16 +189,113 @@
             btnLogin.UseVisualStyleBackColor = true;
             btnLogin.Click += btnLogin_Click;
             // 
+            // cbCompanyNames
+            // 
+            cbCompanyNames.FormattingEnabled = true;
+            cbCompanyNames.Location = new Point(48, 18);
+            cbCompanyNames.Name = "cbCompanyNames";
+            cbCompanyNames.Size = new Size(193, 23);
+            cbCompanyNames.TabIndex = 17;
+            // 
+            // lblCompanyName
+            // 
+            lblCompanyName.AutoSize = true;
+            lblCompanyName.Location = new Point(48, 0);
+            lblCompanyName.Name = "lblCompanyName";
+            lblCompanyName.Size = new Size(94, 15);
+            lblCompanyName.TabIndex = 18;
+            lblCompanyName.Text = "Company Name";
+            // 
+            // lblFirstName
+            // 
+            lblFirstName.AutoSize = true;
+            lblFirstName.Location = new Point(47, 58);
+            lblFirstName.Name = "lblFirstName";
+            lblFirstName.Size = new Size(64, 15);
+            lblFirstName.TabIndex = 19;
+            lblFirstName.Text = "First Name";
+            // 
+            // lblLastName
+            // 
+            lblLastName.AutoSize = true;
+            lblLastName.Location = new Point(48, 102);
+            lblLastName.Name = "lblLastName";
+            lblLastName.Size = new Size(63, 15);
+            lblLastName.TabIndex = 20;
+            lblLastName.Text = "Last Name";
+            // 
+            // lblSSN
+            // 
+            lblSSN.AutoSize = true;
+            lblSSN.Location = new Point(48, 145);
+            lblSSN.Name = "lblSSN";
+            lblSSN.Size = new Size(28, 15);
+            lblSSN.TabIndex = 21;
+            lblSSN.Text = "SSN";
+            // 
+            // lblEmail
+            // 
+            lblEmail.AutoSize = true;
+            lblEmail.Location = new Point(48, 189);
+            lblEmail.Name = "lblEmail";
+            lblEmail.Size = new Size(36, 15);
+            lblEmail.TabIndex = 22;
+            lblEmail.Text = "Email";
+            // 
+            // lblPhoneNumber
+            // 
+            lblPhoneNumber.AutoSize = true;
+            lblPhoneNumber.Location = new Point(48, 237);
+            lblPhoneNumber.Name = "lblPhoneNumber";
+            lblPhoneNumber.Size = new Size(88, 15);
+            lblPhoneNumber.TabIndex = 23;
+            lblPhoneNumber.Text = "Phone Number";
+            // 
+            // lblHourlyRate
+            // 
+            lblHourlyRate.AutoSize = true;
+            lblHourlyRate.Location = new Point(48, 281);
+            lblHourlyRate.Name = "lblHourlyRate";
+            lblHourlyRate.Size = new Size(69, 15);
+            lblHourlyRate.TabIndex = 24;
+            lblHourlyRate.Text = "Hourly Rate";
+            // 
+            // lblHireDate
+            // 
+            lblHireDate.AutoSize = true;
+            lblHireDate.Location = new Point(48, 325);
+            lblHireDate.Name = "lblHireDate";
+            lblHireDate.Size = new Size(56, 15);
+            lblHireDate.TabIndex = 25;
+            lblHireDate.Text = "Hire Date";
+            // 
+            // lblRole
+            // 
+            lblRole.AutoSize = true;
+            lblRole.Location = new Point(48, 369);
+            lblRole.Name = "lblRole";
+            lblRole.Size = new Size(30, 15);
+            lblRole.TabIndex = 26;
+            lblRole.Text = "Role";
+            // 
             // FrmEmployee
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(620, 452);
+            Controls.Add(lblRole);
+            Controls.Add(lblHireDate);
+            Controls.Add(lblHourlyRate);
+            Controls.Add(lblPhoneNumber);
+            Controls.Add(lblEmail);
+            Controls.Add(lblSSN);
+            Controls.Add(lblLastName);
+            Controls.Add(lblFirstName);
+            Controls.Add(lblCompanyName);
+            Controls.Add(cbCompanyNames);
             Controls.Add(btnLogin);
             Controls.Add(btnClose);
             Controls.Add(btnClear);
-            Controls.Add(lblCompanyName);
-            Controls.Add(lblEmployeeId);
             Controls.Add(btnCreate);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
@@ -242,10 +329,18 @@
         private Button btnUpdate;
         private Button btnDelete;
         private Button btnCreate;
-        private Label lblEmployeeId;
-        private Label lblCompanyName;
         private Button btnClear;
         private Button btnClose;
         private Button btnLogin;
+        private ComboBox cbCompanyNames;
+        private Label lblCompanyName;
+        private Label lblFirstName;
+        private Label lblLastName;
+        private Label lblSSN;
+        private Label lblEmail;
+        private Label lblPhoneNumber;
+        private Label lblHourlyRate;
+        private Label lblHireDate;
+        private Label lblRole;
     }
 }

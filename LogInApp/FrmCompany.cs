@@ -74,7 +74,7 @@ namespace LogifyWin
 
                 if (newEmployeeId > 0)
                 {
-                    Logify.Models.UserAccount primaryContactCredentials = new UserAccount()
+                    UserAccount primaryContactCredentials = new UserAccount()
                     {
                         EmployeeId = newEmployeeId,
                         Username = tbxPcUserName.Text.Trim(),

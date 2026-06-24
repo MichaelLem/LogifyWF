@@ -61,5 +61,48 @@ namespace Logify.DataLayer
                 return rowsAffected > 0;
             }
         }
+
+        public List<Company> GetCompanies()
+        {
+            string connectionString = ConfigurationManager
+            .ConnectionStrings["LogifyDb"]
+            .ConnectionString;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    using SqlCommand cmd = new SqlCommand("dbo.GetActiveCompanies", conn);
+                    using SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    DataSet ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    if (ds.Tables.Count > 0)
+                    {
+                        var table = ds.Tables[0];
+
+                        List<Company> companies = new List<Company>();
+
+                        foreach (DataRow row in table.Rows)
+                        {
+                            companies.Add(new Company
+                            {
+                                CompanyId = row.Field<int>("CompanyId"),
+                                CompanyName = row.Field<string>("CompanyName") ?? string.Empty,
+                            });
+                        }
+                        return companies;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return new List<Company>();
+        }
     }
 }

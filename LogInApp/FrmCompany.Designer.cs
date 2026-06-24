@@ -231,8 +231,6 @@
         private TextBox tbxPcLastName;
         private Button btnClear;
         private Button btnCreate;
-        private Button btnDelete;
-        private Button btnUpdate;
         private Button btnClose;
         private Label lblRolePrimaryContact;
         private GroupBox grpCompanyInformation;

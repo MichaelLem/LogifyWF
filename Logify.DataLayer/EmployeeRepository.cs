@@ -58,10 +58,10 @@ namespace Logify.DataLayer
 
                     EmployeeId = reader.GetInt32(reader.GetOrdinal("EmployeeId")),
                     CompanyId = reader.GetInt32(reader.GetOrdinal("CompanyId")),
+                    RoleId = Convert.ToInt32(reader["RoleId"]),
                     HourlyRate = reader.GetDecimal(reader.GetOrdinal("HourlyRate")),
                     IsActive = reader.GetBoolean(reader.GetOrdinal("IsActive")),
                     CompanyName = reader.GetString(reader.GetOrdinal("CompanyName")),
-                    //SSN = reader.GetString(reader.GetOrdinal("SSN")),
                     SSN = reader.IsDBNull(reader.GetOrdinal("SSN"))
                         ? string.Empty
                         : reader.GetString(reader.GetOrdinal("SSN")),
