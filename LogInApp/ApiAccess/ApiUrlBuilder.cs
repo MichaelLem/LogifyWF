@@ -11,22 +11,14 @@ public class ApiUrlBuilder
 {
     string domain = ConfigurationManager.AppSettings["ApiDomainLcl"].ToString(); //"https://localhost:7151";
 
-    public string BuildAuthenticateUrl(string userName, string password)
+    public string BuildAuthenticateUrl()
     {
         string route = ConfigurationManager.AppSettings["ApiAuthRoute"].ToString(); //"/api/auth/authenticate?";
-        string userNameApi = "userName=";
-        string and = "&";
-        string passwordApi = "password=";
 
         StringBuilder sb = new StringBuilder();
 
         sb.Append(domain);
         sb.Append(route);
-        sb.Append(userNameApi);
-        sb.Append(userName);
-        sb.Append(and);
-        sb.Append(passwordApi);
-        sb.Append(password);
 
         string ApiAuthenticateUrl = sb.ToString();
         
@@ -68,6 +60,7 @@ public class ApiUrlBuilder
 
         return ApiUpdateUrl;
     }
+
     public string BuildCreateEmployeeUrl()
     {
         string route = ConfigurationManager.AppSettings["ApiEmployeeCreateRoute"].ToString();

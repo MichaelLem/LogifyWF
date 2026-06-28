@@ -50,6 +50,7 @@ namespace Logify.DataLayer
             catch (Exception ex) {
                 throw;
             }
+
             return new List<RoleItem>();
         }
     }

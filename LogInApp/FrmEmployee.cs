@@ -111,7 +111,7 @@ namespace LogifyWin
                 MessageBox.Show("Invalid hourly rate.");
                 return false;
             }
-            if (validatedHourlyRate <= 0 || validatedHourlyRate > 9999.99m)
+            if (validatedHourlyRate < 0 || validatedHourlyRate > 9999.99m)
             {
                 MessageBox.Show("Hourly rate must be between 0 and 9999.99.");
                 return false;
@@ -248,11 +248,11 @@ namespace LogifyWin
             employee.CompanyId = (int)cbCompanyNames.SelectedValue;
             employee.RoleId = (int)cbRoleNames.SelectedValue;
             employee.HourlyRate = validatedHourlyRate;
-            employee.FirstName = tbxFirstName.Text;
-            employee.LastName = tbxLastName.Text;
-            employee.Email = tbxEmail.Text;
-            employee.PhoneNumber = tbxPhoneNumber.Text;
-            employee.SSN = tbxSSN.Text;
+            employee.FirstName = tbxFirstName.Text.Trim();
+            employee.LastName = tbxLastName.Text.Trim();
+            employee.Email = tbxEmail.Text.Trim();
+            employee.PhoneNumber = tbxPhoneNumber.Text.Trim();
+            employee.SSN = tbxSSN.Text.Trim();
             employee.DateHired = dtpDateHired.Value;
 
             EmployeeServices services = new EmployeeServices();

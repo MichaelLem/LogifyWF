@@ -38,7 +38,6 @@ namespace LogifyWin
             EmployeeRepository employeeRepo = new EmployeeRepository();
             RoleRepository roleRepo = new RoleRepository();
             UserAccountRepository userRepo = new UserAccountRepository();
-            //int testRoleIdFour = 4; Replaced with actual RoleId for Primary Contact role
 
             var role = roleRepo.GetRoles().FirstOrDefault(pcRoleId => pcRoleId.RoleName == "Primary Contact");
             if (role == null)

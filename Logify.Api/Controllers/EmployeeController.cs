@@ -9,7 +9,7 @@ namespace Logify.Api.Controllers
     public class EmployeeController : ControllerBase
     {
         [HttpPut]
-        public ActionResult<bool> UpdateEmployee(Employee employee)
+        public ActionResult<bool> UpdateEmployee([FromBody]Employee employee)
         {
             EmployeeRepository repo = new EmployeeRepository();
 

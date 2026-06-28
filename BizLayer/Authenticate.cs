@@ -21,15 +21,14 @@ namespace Logify.BizLayer
             UserAccountRepository authRepo = new UserAccountRepository();
             UserAccount user = new UserAccount();
 
-            // Call AuthRepo in DataLayer to validate credentials
-            if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
+            if (!string.IsNullOrWhiteSpace(userName) && !string.IsNullOrWhiteSpace(password))
             {
-                 user.IsAuthenticated = false;
+                if (userName.Length <= 50 && password.Length <= 255)
+                {
+                user = authRepo.ValidateUserLogin(userName, password);
                 return user;
+                }
             }
-
-            user = authRepo.ValidateUserLogin(userName, password);
-
             return user;
         }
     }

@@ -132,8 +132,7 @@ namespace Logify.BizLayer
         public async Task<UserAccount> AuthenticateUserFromApi(string userName, string password)
         {
             ApiUrlBuilder apiUrlBuilder = new ApiUrlBuilder();
-
-            string ApiUrl = apiUrlBuilder.BuildAuthenticateUrl(userName, password);
+            string ApiUrl = apiUrlBuilder.BuildAuthenticateUrl();
 
             // For learning purposes: ignore local HTTPS cert issues
             var handler = new HttpClientHandler
@@ -143,12 +142,30 @@ namespace Logify.BizLayer
 
             using var http = new HttpClient(handler);
 
-            // API uses GET
-            using var response = await http.GetAsync(ApiUrl);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+
+            UserAccount user = new UserAccount
+            {
+                Username = userName,
+                PasswordHash = password,
+            };
+
+            string userJson = JsonSerializer.Serialize(user, options);
+            
+
+            using var content = new StringContent(
+                userJson,
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            using var response = await http.PostAsync(ApiUrl, content);
 
             string apiResponseJson = await response.Content.ReadAsStringAsync();
 
-            // If the request failed, return a helpful message (including body)
             if (!response.IsSuccessStatusCode)
             {
                 UserAccount userBad = new UserAccount
@@ -158,16 +175,9 @@ namespace Logify.BizLayer
                 return userBad;
             }
 
-            //Get the JSON return 
-            // {"message":"Authenticated","userName":"manny"}
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            };
-
             var data = JsonSerializer.Deserialize<UserAccount>(apiResponseJson, options);
 
-            UserAccount user = new UserAccount
+            UserAccount authenticatedUser = new UserAccount
             {
                 UserAccountId = data.UserAccountId,
                 EmployeeId = data.EmployeeId,
@@ -177,7 +187,7 @@ namespace Logify.BizLayer
                 IsAuthenticated = data.IsAuthenticated
             };
 
-            return user;
+            return authenticatedUser;
         }
 
         public async Task<bool> DeleteEmployeeFromApi(int employeeId)

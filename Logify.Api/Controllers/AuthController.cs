@@ -2,7 +2,6 @@
 using Logify.Models;
 using Logify.BizLayer;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Logify.Api.Controllers
 {
@@ -13,16 +12,16 @@ namespace Logify.Api.Controllers
 
         // GET: /api/auth/authenticate?userName=...&password=...
         // You can also send these in the body (shown in a note below), but this matches your request: 2 parameters.
-        [HttpGet]
-        public ActionResult<UserAccount> Authenticate(string userName, string password)
+        [HttpPost]
+        public ActionResult<UserAccount> Authenticate([FromBody] UserAccount user)
         {
-            UserAccount user = new UserAccount();
+            UserAccount authenticatedUser = new UserAccount();
             Authenticate auth = new Authenticate();
 
-            user = auth.Validate(userName, password);
+            authenticatedUser = auth.Validate(user.Username, user.PasswordHash);
 
             // Return the UserAccount model directly as JSON
-            return Ok(user);
+            return Ok(authenticatedUser);
         }
 
     }
