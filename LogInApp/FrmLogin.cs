@@ -69,7 +69,8 @@ namespace LogifyWin
             errorUserName.Visible = false;
             errorPassword.Visible = false;
 
-            SessionForm sessionForm = new SessionForm(userName);
+            SessionForm sessionForm = new SessionForm(userName, user.EmployeeId);
+
             sessionForm.Show();
             this.Hide();
         }

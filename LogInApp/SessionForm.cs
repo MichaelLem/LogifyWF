@@ -10,22 +10,19 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Collections.Specialized.BitVector32;
+using Logify.BizLayer;
 
 namespace LogifyWin
 {
     public partial class SessionForm : Form
     {
-        //Session session = new Session(1);
-        Session session = new Session();
+        Session session; //= new Session();
 
-        //private TimeEntries currentRecord;
-        //private Logger logger = new Logger();
-
-        public string filePath = @"C:\Users\Dev\Documents\Dev\logIn\LogInApp\LogInApp\Data\SessionLog.json";
-
-        public SessionForm(string userName)
+        public SessionForm(string userName, int employeeId)
         {
             InitializeComponent();
+
+            session = new Session(employeeId);
             session.Username = userName;
         }
 
@@ -77,19 +74,19 @@ namespace LogifyWin
 
         private void btnViewHistory_Click(object sender, EventArgs e)
         {
-            if (File.Exists(filePath))
-            {
-                MessageBox.Show("No history file found.");
-                return;
-            }
+            //if (File.Exists(filePath))
+            //{
+            //    MessageBox.Show("No history file found.");
+            //    return;
+            //}
 
-            string notepadPath = @"C:\Program Files\Notepad++\notepad++.exe";
-            Process.Start(notepadPath, filePath);
+            //string notepadPath = @"C:\Program Files\Notepad++\notepad++.exe";
+            //Process.Start(notepadPath, filePath);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            session.WriteToJson();
+            //session.WriteToJson();
         }
 
         //private void btnReadFromFile_Click(object sender, EventArgs e)

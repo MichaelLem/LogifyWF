@@ -19,7 +19,7 @@ namespace Logify.Tests
             TimeEntries timeEntry = new TimeEntries();
 
             //Act
-            timeEntry = session.GetTimeCard(1, 1, DateTime.Now.ToShortDateString());
+            timeEntry = session.GetTimeCard(1, DateTime.Now.ToShortDateString());
 
             //Assert - test the stuff
             Assert.IsNotNull(timeEntry);

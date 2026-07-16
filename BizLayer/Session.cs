@@ -63,17 +63,19 @@ namespace Logify.BizLayer
         }
 
         //ToDO : Refactor with Time Entry card
-        public TimeEntries GetTimeCard(int CompanyId, int employeeID, string LookUpDate)
+        public TimeEntries GetTimeCard(int CompanyId, string LookUpDate)
         {
             //Check that the date is valid and not in the future
             bool isDateValid = false;
+
             ValidateLogDate(LookUpDate, out isDateValid);
-                if (isDateValid == false) return null;
+
+            if (isDateValid == false) return null;
             
             //Get the time entries for the employee and date from the database
             TimeEntries record = new TimeEntries
             {
-                EmployeeId = employeeID,
+                EmployeeId = _employeeID,
                 LogDate = DateTime.Now.ToShortDateString(),
                 Username = Username,
                 TimeStart = timeStart.ToString("hh:mm:ss tt"),
