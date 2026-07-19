@@ -11,62 +11,74 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Collections.Specialized.BitVector32;
 using Logify.BizLayer;
+using Logify;
+using LogifyWin.ApiAccess;
 
 namespace LogifyWin
 {
-    public partial class SessionForm : Form
+    public partial class FrmTimeEntry : Form
     {
-        Session session; //= new Session();
+        private readonly int _employeeId;
+        private readonly string _userName;
 
-        public SessionForm(string userName, int employeeId)
+        public FrmTimeEntry(string userName, int employeeId)
         {
             InitializeComponent();
 
-            session = new Session(employeeId);
-            session.Username = userName;
+            _employeeId = employeeId;
+            _userName = userName;
         }
 
-        private void SessionForm_Shown(object sender, EventArgs e)
+        private void FrmTimeEntry_Shown(object sender, EventArgs e)
         {
             btnStart.Focus();
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private async void btnStart_Click(object sender, EventArgs e)
         {
-            session.StartTime();
-            lblTimeStart.Text = session.timeStart.ToString("hh:mm tt");
+            SessionServices sessionServices = new SessionServices();
+
+            int timeEntryId = await sessionServices.ClockInFromApi(_employeeId);
+
+            if (timeEntryId == 0)
+            {
+                MessageBox.Show("Clock in failed.");
+                return;
+            }
+
+            lblTimeStart.Text = DateTime.Now.ToString("hh:mm tt");
             btnStart.Enabled = false;
         }
 
         private void btnBreak_Click(object sender, EventArgs e)
         {
-            session.BreakTime();
-            lblTimeBreak.Text = session.timeBreak.ToString("hh:mm tt");
+            //session.BreakTime();
+            //lblTimeBreak.Text = session.timeBreak.ToString("hh:mm tt");
             btnBreak.Enabled = false;
         }
 
         private void btnReturn_Click(object sender, EventArgs e)
         {
-            session.ReturnTime();
-            lblTimeReturn.Text = session.timeReturn.ToString("hh:mm tt");
+            //session.ReturnTime();
+            //lblTimeReturn.Text = session.timeReturn.ToString("hh:mm tt");
             btnReturn.Enabled = false;
         }
 
         private void btnEnd_Click(object sender, EventArgs e)
         {
-            session.EndTime();
-            lblTimeEnd.Text = session.timeEnd.ToString("hh:mm tt");
+            //session.EndTime();
+            //lblTimeEnd.Text = session.timeEnd.ToString("hh:mm tt");
             btnEnd.Enabled = false;
         }
 
         private void btnSaveNotes_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(session.Notes))
-            {
-                session.Notes += Environment.NewLine;
-            }
+            //if (!string.IsNullOrWhiteSpace(session.Notes))
+            //{
+            //    session.Notes += Environment.NewLine;
+            //}
 
-            session.Notes += txbNotes.Text;
+            //session.Notes += txbNotes.Text;
             txbNotes.Clear();
 
             MessageBox.Show("Notes saved.");

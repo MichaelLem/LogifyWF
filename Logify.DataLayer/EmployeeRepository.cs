@@ -14,8 +14,15 @@ namespace Logify.DataLayer
     public class EmployeeRepository
     {
         // TODO: Move connection string to API configuration.
-        string connectionString = "Data Source=localhost;Initial Catalog=Logify;User ID=CRUDLogify;Password=L0gify$Us3r;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;";
+        //string connectionString = "Data Source=localhost;Initial Catalog=Logify;User ID=CRUDLogify;Password=L0gify$Us3r;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;";
         public string message = string.Empty;
+
+        private string GetConnectionString()
+        {
+            return ConfigurationManager
+                .ConnectionStrings["LogifyDb"]
+                .ConnectionString;
+        }
 
         public Employee GetEmployeesByLastNameRoleId(string lastName, int roleId)
         {
@@ -23,11 +30,7 @@ namespace Logify.DataLayer
 
             try
             {
-                //var connectionString = ConfigurationManager
-                //    .ConnectionStrings["LogifyDb"]
-                //    .ConnectionString;
-
-                using var connection = new SqlConnection(connectionString);
+                using var connection = new SqlConnection(GetConnectionString());
                 connection.Open();
 
                 using var cmd = new SqlCommand("dbo.GetEmployeesByLastName", connection);
@@ -82,11 +85,7 @@ namespace Logify.DataLayer
 
             try
             {
-                //var connectionString = ConfigurationManager
-                //    .ConnectionStrings["LogifyDb"]
-                //    .ConnectionString;
-
-                using var connection = new SqlConnection(connectionString);
+                using var connection = new SqlConnection(GetConnectionString());
                 using var cmd = new SqlCommand("dbo.GetEmployeeById", connection);
 
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -141,11 +140,7 @@ namespace Logify.DataLayer
         {
             try 
             { 
-                //string connectionString = ConfigurationManager
-                //    .ConnectionStrings["LogifyDb"]
-                //    .ConnectionString;
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(GetConnectionString()))
                 using (SqlCommand cmd = new SqlCommand("dbo.InsertNewEmployee", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -174,11 +169,7 @@ namespace Logify.DataLayer
 
         public bool UpdateEmployeeInfo(Employee employee)
         {
-            //string connectionString = ConfigurationManager
-            //    .ConnectionStrings["LogifyDb"]
-            //    .ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             using (SqlCommand cmd = new SqlCommand("dbo.UpdateEmployeeInfo", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -198,11 +189,7 @@ namespace Logify.DataLayer
 
         public bool DeleteEmployee(int employeeId)
         {
-            //string connectionString = ConfigurationManager
-            //    .ConnectionStrings["LogifyDb"]
-            //    .ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
                 try
                 { 
                     using (SqlCommand cmd = new SqlCommand("dbo.DeleteEmployee", conn))
@@ -229,11 +216,7 @@ namespace Logify.DataLayer
 
         public int InsertPrimaryContactEmployee(Employee newEmployee)
         {
-            //string connectionString = ConfigurationManager
-            //    .ConnectionStrings["LogifyDb"]
-            //    .ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(GetConnectionString()))
                 try
                 {
                     using (SqlCommand cmd = new SqlCommand("dbo.InsertPrimaryContactEmployee", conn))

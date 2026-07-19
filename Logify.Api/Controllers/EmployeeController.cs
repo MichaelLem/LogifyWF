@@ -6,20 +6,21 @@ namespace Logify.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class EmployeeController : ControllerBase
     {
-        [HttpPut]
-        public ActionResult<bool> UpdateEmployee([FromBody]Employee employee)
+        [HttpPost]
+        public ActionResult<bool> Employee(Employee employee)
         {
             EmployeeRepository repo = new EmployeeRepository();
 
-            bool updated = repo.UpdateEmployeeInfo(employee);
+            bool created = repo.InsertNewEmployee(employee);
 
-            return Ok(updated);
+            return Ok(created);
         }
 
         [HttpGet]
-        public ActionResult<Employee> Search(string lastName, int roleId)
+        public ActionResult<Employee> Employee(string lastName, int roleId)
         {
             EmployeeRepository repo = new EmployeeRepository();
 
@@ -33,18 +34,18 @@ namespace Logify.Api.Controllers
             return Ok(employee);
         }
 
-        [HttpPost]
-        public ActionResult<bool> CreateEmployee(Employee employee)
+        [HttpPut]
+        public ActionResult<bool> UpdateEmployee(Employee employee)
         {
             EmployeeRepository repo = new EmployeeRepository();
 
-            bool created = repo.InsertNewEmployee(employee);
+            bool updated = repo.UpdateEmployeeInfo(employee);
 
-            return Ok(created);
+            return Ok(updated);
         }
 
         [HttpDelete]
-        public ActionResult<bool> Delete(int employeeId)
+        public ActionResult<bool> Employee(int employeeId)
         {
             EmployeeRepository repo = new EmployeeRepository();
 

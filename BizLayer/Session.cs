@@ -21,16 +21,16 @@ namespace Logify.BizLayer
         public string Notes = string.Empty;
         public string Category = string.Empty;
 
-        //Must be passed in.
-        private int _employeeID;
+        public readonly int EmployeeID;
 
         private Session()
         {
             //Private constructor to prevent instantiation without employeeID
         }
+
         public Session(int employeeID)
         {
-            _employeeID = employeeID;
+            EmployeeID = employeeID;
         }
 
         public DateTime GetCurrentTime()
@@ -63,7 +63,7 @@ namespace Logify.BizLayer
         }
 
         //ToDO : Refactor with Time Entry card
-        public TimeEntries GetTimeCard(int CompanyId, string LookUpDate)
+        public TimeEntry GetTimeCard(int CompanyId, string LookUpDate)
         {
             //Check that the date is valid and not in the future
             bool isDateValid = false;
@@ -73,9 +73,9 @@ namespace Logify.BizLayer
             if (isDateValid == false) return null;
             
             //Get the time entries for the employee and date from the database
-            TimeEntries record = new TimeEntries
+            TimeEntry record = new TimeEntry
             {
-                EmployeeId = _employeeID,
+                EmployeeId = EmployeeID,
                 LogDate = DateTime.Now.ToShortDateString(),
                 Username = Username,
                 TimeStart = timeStart.ToString("hh:mm:ss tt"),

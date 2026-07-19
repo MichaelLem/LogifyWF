@@ -1,6 +1,6 @@
 ﻿namespace LogifyWin
 {
-    partial class SessionForm
+    partial class FrmTimeEntry
     {
         /// <summary>
         /// Required designer variable.
@@ -182,10 +182,9 @@
             Controls.Add(btnBreak);
             Controls.Add(btnStart);
             Controls.Add(txbNotes);
-            Name = "SessionForm";
+            Name = "FrmTimeEntry";
             Text = "Logify";
-            Load += SessionForm_Load;
-            Shown += SessionForm_Shown;
+            Shown += FrmTimeEntry_Shown;
             ResumeLayout(false);
             PerformLayout();
         }

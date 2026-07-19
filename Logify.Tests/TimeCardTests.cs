@@ -16,7 +16,7 @@ namespace Logify.Tests
         {
             //Assemble - Arrange
             Session session = new Session(1);
-            TimeEntries timeEntry = new TimeEntries();
+            TimeEntry timeEntry = new TimeEntry();
 
             //Act
             timeEntry = session.GetTimeCard(1, DateTime.Now.ToShortDateString());

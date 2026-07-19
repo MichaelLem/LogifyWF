@@ -1,3 +1,8 @@
 ﻿ToDO
 
 
+check namespaces in api access
+create api url
+add method session services
+refactor btn's
+rename controller to timeentry

@@ -7,7 +7,7 @@ using System;
 
 namespace Logify.Models
 {
-    public class TimeEntries
+    public class TimeEntry
     {
         public int EmployeeId { get; set; }
         public string Username { get; set; } = string.Empty;

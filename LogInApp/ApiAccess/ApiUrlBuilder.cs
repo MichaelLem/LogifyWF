@@ -20,9 +20,9 @@ public class ApiUrlBuilder
         sb.Append(domain);
         sb.Append(route);
 
-        string ApiAuthenticateUrl = sb.ToString();
+        string apiAuthenticateUrl = sb.ToString();
         
-        return ApiAuthenticateUrl;
+        return apiAuthenticateUrl;
     }
 
     public string BuildSearchEmployeeUrl(string lastName, int roleId)
@@ -42,9 +42,9 @@ public class ApiUrlBuilder
         sb.Append(roleIdApi);
         sb.Append(roleId.ToString());
 
-        string ApiSearchUrl = sb.ToString();
+        string apiSearchUrl = sb.ToString();
 
-        return ApiSearchUrl;
+        return apiSearchUrl;
     }
 
     public string BuildUpdateEmployeeUrl()
@@ -56,9 +56,9 @@ public class ApiUrlBuilder
         sb.Append(domain);
         sb.Append(route);
 
-        string ApiUpdateUrl = sb.ToString();
+        string apiUpdateUrl = sb.ToString();
 
-        return ApiUpdateUrl;
+        return apiUpdateUrl;
     }
 
     public string BuildCreateEmployeeUrl()
@@ -70,9 +70,9 @@ public class ApiUrlBuilder
         sb.Append(domain);
         sb.Append(route);
 
-        string ApiCreateUrl = sb.ToString();
+        string apiCreateUrl = sb.ToString();
 
-        return ApiCreateUrl;
+        return apiCreateUrl;
     }
 
     public string BuildDeleteEmployeeUrl(int employeeId)
@@ -87,8 +87,25 @@ public class ApiUrlBuilder
         sb.Append(employeeIdApi);
         sb.Append(employeeId.ToString());
 
-        string ApiDeleteUrl = sb.ToString();
+        string apiDeleteUrl = sb.ToString();
 
-        return ApiDeleteUrl;
+        return apiDeleteUrl;
+    }
+
+    public string BuildClockInUrl(int employeeId)
+    {
+        string route = ConfigurationManager.AppSettings["ApiClockInRoute"].ToString();
+        string employeeIdApi = "employeeId=";
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.Append(domain);
+        sb.Append(route);
+        sb.Append(employeeIdApi);
+        sb.Append(employeeId.ToString());
+
+        string apiClockInUrl = sb.ToString();
+
+        return apiClockInUrl;
     }
 }

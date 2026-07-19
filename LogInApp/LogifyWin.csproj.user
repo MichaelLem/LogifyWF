@@ -10,7 +10,7 @@
     <Compile Update="FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SessionForm.cs">
+    <Compile Update="FrmTimeEntry.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
